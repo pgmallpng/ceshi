@@ -6,6 +6,43 @@
     <title>PG Earn – Daily Commission | Online Jobs</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💰%3C/text%3E%3C/svg%3E">
     <style>
+        /* Light mode (default) */
+        :root {
+            --bg-body: #f2f6fa;
+            --bg-card: white;
+            --text-primary: #1f2f3e;
+            --text-secondary: #2c5370;
+            --text-muted: #5c7e97;
+            --border-light: #e2edf2;
+            --header-bg: white;
+            --header-border: #eef3f8;
+            --badge-bg: #eaf2f9;
+            --badge-color: #1e6b49;
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.05);
+            --card-border: #e2edf2;
+            --detail-bg: white;
+            --contact-bg: #eef2f9;
+            --footer-color: #87a1bb;
+            --divider: #e2edf2;
+        }
+        body.dark {
+            --bg-body: #1a1e2a;
+            --bg-card: #2a2f3f;
+            --text-primary: #eef2ff;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-light: #334155;
+            --header-bg: #2a2f3f;
+            --header-border: #334155;
+            --badge-bg: #1e293b;
+            --badge-color: #6ee7b7;
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.2);
+            --card-border: #334155;
+            --detail-bg: #2a2f3f;
+            --contact-bg: #1e293b;
+            --footer-color: #6c7a91;
+            --divider: #334155;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -14,13 +51,34 @@
         }
         body {
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #f2f6fa;
+            background: var(--bg-body);
+            color: var(--text-primary);
             padding: 16px;
             min-height: 100vh;
+            transition: background 0.2s ease, color 0.2s ease;
         }
         .wrapper {
             max-width: 780px;
             margin: 0 auto;
+        }
+        /* Theme toggle */
+        .theme-toggle {
+            position: sticky;
+            top: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 40px;
+            padding: 6px 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 100;
+            width: fit-content;
+            margin-left: auto;
+            box-shadow: var(--shadow-sm);
+            transition: background 0.2s;
+        }
+        .theme-toggle:hover {
+            background: var(--badge-bg);
         }
         .card-list {
             display: flex;
@@ -28,16 +86,16 @@
             gap: 16px;
         }
         .card {
-            background: white;
+            background: var(--bg-card);
             border-radius: 28px;
             padding: 20px 22px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.05);
-            border: 1px solid #e2edf2;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--card-border);
             transition: all 0.2s ease;
             cursor: pointer;
         }
         .card:active {
-            background: #fafcff;
+            background: var(--badge-bg);
             transform: scale(0.99);
         }
         .card:focus-visible {
@@ -50,26 +108,34 @@
             margin-bottom: 8px;
             color: #1a5d46;
         }
+        body.dark .card h3 {
+            color: #6ee7b7;
+        }
         .card p {
-            color: #2c5370;
+            color: var(--text-secondary);
             font-size: 0.92rem;
             line-height: 1.4;
             margin-bottom: 10px;
         }
         .badge {
             display: inline-block;
-            background: #eaf2f9;
-            color: #1e6b49;
+            background: var(--badge-bg);
+            color: var(--badge-color);
             border-radius: 30px;
             padding: 5px 14px;
             font-size: 0.7rem;
             font-weight: 500;
         }
         .detail-view {
-            background: white;
+            background: var(--detail-bg);
             border-radius: 32px;
             padding: 28px 24px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-sm);
+            animation: fadeIn 0.25s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .detail-title {
             font-size: 1.8rem;
@@ -79,17 +145,20 @@
             padding-left: 18px;
             margin-bottom: 12px;
         }
+        body.dark .detail-title {
+            color: #6ee7b7;
+        }
         .detail-meta {
-            color: #5c7e97;
+            color: var(--text-muted);
             font-size: 0.8rem;
-            border-bottom: 1px solid #e6edf4;
+            border-bottom: 1px solid var(--divider);
             padding-bottom: 12px;
             margin-bottom: 24px;
         }
         .detail-text {
             font-size: 1rem;
             line-height: 1.6;
-            color: #1f2f3e;
+            color: var(--text-primary);
         }
         .detail-text p {
             margin-bottom: 1rem;
@@ -102,14 +171,17 @@
         }
         .contact-link {
             display: inline-block;
-            background: #eef2f9;
+            background: var(--contact-bg);
             padding: 8px 18px;
             border-radius: 40px;
             text-decoration: none;
             color: #1e6b4e;
             font-weight: 500;
             margin: 6px 6px 0 0;
-            border: 1px solid #cfe0ec;
+            border: 1px solid var(--border-light);
+        }
+        body.dark .contact-link {
+            color: #6ee7b7;
         }
         .back-btn {
             background: #2c7a5c;
@@ -137,36 +209,36 @@
         .header {
             text-align: center;
             margin-bottom: 28px;
-            background: white;
+            background: var(--header-bg);
             border-radius: 32px;
             padding: 20px 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-            border: 1px solid #eef3f8;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--header-border);
         }
         .header h1 {
             font-size: 2rem;
             font-weight: 700;
-            color: #1f6e43;
             background: linear-gradient(145deg, #1f6e43, #0f6b8c);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
         }
         .header p {
-            color: #5f7f98;
+            color: var(--text-muted);
             margin-top: 6px;
         }
         footer {
             text-align: center;
             font-size: 0.7rem;
-            color: #87a1bb;
+            color: var(--footer-color);
             margin-top: 32px;
             padding-top: 12px;
         }
-        .task-image {
+        .task-image-thumb {
             width: 100%;
             border-radius: 12px;
             cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .lightbox {
             display: none;
@@ -199,12 +271,15 @@
 </head>
 <body>
 <div class="wrapper">
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+        <button id="themeToggle" class="theme-toggle" aria-label="Switch dark/light mode">🌙</button>
+    </div>
     <div id="homeContainer">
         <div class="header">
             <h1>💰 PG Earn – Daily Commission</h1>
             <p>Complete orders for brands · Earn every day</p>
         </div>
-        <div style="text-align: center; margin: 8px 0 16px 0; color: #5c7e97; font-size: 0.85rem;">
+        <div style="text-align: center; margin: 8px 0 16px 0; color: var(--text-muted); font-size: 0.85rem;">
             👇 Tap any card to read full guide
         </div>
         <div id="cardsArea" class="card-list"></div>
@@ -218,7 +293,7 @@
         <footer>✅ Use "Back to Contents" to explore other topics</footer>
     </div>
 
-    <div style="text-align: center; font-size: 0.7rem; color: #87a1bb; margin-top: 20px; padding: 12px 0 8px; border-top: 1px solid #e2edf2;">
+    <div style="text-align: center; font-size: 0.7rem; color: var(--footer-color); margin-top: 20px; padding: 12px 0 8px; border-top: 1px solid var(--divider);">
         This is a personal help site. All rules are subject to the manager’s reply.
     </div>
 </div>
@@ -228,6 +303,7 @@
 </div>
 
 <script>
+    // Lightbox functions
     function openLightbox(imgElement) {
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
@@ -238,6 +314,35 @@
         document.getElementById('lightbox').style.display = 'none';
     }
 
+    // Theme toggle
+    function initTheme() {
+        const stored = localStorage.getItem('theme');
+        if (stored === 'dark') {
+            document.body.classList.add('dark');
+            document.getElementById('themeToggle').innerHTML = '☀️';
+        } else {
+            document.body.classList.remove('dark');
+            document.getElementById('themeToggle').innerHTML = '🌙';
+        }
+    }
+    function toggleTheme() {
+        if (document.body.classList.contains('dark')) {
+            document.body.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+            document.getElementById('themeToggle').innerHTML = '🌙';
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+            document.getElementById('themeToggle').innerHTML = '☀️';
+        }
+    }
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+    initTheme();
+
+    // Store scroll position before entering detail
+    let savedScrollY = 0;
+
+    // ARTICLES data (full content, same as before with task-steps)
     const ARTICLES = {
         "deposit-earnings": {
             title: "💰 Deposit & Earnings",
@@ -327,9 +432,9 @@
 </p>`
         },
         "task-steps": {
-    title: "📝 Task Steps (How to Submit an Order)",
-    meta: "Step-by-step guide for interns & level 1-3",
-    content: `
+            title: "📝 Task Steps (How to Submit an Order)",
+            meta: "Step-by-step guide for interns & level 1-3",
+            content: `
 <p><strong>📍 1. Add your shipping address (one time only)</strong><br>
 Go to <strong>User Center</strong> (bottom right) → scroll down to find "Shipping Address" → enter your address once.</p>
 
@@ -356,8 +461,7 @@ After selecting <strong>"Select All"</strong>, click <strong>"Checkout"</strong>
 <p><em>This order is intended to help brands improve their product sales data. No physical product will be shipped to you.</em></p>
 <p style="margin-top: 20px; text-align: center;">
     <a href="#" onclick="showDetail('contact-manager'); return false;" style="display: inline-block; background: #eef2f9; padding: 10px 20px; border-radius: 40px; text-decoration: none; color: #1e6b4e; font-weight: 500;">📞 Need help? Contact Manager →</a>
-</p>
-`
+</p>`
         },
         "contact-manager": {
             title: "📞 Contact Manager",
@@ -447,6 +551,7 @@ After selecting <strong>"Select All"</strong>, click <strong>"Checkout"</strong>
     }
 
     function showDetail(articleId) {
+        savedScrollY = window.scrollY;
         const article = ARTICLES[articleId];
         if (!article) return;
         const detailHtml = `<div><div class="detail-title">${article.title}</div><div class="detail-meta">📌 ${article.meta}</div><div class="detail-text">${article.content}</div></div>`;
@@ -462,13 +567,14 @@ After selecting <strong>"Select All"</strong>, click <strong>"Checkout"</strong>
     function backToHome() {
         detailContainer.classList.add('hidden');
         homeContainer.classList.remove('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: savedScrollY, behavior: 'auto' });
         if (location.hash) history.replaceState(null, '', ' ');
     }
 
     function handlePopState() {
-        if (!detailContainer.classList.contains('hidden')) backToHome();
-        else if (location.hash && location.hash.length > 1) {
+        if (!detailContainer.classList.contains('hidden')) {
+            backToHome();
+        } else if (location.hash && location.hash.length > 1) {
             const id = location.hash.slice(1);
             if (ARTICLES[id]) showDetail(id);
         }
