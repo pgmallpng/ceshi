@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>PG Earn – Daily Commission | Online Jobs</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💰%3C/text%3E%3C/svg%3E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f2f6fa;
+            padding: 16px;
+            min-height: 100vh;
+        }
+        .wrapper {
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 20px 22px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.05);
+            border: 1px solid #e2edf2;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .card:active {
+            background: #fafcff;
+            transform: scale(0.99);
+        }
+        .card:focus-visible {
+            outline: 2px solid #2c7a5c;
+            outline-offset: 2px;
+        }
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 620;
+            margin-bottom: 8px;
+            color: #1a5d46;
+        }
+        .card p {
+            color: #2c5370;
+            font-size: 0.92rem;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+        .badge {
+            display: inline-block;
+            background: #eaf2f9;
+            color: #1e6b49;
+            border-radius: 30px;
+            padding: 5px 14px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        .detail-view {
+            background: white;
+            border-radius: 32px;
+            padding: 28px 24px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+        .detail-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #176b48;
+            border-left: 5px solid #2a946b;
+            padding-left: 18px;
+            margin-bottom: 12px;
+        }
+        .detail-meta {
+            color: #5c7e97;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #e6edf4;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+        }
+        .detail-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #1f2f3e;
+        }
+        .detail-text p {
+            margin-bottom: 1rem;
+        }
+        .detail-text ul, .detail-text ol {
+            margin: 0.8rem 0 1rem 1.6rem;
+        }
+        .detail-text li {
+            margin: 0.4rem 0;
+        }
+        .contact-link {
+            display: inline-block;
+            background: #eef2f9;
+            padding: 8px 18px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #1e6b4e;
+            font-weight: 500;
+            margin: 6px 6px 0 0;
+            border: 1px solid #cfe0ec;
+        }
+        .back-btn {
+            background: #2c7a5c;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 28px;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        .back-btn:active {
+            background: #1f6046;
+        }
+        .back-btn:focus-visible {
+            outline: 2px solid #2c7a5c;
+            outline-offset: 2px;
+        }
+        .hidden {
+            display: none;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+            background: white;
+            border-radius: 32px;
+            padding: 20px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border: 1px solid #eef3f8;
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f6e43;
+            background: linear-gradient(145deg, #1f6e43, #0f6b8c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .header p {
+            color: #5f7f98;
+            margin-top: 6px;
+        }
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #87a1bb;
+            margin-top: 32px;
+            padding-top: 12px;
+        }
+        .task-image {
+            width: 100%;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        @media (max-width: 550px) {
+            body {
+                padding: 12px;
+            }
+            .detail-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div id="homeContainer">
+        <div class="header">
+            <h1>💰 PG Earn – Daily Commission</h1>
+            <p>Complete orders for brands · Earn every day</p>
+        </div>
+        <div style="text-align: center; margin: 8px 0 16px 0; color: #5c7e97; font-size: 0.85rem;">
+            👇 Tap any card to read full guide
+        </div>
+        <div id="cardsArea" class="card-list"></div>
+    </div>
+
+    <div id="detailContainer" class="hidden">
+        <div class="detail-view">
+            <div id="detailContent"></div>
+            <button id="backHomeBtn" class="back-btn">← Back to Contents</button>
+        </div>
+        <footer>✅ Use "Back to Contents" to explore other topics</footer>
+    </div>
+
+    <div style="text-align: center; font-size: 0.7rem; color: #87a1bb; margin-top: 20px; padding: 12px 0 8px; border-top: 1px solid #e2edf2;">
+        This is a personal help site. All rules are subject to the manager’s reply.
+    </div>
+</div>
+
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Full size">
+</div>
+
+<script>
+    function openLightbox(imgElement) {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightboxImg.src = imgElement.src;
+        lightbox.style.display = 'flex';
+    }
+    function closeLightbox() {
+        document.getElementById('lightbox').style.display = 'none';
+    }
+
+    const ARTICLES = {
+        "deposit-earnings": {
+            title: "💰 Deposit & Earnings",
+            meta: "Level 1–3 · daily tasks · weekly income",
+            content: `
+<div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0 12px;">
+  <div style="flex: 1; min-width: 150px; background: #f8fafc; border-radius: 20px; padding: 14px; border: 1px solid #e2edf2;">
+    <div style="font-weight: 700; font-size: 1.1rem; color: #1a5d46; margin-bottom: 8px;">🌟 Level 1</div>
+    <div style="font-size: 0.85rem; margin-bottom: 4px;">💰 Recharge: <strong>K240</strong></div>
+    <div style="font-size: 0.85rem; margin-bottom: 4px;">📋 Tasks: <strong>3 per day</strong></div>
+    <div style="font-size: 0.85rem; margin-bottom: 4px;">🏆 Weekly: <strong>K21</strong></div>
+    <div style="font-size: 0.85rem; color: #1e6b49;">💸 Min withdrawal: <strong>K14</strong></div>
+    <div style="font-size: 0.85rem; color: #1e6b49;">💸 Max withdrawal: <strong>No limit</strong></div>
+  </div>
+  <div style="flex: 1; min-width: 150px; background: #f8fafc; border-radius: 20px; padding: 14px; border: 1px solid #e2edf2;">
+    <div style="font-weight: 700; font-size: 1.1rem; color: #1a5d46; margin-bottom: 8px;">⭐ Level 2</div>
+    <div style="font-size: 0.85rem; margin-bottom: 4px;">💰 Recharge: <strong>K670</strong></div>
+    <div style="font-size: 0.85rem; margin-bottom: 4px;">📋 Tasks: <strong>6 per day</strong></div>
+    <div style="font-size: 0.85rem; margin-bottom: 4px;">🏆 Weekly: <strong>K138.6</strong></div>
+    <div style="font-size: 0.85rem; color: #1e6b49;">💸 Min withdrawal: <strong>K80</strong></div>
+    <div style="font-size: 0.85rem; color: #1e6b49;">💸 Max withdrawal: <strong>No limit</strong></div>
+  </div>
+  <div style="flex: 1; min-width: 150px; background: #f8fafc; border-radius: 20px; padding: 14px; border: 1px solid #e2edf2;">
+    <div style="font-weight: 700; font-size: 1.1rem; color: #1a5d46; margin-bottom: 8px;">🚀 Level 3</div>
+    <div style="font-size: 0.85rem; margin-bottom: 4px;">💰 Recharge: <strong>K1,700</strong></div>
+    <div style="font-size: 0.85rem; margin-bottom: 4px;">📋 Tasks: <strong>8 per day</strong></div>
+    <div style="font-size: 0.85rem; margin-bottom: 4px;">🏆 Weekly: <strong>K364</strong></div>
+    <div style="font-size: 0.85rem; color: #1e6b49;">💸 Min withdrawal: <strong>K250</strong></div>
+    <div style="font-size: 0.85rem; color: #1e6b49;">💸 Max withdrawal: <strong>No limit</strong></div>
+  </div>
+</div>
+<p><em>Interns are eligible for a discount. Contact your manager for the exact amount.</em></p>
+<p>💡 Your deposit is working capital (fully refundable). Higher level = more daily orders + higher earnings.</p>
+<p style="margin-top: 20px; text-align: center;">
+    <a href="#" onclick="showDetail('contact-manager'); return false;" style="display: inline-block; background: #eef2f9; padding: 10px 20px; border-radius: 40px; text-decoration: none; color: #1e6b4e; font-weight: 500;">📞 Need help? Contact Manager →</a>
+</p>`
+        },
+        "topup-steps": {
+            title: "🔁 Top‑Up Steps",
+            meta: "4 easy steps to fund your account",
+            content: `
+<ol>
+    <li>Contact your manager to get the current account details.</li>
+    <li>Transfer the required deposit (keep a screenshot of the Ref ID).</li>
+    <li>Send the screenshot to your manager. Once confirmed, the funds will be credited to your PG account.</li>
+    <li>The platform supports transfers via <strong>BSP, Kina, USDT, and other local banks</strong>.</li>
+</ol>
+<p>⚠️ Always confirm details with your manager before any transfer.</p>
+<p style="margin-top: 20px; text-align: center;">
+    <a href="#" onclick="showDetail('contact-manager'); return false;" style="display: inline-block; background: #eef2f9; padding: 10px 20px; border-radius: 40px; text-decoration: none; color: #1e6b4e; font-weight: 500;">📞 Need help? Contact Manager →</a>
+</p>`
+        },
+        "withdrawal-rules": {
+            title: "🏦 Withdrawal Rules",
+            meta: "Request schedule & arrival time",
+            content: `
+<ul>
+    <li><strong>Withdrawal request:</strong> Monday–Friday (no requests on weekends).</li>
+    <li><strong>Funds arrive:</strong> 1–4 days (including weekends).</li>
+    <li><strong>Minimum withdrawal</strong> depends on your level — ask your manager for exact amount.</li>
+</ul>
+<p>📌 All withdrawals are processed in order. Make sure your bank account details are correct to avoid delays.</p>
+<p style="margin-top: 20px; text-align: center;">
+    <a href="#" onclick="showDetail('contact-manager'); return false;" style="display: inline-block; background: #eef2f9; padding: 10px 20px; border-radius: 40px; text-decoration: none; color: #1e6b4e; font-weight: 500;">📞 Need help? Contact Manager →</a>
+</p>`
+        },
+        "why-topup": {
+            title: "❓ Why Top Up?",
+            meta: "Deposit = working capital (refundable)",
+            content: `
+<p>The deposit is <strong>not a "fee"</strong> – it's working capital to support your order flow.</p>
+<p>Each order requires matching funds to complete the process. Your deposit stays in your account as a tool for your daily tasks. Every order you complete earns you commission. When you upgrade or leave, the deposit is fully refunded.</p>
+<p>✅ Your earnings are purely from completed tasks.</p>
+<p style="margin-top: 20px; text-align: center;">
+    <a href="#" onclick="showDetail('contact-manager'); return false;" style="display: inline-block; background: #eef2f9; padding: 10px 20px; border-radius: 40px; text-decoration: none; color: #1e6b4e; font-weight: 500;">📞 Need help? Contact Manager →</a>
+</p>`
+        },
+        "order-problems": {
+            title: "⏳ Order Process",
+            meta: "Automatic completion & commission crediting",
+            content: `
+<p>After you submit an order, the system starts a <strong>countdown (Review time)</strong>. When the countdown ends, the order is automatically completed, and the commission is automatically credited to your User Center balance.</p>
+<p>Then you can submit a new order to continue working. Your daily order limit (Level 1: 3, Level 2: 6, Level 3: 8) frees up a slot once the countdown ends.</p>
+<p><strong>Important:</strong> Wait patiently during the countdown. Once credited, check your balance in "User Center". Then you can start a new order.</p>
+<p style="margin-top: 20px; text-align: center;">
+    <a href="#" onclick="showDetail('contact-manager'); return false;" style="display: inline-block; background: #eef2f9; padding: 10px 20px; border-radius: 40px; text-decoration: none; color: #1e6b4e; font-weight: 500;">📞 Need help? Contact Manager →</a>
+</p>`
+        },
+        "task-steps": {
+            title: "📝 Task Steps (How to Submit an Order)",
+            meta: "Step-by-step guide for interns & level 1-3",
+            content: `
+<p><strong>📍 1. Add your shipping address (one time only)</strong><br>
+Go to <strong>User Center</strong> (bottom right) → scroll down to find "Shipping Address" → enter your address once.</p>
+
+<p><strong>🏠 2. Enter the task page</strong><br>
+On Home screen, tap <strong>"intern"</strong> (if you are an intern) or your level button (<strong>Level 1/2/3</strong>). Then select the first item and click <strong>"Buy Now"</strong>.</p>
+
+<p><strong>🛒 3. Review order & submit</strong><br>
+After selecting <strong>"Select All"</strong>, click <strong>"Checkout"</strong> → then click <strong>"Submit Order and Confirm"</strong>.</p>
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin: 16px 0;">
+    <div style="text-align: center; width: 150px;">
+        <img src="images/address.jpg" alt="Shipping address screenshot" style="width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)">
+        <div style="font-size: 0.75rem; color: #5c7e97; margin-top: 6px;">📍 Shipping address</div>
+    </div>
+    <div style="text-align: center; width: 100%; margin-top: 8px;">
+        <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <img src="images/checkout.png" alt="Complete order process (5 screens)" style="max-width: none; height: auto; display: block; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)">
+        </div>
+        <div style="font-size: 0.75rem; color: #5c7e97; margin-top: 6px;">📋 Swipe right to see full task flow →</div>
+    </div>
+</div>
+
+<p>✅ Once submitted, the system starts a countdown. When the countdown ends, the commission will be automatically credited to your balance.</p>
+<p><em>This order is intended to help brands improve their product sales data. No physical product will be shipped to you.</em></p>
+<p style="margin-top: 20px; text-align: center;">
+    <a href="#" onclick="showDetail('contact-manager'); return false;" style="display: inline-block; background: #eef2f9; padding: 10px 20px; border-radius: 40px; text-decoration: none; color: #1e6b4e; font-weight: 500;">📞 Need help? Contact Manager →</a>
+</p>`
+        },
+        "contact-manager": {
+            title: "📞 Contact Manager",
+            meta: "Direct support for deposit/withdrawal/upgrades",
+            content: `
+<p><strong>Official Manager Contacts:</strong></p>
+<p>
+    <a href="https://t.me/Mia0508" target="_blank" rel="noopener noreferrer" class="contact-link">📱 Telegram Manager</a>
+    <a href="https://signal.me/#eu/iawB5NudJJf08YQCU7heIQjavTxIyfiTVK1DT-8wZw-neEgqB89G7Iq7KwerJkSZ" target="_blank" rel="noopener noreferrer" class="contact-link">🔒 Signal Manager</a>
+</p>
+<p>🕒 <strong>Working hours:</strong> 10am – 10pm (PNG time).</p>
+<p>Your manager helps with top-up confirmation, withdrawal requests, level upgrades and daily support.</p>`
+        },
+        "extra-earnings": {
+            title: "💡 Extra Earnings",
+            meta: "Beyond daily order commissions",
+            content: `
+<p>In addition to the income from daily orders on the PG platform, you can also earn extra income through methods such as:</p>
+<ul>
+    <li><strong>Invitation bonuses</strong> — earn rewards for each new member you refer.</li>
+    <li><strong>Subordinate rebates</strong> — receive a percentage of your team's order commissions.</li>
+    <li><strong>Fixed salary</strong> — qualified members can enjoy a stable monthly base pay.</li>
+    <li><strong>Welfare product orders</strong> — special high‑value tasks with extra rewards.</li>
+</ul>
+<p>✅ Ask your manager for details and eligibility requirements for each extra earning method.</p>
+<p style="margin-top: 20px; text-align: center;">
+    <a href="#" onclick="showDetail('contact-manager'); return false;" style="display: inline-block; background: #eef2f9; padding: 10px 20px; border-radius: 40px; text-decoration: none; color: #1e6b4e; font-weight: 500;">📞 Need help? Contact Manager →</a>
+</p>`
+        },
+        "what-is-pg": {
+            title: "🌐 What Is PG?",
+            meta: "Online work platform since 2018",
+            content: `
+<p>The platform helps brands gather real order data to improve their online visibility.</p>
+<p>As a member, you do daily tasks and earn commission. It's a steady, reliable, paid online job. The platform has run smoothly for over <strong>7 years</strong> — payments are always on time.</p>`
+        },
+        "why-pg-safe": {
+            title: "🔒 Why Is PG Safe?",
+            meta: "Legal registration, fund security, transparent rules",
+            content: `
+<ul>
+    <li><strong>Legally Registered</strong> — Colorado, USA (2018), address publicly accessible</li>
+    <li><strong>Stable Operation</strong> — 7+ years of stable operation</li>
+    <li><strong>Fund Security</strong> — Deposit is working capital, earnings are labor‑based</li>
+    <li><strong>Transparent Rules</strong> — Every record traceable, income matched to orders</li>
+    <li><strong>Verifiable</strong> — Company info can be verified via official channels</li>
+</ul>
+<p>⭐ Thousands trust PG for daily online income – fully compliant.</p>`
+        }
+    };
+
+    const CARD_LIST = [
+        { id: "deposit-earnings", title: "💰 Deposit & Earnings", desc: "Weekly earnings: K21 (L1) · K138.6 (L2) · K364 (L3)" },
+        { id: "topup-steps", title: "🔁 Top‑Up Steps", desc: "Contact manager → transfer → confirm → credit" },
+        { id: "withdrawal-rules", title: "🏦 Withdrawal Rules", desc: "Mon–Fri only, arrive 1–4 days" },
+        { id: "why-topup", title: "❓ Why Top Up?", desc: "Deposit is working capital, fully refundable" },
+        { id: "task-steps", title: "📝 Task Steps", desc: "Step-by-step: add address → submit order" },
+        { id: "order-problems", title: "⏳ Order Problems", desc: "Automatic countdown, commission auto‑credit" },
+        { id: "extra-earnings", title: "💡 Extra Earnings", desc: "Invitation bonuses, subordinate rebates, fixed salary & welfare orders" },
+        { id: "what-is-pg", title: "🌐 What Is PG?", desc: "USA registered, 7+ years, brands order data" },
+        { id: "why-pg-safe", title: "🔒 Why Is PG Safe?", desc: "Legal, stable, fund security & verifiable" },
+        { id: "contact-manager", title: "📞 Contact Manager", desc: "Telegram/Signal, 10am–10pm (PNG)" }
+    ];
+
+    const homeContainer = document.getElementById('homeContainer');
+    const detailContainer = document.getElementById('detailContainer');
+    const cardsArea = document.getElementById('cardsArea');
+    const detailContentDiv = document.getElementById('detailContent');
+    const backBtn = document.getElementById('backHomeBtn');
+
+    function renderCards() {
+        if (!cardsArea) return;
+        cardsArea.innerHTML = '';
+        CARD_LIST.forEach(item => {
+            const article = ARTICLES[item.id];
+            const shortDesc = (article && article.meta) ? article.meta : item.desc;
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.setAttribute('data-id', item.id);
+            card.innerHTML = `<h3>${item.title}</h3><p>${shortDesc}</p><div class="badge">📖 Read more →</div>`;
+            card.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showDetail(item.id);
+            });
+            cardsArea.appendChild(card);
+        });
+    }
+
+    function showDetail(articleId) {
+        const article = ARTICLES[articleId];
+        if (!article) return;
+        const detailHtml = `<div><div class="detail-title">${article.title}</div><div class="detail-meta">📌 ${article.meta}</div><div class="detail-text">${article.content}</div></div>`;
+        detailContentDiv.innerHTML = detailHtml;
+        homeContainer.classList.add('hidden');
+        detailContainer.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (history.pushState) {
+            history.pushState({ view: 'detail', id: articleId }, '', `#${articleId}`);
+        }
+    }
+
+    function backToHome() {
+        detailContainer.classList.add('hidden');
+        homeContainer.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (location.hash) history.replaceState(null, '', ' ');
+    }
+
+    function handlePopState() {
+        if (!detailContainer.classList.contains('hidden')) backToHome();
+        else if (location.hash && location.hash.length > 1) {
+            const id = location.hash.slice(1);
+            if (ARTICLES[id]) showDetail(id);
+        }
+    }
+
+    function init() {
+        renderCards();
+        backBtn.addEventListener('click', backToHome);
+        window.addEventListener('popstate', handlePopState);
+        if (location.hash && location.hash.length > 1) {
+            const id = location.hash.substring(1);
+            if (ARTICLES[id]) showDetail(id);
+        }
+    }
+    init();
+</script>
+</body>
+</html>
