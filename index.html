@@ -512,29 +512,32 @@
         }
     });
 
-    // ---------- Share API ----------
-document.getElementById('shareBtn').addEventListener('click', () => {
-    const url = window.location.href;
-    const title = document.title;
-    if (navigator.share) {
-        navigator.share({
-            title: title,
-            text: 'PG Earn – Daily Commission. Complete orders and earn daily.',
-            url: url
-        }).catch(err => console.log('Share cancelled', err));
-    } else {
-        // Fallback for desktop: copy to clipboard
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(() => {
-                alert('✅ Link copied to clipboard!\n\n' + url);
-            }).catch(() => {
-                alert('⚠️ Unable to copy. You can manually copy this link:\n' + url);
-            });
-        } else {
-            alert('📋 Share not supported. Please copy this link:\n' + url);
-        }
+    // ---------- Share API with reliable desktop fallback ----------
+    function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
-});
+    document.getElementById('shareBtn').addEventListener('click', () => {
+        const url = window.location.href;
+        const title = document.title;
+        if (navigator.share && isMobileDevice()) {
+            navigator.share({
+                title: title,
+                text: 'PG Earn – Daily Commission. Complete orders and earn daily.',
+                url: url
+            }).catch(err => console.log('Share cancelled', err));
+        } else {
+            // Fallback for desktop or unsupported: copy to clipboard
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('✅ Link copied to clipboard!\n\n' + url);
+                }).catch(() => {
+                    alert('⚠️ Unable to copy. You can manually copy this link:\n' + url);
+                });
+            } else {
+                alert('📋 Share not supported. Please copy this link:\n' + url);
+            }
+        }
+    });
 
     // ---------- Loading and animations ----------
     let isLoading = false;
