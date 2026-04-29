@@ -539,13 +539,13 @@
 <script src="contact-config.js"></script>
 
 <script>
-    // --- Enhanced Lightbox with pan/zoom ---
+    // --- Enhanced Lightbox with pan/zoom (fixed for wide images) ---
     let lightboxActive = false;
     let currentZoom = 1;
     let imgTranslateX = 0, imgTranslateY = 0;
-    let initialDistance = 0, initialScale = 1;
     let startX = 0, startY = 0;
     let isDragging = false;
+    let initialDistance = 0, initialScale = 1;
     let isPinching = false;
 
     const lightbox = document.getElementById('lightbox');
@@ -564,8 +564,9 @@
         if (!lightboxImg.parentElement) return;
         const containerRect = lightboxContent.getBoundingClientRect();
         const imgRect = lightboxImg.getBoundingClientRect();
-        const maxX = Math.max(0, (imgRect.width - containerRect.width) / 2);
-        const maxY = Math.max(0, (imgRect.height - containerRect.height) / 2);
+        let maxX = Math.max(0, (imgRect.width - containerRect.width) / 2);
+        let maxY = Math.max(0, (imgRect.height - containerRect.height) / 2);
+
         imgTranslateX = Math.min(maxX, Math.max(-maxX, imgTranslateX));
         imgTranslateY = Math.min(maxY, Math.max(-maxY, imgTranslateY));
         applyTransform();
@@ -596,7 +597,12 @@
         lightbox.style.display = 'flex';
         lightboxActive = true;
         document.body.classList.add('lightbox-open');
-        lightboxImg.onload = () => clampTranslate();
+
+        lightboxImg.onload = () => {
+            clampTranslate();
+        };
+
+        if (lightboxImg.complete) clampTranslate();
     }
 
     function closeLightbox() {
@@ -626,7 +632,7 @@
     }
 
     function onDrag(e) {
-        if (!isDragging || currentZoom <= 1) return;
+        if (!isDragging) return;
         e.preventDefault();
         const clientX = e.clientX ?? (e.touches ? e.touches[0].clientX : 0);
         const clientY = e.clientY ?? (e.touches ? e.touches[0].clientY : 0);
@@ -708,11 +714,7 @@
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox || e.target === lightboxContent) closeLightbox();
     });
-    closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeLightbox();
-    });
-
+    closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
     zoomInBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomIn(); });
     zoomOutBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomOut(); });
     zoomResetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetZoomAndPan(); clampTranslate(); });
