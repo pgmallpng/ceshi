@@ -540,6 +540,7 @@
 
 <script>
     // --- Enhanced Lightbox with pan/zoom (fixed for wide images) ---
+    // --- Enhanced Lightbox with pan/zoom (fixed z-index & drag) ---
     let lightboxActive = false;
     let currentZoom = 1;
     let imgTranslateX = 0, imgTranslateY = 0;
@@ -556,6 +557,11 @@
     const zoomResetBtn = document.getElementById('zoomResetBtn');
     const closeBtn = document.getElementById('lightboxCloseBtn');
 
+    zoomInBtn.style.zIndex = '1003';
+    zoomOutBtn.style.zIndex = '1003';
+    zoomResetBtn.style.zIndex = '1003';
+    closeBtn.style.zIndex = '1003';
+
     function applyTransform() {
         lightboxImg.style.transform = `translate(${imgTranslateX}px, ${imgTranslateY}px) scale(${currentZoom})`;
     }
@@ -566,7 +572,6 @@
         const imgRect = lightboxImg.getBoundingClientRect();
         let maxX = Math.max(0, (imgRect.width - containerRect.width) / 2);
         let maxY = Math.max(0, (imgRect.height - containerRect.height) / 2);
-
         imgTranslateX = Math.min(maxX, Math.max(-maxX, imgTranslateX));
         imgTranslateY = Math.min(maxY, Math.max(-maxY, imgTranslateY));
         applyTransform();
@@ -580,13 +585,17 @@
     }
 
     function zoomIn() {
-        currentZoom = Math.min(currentZoom + 0.25, 3);
+        let newZoom = currentZoom + 0.25;
+        if (newZoom > 3) newZoom = 3;
+        currentZoom = newZoom;
         applyTransform();
         clampTranslate();
     }
 
     function zoomOut() {
-        currentZoom = Math.max(currentZoom - 0.25, 0.5);
+        let newZoom = currentZoom - 0.25;
+        if (newZoom < 0.5) newZoom = 0.5;
+        currentZoom = newZoom;
         applyTransform();
         clampTranslate();
     }
@@ -597,11 +606,7 @@
         lightbox.style.display = 'flex';
         lightboxActive = true;
         document.body.classList.add('lightbox-open');
-
-        lightboxImg.onload = () => {
-            clampTranslate();
-        };
-
+        lightboxImg.onload = () => clampTranslate();
         if (lightboxImg.complete) clampTranslate();
     }
 
@@ -714,7 +719,10 @@
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox || e.target === lightboxContent) closeLightbox();
     });
-    closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox();
+    });
     zoomInBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomIn(); });
     zoomOutBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomOut(); });
     zoomResetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetZoomAndPan(); clampTranslate(); });
