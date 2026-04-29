@@ -75,6 +75,9 @@
             min-height: 100vh;
             transition: background 0.2s ease, color 0.2s ease;
         }
+        body.lightbox-open {
+            overflow: hidden;
+        }
         .wrapper {
             max-width: 780px;
             margin: 0 auto;
@@ -379,7 +382,7 @@
             margin-top: 32px;
             padding-top: 12px;
         }
-        /* Enhanced Lightbox Styles */
+        /* Lightbox */
         .lightbox {
             display: none;
             position: fixed;
@@ -410,7 +413,6 @@
             border-radius: 16px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.3);
             transform-origin: center center;
-            transition: none;
             user-select: none;
             -webkit-user-drag: none;
         }
@@ -522,7 +524,6 @@
     </div>
 </div>
 
-<!-- Enhanced Lightbox -->
 <div id="lightbox" class="lightbox">
     <div class="lightbox-content" id="lightboxContent">
         <img id="lightbox-img" src="" alt="Full size">
@@ -594,7 +595,7 @@
         resetZoomAndPan();
         lightbox.style.display = 'flex';
         lightboxActive = true;
-        document.body.style.overflow = 'hidden';
+        document.body.classList.add('lightbox-open');
         lightboxImg.onload = () => clampTranslate();
     }
 
@@ -604,7 +605,7 @@
         resetZoomAndPan();
         isDragging = false;
         lightbox.classList.remove('dragging');
-        document.body.style.overflow = '';
+        document.body.classList.remove('lightbox-open');
     }
 
     lightboxImg.addEventListener('dblclick', (e) => {
@@ -803,9 +804,9 @@
         },
         "extra-earnings": { title: "💡 Extra Earnings", meta: "Beyond daily order commissions", content: `<p>In addition to the income from daily orders on the PG platform, you can also earn extra income through methods such as:</p><ul><li><strong>Invitation bonuses</strong> — earn rewards for each new member you refer.</li><li><strong>Subordinate rebates</strong> — receive a percentage of your team's order commissions.</li><li><strong>Fixed salary</strong> — qualified members can enjoy a stable monthly base pay.</li><li><strong>Welfare product orders</strong> — special high‑value tasks with extra rewards.</li></ul><p>✅ Ask your manager for details and eligibility requirements for each extra earning method.</p><p style="margin-top:20px; text-align:center;"><a href="#" onclick="showDetail('contact-manager'); return false;" style="display:inline-block; background:#eef2f9; padding:10px 20px; border-radius:40px; text-decoration:none; color:#1e6b4e; font-weight:500;">📞 Need help? Contact Manager →</a></p>` },
         "pg-rules": {
-    title: "📜 PG Mall Platform Regulations",
-    meta: "Official rules for all members",
-    content: `
+            title: "📜 PG Mall Platform Regulations",
+            meta: "Official rules for all members",
+            content: `
 <ol style="list-style-type: decimal; margin-left: 1.2rem; line-height: 1.6;">
     <li><strong>Member Conduct</strong><br>All members must treat each other with respect and professionalism. Offensive language, harassment, or conflicts are not allowed.</li>
     <li><strong>Honest Registration</strong><br>Members must provide truthful information when registering. Fake profiles or multiple accounts (one person, one account) are prohibited.</li>
@@ -822,7 +823,8 @@
     <a href="#" onclick="showDetail('contact-manager'); return false;" style="display: inline-block; background: #eef2f9; padding: 10px 20px; border-radius: 40px; text-decoration: none; color: #1e6b4e; font-weight: 500;">📞 Need help? Contact Manager →</a>
 </p>
 `
-}
+        }
+    };
 
     let ARTICLES = { ...ARTICLES_BASE };
 
