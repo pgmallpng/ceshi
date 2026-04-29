@@ -9,7 +9,6 @@
         :root {
             --bg-body: #f2f6fa;
             --bg-card: rgba(255, 255, 255, 0.75);
-            --bg-card-dark: rgba(30, 35, 50, 0.75);
             --text-primary: #1f2f3e;
             --text-secondary: #2c5370;
             --text-muted: #5c7e97;
@@ -54,7 +53,6 @@
             --header-grad-start: #facc15;
             --header-grad-end: #f97316;
         }
-        /* Unified text color for level cards in deposit-earnings */
         .level-card-text {
             font-size: 0.85rem;
             margin-bottom: 4px;
@@ -381,6 +379,7 @@
             margin-top: 32px;
             padding-top: 12px;
         }
+        /* Enhanced Lightbox Styles */
         .lightbox {
             display: none;
             position: fixed;
@@ -390,15 +389,74 @@
             height: 100%;
             background: rgba(0,0,0,0.85);
             z-index: 2000;
+            cursor: grab;
+        }
+        .lightbox.dragging {
+            cursor: grabbing;
+        }
+        .lightbox-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
+            overflow: hidden;
         }
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90%;
+        .lightbox-content img {
+            display: block;
+            max-width: none;
+            max-height: none;
             border-radius: 16px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            transform-origin: center center;
+            transition: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+            backdrop-filter: blur(4px);
+        }
+        .lightbox-close:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .zoom-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            border-radius: 40px;
+            padding: 6px 12px;
+            display: flex;
+            gap: 12px;
+            z-index: 1001;
+        }
+        .zoom-controls button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 32px;
+            text-align: center;
+        }
+        .zoom-controls button:hover {
+            opacity: 0.8;
         }
         @media (max-width: 550px) {
             body {
@@ -410,6 +468,13 @@
             .floating-home {
                 padding: 10px 16px;
                 font-size: 0.8rem;
+            }
+            .lightbox-close {
+                width: 36px;
+                height: 36px;
+                font-size: 1.5rem;
+                top: 16px;
+                right: 16px;
             }
         }
     </style>
@@ -456,22 +521,202 @@
         <button id="closeTocBtn" style="margin-top:16px; width:100%; padding:8px; border-radius:40px; border:1px solid var(--border-light); background:var(--bg-card); backdrop-filter:var(--backdrop-blur); cursor:pointer;">Close</button>
     </div>
 </div>
-<div id="lightbox" class="lightbox" onclick="closeLightbox()"><img id="lightbox-img" src="" alt="Full size"></div>
 
-<!-- External configuration for contact manager -->
+<!-- Enhanced Lightbox -->
+<div id="lightbox" class="lightbox">
+    <div class="lightbox-content" id="lightboxContent">
+        <img id="lightbox-img" src="" alt="Full size">
+    </div>
+    <button class="lightbox-close" id="lightboxCloseBtn" aria-label="Close">✕</button>
+    <div class="zoom-controls">
+        <button id="zoomOutBtn" title="Zoom out">−</button>
+        <button id="zoomResetBtn" title="Reset zoom">⟲</button>
+        <button id="zoomInBtn" title="Zoom in">+</button>
+    </div>
+</div>
+
 <script src="contact-config.js"></script>
 
 <script>
-    // Lightbox
-    function openLightbox(imgElement) {
-        document.getElementById('lightbox-img').src = imgElement.src;
-        document.getElementById('lightbox').style.display = 'flex';
-    }
-    function closeLightbox() {
-        document.getElementById('lightbox').style.display = 'none';
+    // --- Enhanced Lightbox with pan/zoom ---
+    let lightboxActive = false;
+    let currentZoom = 1;
+    let imgTranslateX = 0, imgTranslateY = 0;
+    let initialDistance = 0, initialScale = 1;
+    let startX = 0, startY = 0;
+    let isDragging = false;
+    let isPinching = false;
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxContent = document.getElementById('lightboxContent');
+    const zoomInBtn = document.getElementById('zoomInBtn');
+    const zoomOutBtn = document.getElementById('zoomOutBtn');
+    const zoomResetBtn = document.getElementById('zoomResetBtn');
+    const closeBtn = document.getElementById('lightboxCloseBtn');
+
+    function applyTransform() {
+        lightboxImg.style.transform = `translate(${imgTranslateX}px, ${imgTranslateY}px) scale(${currentZoom})`;
     }
 
-    // Theme
+    function clampTranslate() {
+        if (!lightboxImg.parentElement) return;
+        const containerRect = lightboxContent.getBoundingClientRect();
+        const imgRect = lightboxImg.getBoundingClientRect();
+        const maxX = Math.max(0, (imgRect.width - containerRect.width) / 2);
+        const maxY = Math.max(0, (imgRect.height - containerRect.height) / 2);
+        imgTranslateX = Math.min(maxX, Math.max(-maxX, imgTranslateX));
+        imgTranslateY = Math.min(maxY, Math.max(-maxY, imgTranslateY));
+        applyTransform();
+    }
+
+    function resetZoomAndPan() {
+        currentZoom = 1;
+        imgTranslateX = 0;
+        imgTranslateY = 0;
+        applyTransform();
+    }
+
+    function zoomIn() {
+        currentZoom = Math.min(currentZoom + 0.25, 3);
+        applyTransform();
+        clampTranslate();
+    }
+
+    function zoomOut() {
+        currentZoom = Math.max(currentZoom - 0.25, 0.5);
+        applyTransform();
+        clampTranslate();
+    }
+
+    function openLightbox(imgElement) {
+        lightboxImg.src = imgElement.src;
+        resetZoomAndPan();
+        lightbox.style.display = 'flex';
+        lightboxActive = true;
+        document.body.style.overflow = 'hidden';
+        lightboxImg.onload = () => clampTranslate();
+    }
+
+    function closeLightbox() {
+        lightbox.style.display = 'none';
+        lightboxActive = false;
+        resetZoomAndPan();
+        isDragging = false;
+        lightbox.classList.remove('dragging');
+        document.body.style.overflow = '';
+    }
+
+    lightboxImg.addEventListener('dblclick', (e) => {
+        e.stopPropagation();
+        resetZoomAndPan();
+        clampTranslate();
+    });
+
+    function startDrag(e) {
+        if (currentZoom <= 1) return;
+        e.preventDefault();
+        isDragging = true;
+        lightbox.classList.add('dragging');
+        const clientX = e.clientX ?? (e.touches ? e.touches[0].clientX : 0);
+        const clientY = e.clientY ?? (e.touches ? e.touches[0].clientY : 0);
+        startX = clientX - imgTranslateX;
+        startY = clientY - imgTranslateY;
+    }
+
+    function onDrag(e) {
+        if (!isDragging || currentZoom <= 1) return;
+        e.preventDefault();
+        const clientX = e.clientX ?? (e.touches ? e.touches[0].clientX : 0);
+        const clientY = e.clientY ?? (e.touches ? e.touches[0].clientY : 0);
+        imgTranslateX = clientX - startX;
+        imgTranslateY = clientY - startY;
+        applyTransform();
+        clampTranslate();
+    }
+
+    function endDrag() {
+        isDragging = false;
+        lightbox.classList.remove('dragging');
+        clampTranslate();
+    }
+
+    function getDistance(touches) {
+        const dx = touches[0].clientX - touches[1].clientX;
+        const dy = touches[0].clientY - touches[1].clientY;
+        return Math.hypot(dx, dy);
+    }
+
+    function onTouchStart(e) {
+        if (e.touches.length === 2) {
+            e.preventDefault();
+            isPinching = true;
+            initialDistance = getDistance(e.touches);
+            initialScale = currentZoom;
+        } else if (e.touches.length === 1 && currentZoom > 1) {
+            startDrag(e);
+        }
+    }
+
+    function onTouchMove(e) {
+        if (isPinching && e.touches.length === 2) {
+            e.preventDefault();
+            const newDistance = getDistance(e.touches);
+            let scale = initialScale * (newDistance / initialDistance);
+            scale = Math.min(Math.max(scale, 0.5), 3);
+            if (scale !== currentZoom) {
+                currentZoom = scale;
+                applyTransform();
+                clampTranslate();
+            }
+        } else if (isDragging && e.touches.length === 1) {
+            onDrag(e);
+        }
+    }
+
+    function onTouchEnd(e) {
+        if (isPinching) {
+            isPinching = false;
+            clampTranslate();
+        }
+        if (isDragging) {
+            endDrag();
+        }
+    }
+
+    function onWheel(e) {
+        if (!lightboxActive) return;
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.1 : 0.1;
+        let newZoom = currentZoom + delta;
+        newZoom = Math.min(Math.max(newZoom, 0.5), 3);
+        if (newZoom !== currentZoom) {
+            currentZoom = newZoom;
+            applyTransform();
+            clampTranslate();
+        }
+    }
+
+    lightbox.addEventListener('mousedown', startDrag);
+    window.addEventListener('mousemove', onDrag);
+    window.addEventListener('mouseup', endDrag);
+    lightbox.addEventListener('touchstart', onTouchStart, { passive: false });
+    lightbox.addEventListener('touchmove', onTouchMove, { passive: false });
+    lightbox.addEventListener('touchend', onTouchEnd);
+    lightbox.addEventListener('wheel', onWheel, { passive: false });
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target === lightboxContent) closeLightbox();
+    });
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox();
+    });
+
+    zoomInBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomIn(); });
+    zoomOutBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomOut(); });
+    zoomResetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetZoomAndPan(); clampTranslate(); });
+
+    // --- Theme ---
     function initTheme() {
         const stored = localStorage.getItem('theme');
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -503,7 +748,7 @@
         }
     });
 
-    // Share
+    // --- Share ---
     function isMobileDevice() {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
@@ -518,7 +763,7 @@
         }
     });
 
-    // Core variables
+    // --- Core app logic ---
     let allowClick = true, savedScrollY = 0, lastClickedCard = null;
     const homeContainer = document.getElementById('homeContainer');
     const detailContainer = document.getElementById('detailContainer');
@@ -531,7 +776,6 @@
         detailContainer.classList.contains('hidden') ? floatingHomeBtn.classList.add('hidden') : floatingHomeBtn.classList.remove('hidden');
     }
 
-    // Base articles (without contact-manager hardcoded)
     const ARTICLES_BASE = {
         "what-is-pg": {
             title: "🌐 What Is PG?",
@@ -559,13 +803,27 @@
         },
         "extra-earnings": { title: "💡 Extra Earnings", meta: "Beyond daily order commissions", content: `<p>In addition to the income from daily orders on the PG platform, you can also earn extra income through methods such as:</p><ul><li><strong>Invitation bonuses</strong> — earn rewards for each new member you refer.</li><li><strong>Subordinate rebates</strong> — receive a percentage of your team's order commissions.</li><li><strong>Fixed salary</strong> — qualified members can enjoy a stable monthly base pay.</li><li><strong>Welfare product orders</strong> — special high‑value tasks with extra rewards.</li></ul><p>✅ Ask your manager for details and eligibility requirements for each extra earning method.</p><p style="margin-top:20px; text-align:center;"><a href="#" onclick="showDetail('contact-manager'); return false;" style="display:inline-block; background:#eef2f9; padding:10px 20px; border-radius:40px; text-decoration:none; color:#1e6b4e; font-weight:500;">📞 Need help? Contact Manager →</a></p>` },
         "pg-rules": {
-            title: "📜 PG Rules",
-            meta: "Platform guidelines and policies",
-            content: `<p>Rule details coming soon. Please check back later.</p>`
-        }
-    };
+    title: "📜 PG Mall Platform Regulations",
+    meta: "Official rules for all members",
+    content: `
+<ol style="list-style-type: decimal; margin-left: 1.2rem; line-height: 1.6;">
+    <li><strong>Member Conduct</strong><br>All members must treat each other with respect and professionalism. Offensive language, harassment, or conflicts are not allowed.</li>
+    <li><strong>Honest Registration</strong><br>Members must provide truthful information when registering. Fake profiles or multiple accounts (one person, one account) are prohibited.</li>
+    <li><strong>Teamwork & Support</strong><br>Uplines are encouraged to guide and support their downlines. Positive teamwork helps everyone grow together.</li>
+    <li><strong>Task Completion</strong><br>Complete your daily assigned orders.<br>After finishing your daily tasks, <strong>please send a screenshot of any one of them to your manager</strong>. If you fail to report back, your account could be limited from getting new tasks. (Contact your manager for further assistance.)</li>
+    <li><strong>Earnings & Rewards</strong><br>Income includes daily salary (Level 1: <strong>K3/day</strong>, Level 2: <strong>K19.8/day</strong>, Level 3: <strong>K52/day</strong>), invitation bonuses, subordinate rebate (0.2%), fixed salary, and welfare order rebates. All earnings are settled based on actual task completion.</li>
+    <li><strong>Referrals & Invitations</strong><br>You may invite friends or family, but spamming, forcing, or misleading others is not allowed. Invitation bonuses are paid only after the invited person becomes a regular employee (Level 1+).</li>
+    <li><strong>Account Security</strong><br>Do not share your password or account access with anyone. Report any suspicious activity to support immediately.</li>
+    <li><strong>Violations</strong><br>Violating these rules may result in warnings, suspension of task access, or permanent account removal.</li>
+    <li><strong>Rule Updates</strong><br>PG Mall reserves the right to update these regulations for platform improvement. Members will be notified in advance.</li>
+    <li><strong>Contact Support</strong><br>For questions or assistance, please contact your manager or the official support team through official channels.</li>
+</ol>
+<p style="margin-top: 20px; text-align: center;">
+    <a href="#" onclick="showDetail('contact-manager'); return false;" style="display: inline-block; background: #eef2f9; padding: 10px 20px; border-radius: 40px; text-decoration: none; color: #1e6b4e; font-weight: 500;">📞 Need help? Contact Manager →</a>
+</p>
+`
+}
 
-    // Build full ARTICLES with contact-manager from external config
     let ARTICLES = { ...ARTICLES_BASE };
 
     function buildContactManagerContent() {
@@ -577,8 +835,7 @@
                     linksHtml += `<a href="${c.url}" target="_blank" rel="noopener noreferrer" class="contact-link">${iconHtml}${c.name}</a> `;
                 }
                 return `<p><strong>Manager Contacts:</strong></p><p>${linksHtml}</p><p>🕒 <strong>Working hours:</strong> ${window.CONTACT_CONFIG.hours || "10am – 10pm (PNG time)"}</p><p>Your manager helps with top-up confirmation, withdrawal requests, level upgrades and daily support.</p>`;
-            }
-            else if (window.CONTACT_CONFIG.telegram && window.CONTACT_CONFIG.signal) {
+            } else if (window.CONTACT_CONFIG.telegram && window.CONTACT_CONFIG.signal) {
                 return `<p><strong>Official Manager Contacts:</strong></p><p><a href="${window.CONTACT_CONFIG.telegram}" target="_blank" rel="noopener noreferrer" class="contact-link">📱 Telegram Manager</a> <a href="${window.CONTACT_CONFIG.signal}" target="_blank" rel="noopener noreferrer" class="contact-link">🔒 Signal Manager</a></p><p>🕒 <strong>Working hours:</strong> ${window.CONTACT_CONFIG.hours || "10am – 10pm (PNG time)"}</p><p>Your manager helps with top-up confirmation, withdrawal requests, level upgrades and daily support.</p>`;
             }
         }
@@ -591,7 +848,6 @@
         content: buildContactManagerContent()
     };
 
-    // Card order adjusted: What Is PG? and Why Is PG Safe? at top, then remaining order, with new pg-rules before contact-manager
     const CARD_LIST = [
         { id: "what-is-pg", title: "🌐 What Is PG?", desc: "Online work platform since 2018" },
         { id: "why-pg-safe", title: "🔒 Why Is PG Safe?", desc: "Legal, stable, fund security & verifiable" },
@@ -606,7 +862,6 @@
         { id: "contact-manager", title: "📞 Contact Manager", desc: "Telegram/Signal, 10am–10pm (PNG)" }
     ];
 
-    // Render cards
     function renderCards() {
         if (!cardsArea) return;
         cardsArea.innerHTML = '';
@@ -653,7 +908,6 @@
         }
     }
 
-    // Show detail
     function showDetail(articleId) {
         const article = ARTICLES[articleId];
         if (!article) return;
