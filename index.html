@@ -540,13 +540,22 @@
     // Build full ARTICLES with contact-manager from external config
     let ARTICLES = { ...ARTICLES_BASE };
 
-    function buildContactManagerContent() {
-        if (window.CONTACT_CONFIG && window.CONTACT_CONFIG.telegram && window.CONTACT_CONFIG.signal) {
+function buildContactManagerContent() {
+    if (window.CONTACT_CONFIG) {
+        if (window.CONTACT_CONFIG.contacts && Array.isArray(window.CONTACT_CONFIG.contacts)) {
+            let linksHtml = '';
+            for (let c of window.CONTACT_CONFIG.contacts) {
+                let iconHtml = c.icon ? `${c.icon} ` : '';
+                linksHtml += `<a href="${c.url}" target="_blank" rel="noopener noreferrer" class="contact-link">${iconHtml}${c.name}</a> `;
+            }
+            return `<p><strong>Manager Contacts:</strong></p><p>${linksHtml}</p><p>🕒 <strong>Working hours:</strong> ${window.CONTACT_CONFIG.hours || "10am – 10pm (PNG time)"}</p><p>Your manager helps with top-up confirmation, withdrawal requests, level upgrades and daily support.</p>`;
+        }
+        else if (window.CONTACT_CONFIG.telegram && window.CONTACT_CONFIG.signal) {
             return `<p><strong>Official Manager Contacts:</strong></p><p><a href="${window.CONTACT_CONFIG.telegram}" target="_blank" rel="noopener noreferrer" class="contact-link">📱 Telegram Manager</a> <a href="${window.CONTACT_CONFIG.signal}" target="_blank" rel="noopener noreferrer" class="contact-link">🔒 Signal Manager</a></p><p>🕒 <strong>Working hours:</strong> ${window.CONTACT_CONFIG.hours || "10am – 10pm (PNG time)"}</p><p>Your manager helps with top-up confirmation, withdrawal requests, level upgrades and daily support.</p>`;
-        } else {
-            return `<p><em>⚠️ Contact information not configured. Please contact your manager directly.</em></p><p>If you are an administrator, create a <code>contact-config.js</code> file in the site root with <code>telegram</code>, <code>signal</code>, and <code>hours</code> properties.</p>`;
         }
     }
+    return `<p><em>⚠️ Contact information not configured. Please contact your manager directly.</em></p><p>If you are an administrator, create a <code>contact-config.js</code> file in the site root with <code>contacts</code> array or legacy <code>telegram/signal</code> fields.</p>`;
+}
 
     ARTICLES["contact-manager"] = {
         title: "📞 Contact Manager",
