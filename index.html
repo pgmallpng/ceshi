@@ -9,7 +9,6 @@
         :root {
             --bg-body: #f2f6fa;
             --bg-card: rgba(255, 255, 255, 0.75);
-            --bg-card-dark: rgba(30, 35, 50, 0.75);
             --text-primary: #1f2f3e;
             --text-secondary: #2c5370;
             --text-muted: #5c7e97;
@@ -27,26 +26,53 @@
             --divider: #e2edf2;
             --loading-bg: rgba(0,0,0,0.5);
             --backdrop-blur: blur(8px);
+            --card-text-bright: #1f2f3e;
+            --header-gradient-start: #1f6e43;
+            --header-gradient-end: #0f6b8c;
         }
         body.dark {
-            --bg-body: #1a1e2a;
-            --bg-card: rgba(35, 40, 55, 0.75);
+            --bg-body: #121212;
+            --bg-card: rgba(35, 35, 45, 0.85);
             --text-primary: #eef2ff;
             --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-            --border-light: rgba(51, 65, 85, 0.6);
-            --header-bg: rgba(35, 40, 55, 0.9);
+            --text-muted: #9ca3af;
+            --border-light: rgba(51, 65, 85, 0.8);
+            --header-bg: rgba(30, 30, 40, 0.95);
             --header-border: rgba(51, 65, 85, 0.8);
-            --badge-bg: #1e293b;
-            --badge-color: #6ee7b7;
-            --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 16px 28px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.2);
-            --card-border: rgba(51, 65, 85, 0.5);
-            --detail-bg: rgba(35, 40, 55, 0.95);
-            --contact-bg: #1e293b;
-            --footer-color: #6c7a91;
+            --badge-bg: #2d3748;
+            --badge-color: #facc15;
+            --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 16px 28px rgba(0, 0, 0, 0.7);
+            --card-border: rgba(51, 65, 85, 0.7);
+            --detail-bg: rgba(35, 35, 45, 0.95);
+            --contact-bg: #2d3748;
+            --footer-color: #9ca3af;
             --divider: #334155;
-            --loading-bg: rgba(0,0,0,0.7);
+            --loading-bg: rgba(0,0,0,0.8);
+            --card-text-bright: #facc15;
+            --header-gradient-start: #facc15;
+            --header-gradient-end: #f97316;
+        }
+        /* 夜间模式下所有卡片内普通文字变亮 */
+        body.dark .card p,
+        body.dark .card .level-stats,
+        body.dark .detail-text p,
+        body.dark .detail-text li,
+        body.dark .badge {
+            color: var(--card-text-bright);
+        }
+        body.dark .card p strong,
+        body.dark .level-stats strong {
+            color: #ffd966;
+        }
+        /* 标题提亮 */
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(145deg, var(--header-gradient-start), var(--header-gradient-end));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
         }
         * {
             margin: 0;
@@ -209,7 +235,7 @@
             color: #1a5d46;
         }
         body.dark .card h3 {
-            color: #6ee7b7;
+            color: #facc15;
         }
         .card p {
             color: var(--text-secondary);
@@ -248,7 +274,7 @@
             margin-bottom: 12px;
         }
         body.dark .detail-title {
-            color: #6ee7b7;
+            color: #facc15;
         }
         .detail-meta {
             color: var(--text-muted);
@@ -288,7 +314,7 @@
             background: #e2e8f0;
         }
         body.dark .contact-link {
-            color: #6ee7b7;
+            color: #facc15;
         }
         body.dark .contact-link:hover {
             background: #2d3748;
@@ -346,14 +372,6 @@
             padding: 20px 16px;
             box-shadow: var(--shadow-sm);
             border: 1px solid var(--header-border);
-        }
-        .header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(145deg, #1f6e43, #0f6b8c);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
         }
         .header p {
             color: var(--text-muted);
@@ -563,6 +581,13 @@
         lightbox.classList.remove('dragging');
     }
 
+    // Double-click/tap to reset
+    lightboxImg.addEventListener('dblclick', (e) => {
+        e.stopPropagation();
+        resetZoomAndPan();
+        clampTranslate();
+    });
+
     // Mouse / touch drag
     function startDrag(e) {
         if (currentZoom <= 1) return;
@@ -658,6 +683,7 @@
     lightbox.addEventListener('touchmove', onTouchMove, { passive: false });
     lightbox.addEventListener('touchend', onTouchEnd);
     lightbox.addEventListener('wheel', onWheel, { passive: false });
+    // 阻止点击背景关闭时的误拖拽
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox || e.target === lightboxContent) closeLightbox();
     });
@@ -744,28 +770,28 @@
         },
         "extra-earnings": { title: "💡 Extra Earnings", meta: "Beyond daily order commissions", content: `<p>In addition to the income from daily orders on the PG platform, you can also earn extra income through methods such as:</p><ul><li><strong>Invitation bonuses</strong> — earn rewards for each new member you refer.</li><li><strong>Subordinate rebates</strong> — receive a percentage of your team's order commissions.</li><li><strong>Fixed salary</strong> — qualified members can enjoy a stable monthly base pay.</li><li><strong>Welfare product orders</strong> — special high‑value tasks with extra rewards.</li></ul><p>✅ Ask your manager for details and eligibility requirements for each extra earning method.</p><p style="margin-top:20px; text-align:center;"><a href="#" onclick="showDetail('contact-manager'); return false;" style="display:inline-block; background:#eef2f9; padding:10px 20px; border-radius:40px; text-decoration:none; color:#1e6b4e; font-weight:500;">📞 Need help? Contact Manager →</a></p>` },
         "what-is-pg": { title: "🌐 What Is PG?", meta: "Online work platform since 2018", content: `<p>The platform helps brands gather real order data to improve their online visibility.</p><p>As a member, you do daily tasks and earn commission. It's a steady, reliable, paid online job. The platform has run smoothly for over <strong>7 years</strong> — payments are always on time.</p>` },
-        "why-pg-safe": { title: "🔒 Why Is PG Safe?", meta: "Legal registration, fund security, transparent rules", content: `<ul><li><strong>Legally Registered</strong> — Colorado, USA (2018), address publicly accessible</li><li><strong>Stable Operation</strong> — 7+ years of stable operation</li><li><strong>Fund Security</strong> — Deposit is working capital, earnings are labor‑based</li><li><strong>Transparent Rules</strong> — Every record traceable, income matched to orders</li><li><strong>Verifiable</strong> — Company info can be verified via official channels</li></ul><p>⭐ Thousands trust PG for daily online income – fully compliant.</p><div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;"><img src="images/pg-registration.jpg" alt="PG official registration certificate" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="margin-top: 12px;"><a href="https://www.coloradosos.gov/pubs/business/businessHome.html" target="_blank" rel="noopener noreferrer" class="contact-link">📄 View official registration details →</a></div></div>` }
+        "why-pg-safe": { title: "🔒 Why Is PG Safe?", meta: "Legal registration, fund security, transparent rules", content: `<ul><li><strong>Legally Registered</strong> — Colorado, USA (2018), address publicly accessible</li><li><strong>Stable Operation</strong> — 7+ years of stable operation</li><li><strong>Fund Security</strong> — Deposit is working capital, earnings are labor‑based</li><li><strong>Transparent Rules</strong> — Every record traceable, income matched to orders</li><li><strong>Verifiable</strong> — Company info can be verified via official channels</li></ul><p>⭐ Thousands trust PG for daily online income – fully compliant.</p><div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;"><img src="images/pg-registration.jpg" alt="PG official registration certificate" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="margin-top: 12px;"><a href="https://www.coloradosos.gov/biz/BusinessEntityDetail.do?quitButtonDestination=BusinessEntityCriteriaExt&fileId=20181650293&masterFileId=" target="_blank" rel="noopener noreferrer" class="contact-link">📄 View official registration details →</a></div></div>` }
     };
 
     // Build full ARTICLES with contact-manager from external config
     let ARTICLES = { ...ARTICLES_BASE };
 
-function buildContactManagerContent() {
-    if (window.CONTACT_CONFIG) {
-        if (window.CONTACT_CONFIG.contacts && Array.isArray(window.CONTACT_CONFIG.contacts)) {
-            let linksHtml = '';
-            for (let c of window.CONTACT_CONFIG.contacts) {
-                let iconHtml = c.icon ? `${c.icon} ` : '';
-                linksHtml += `<a href="${c.url}" target="_blank" rel="noopener noreferrer" class="contact-link">${iconHtml}${c.name}</a> `;
+    function buildContactManagerContent() {
+        if (window.CONTACT_CONFIG) {
+            if (window.CONTACT_CONFIG.contacts && Array.isArray(window.CONTACT_CONFIG.contacts)) {
+                let linksHtml = '';
+                for (let c of window.CONTACT_CONFIG.contacts) {
+                    let iconHtml = c.icon ? `${c.icon} ` : '';
+                    linksHtml += `<a href="${c.url}" target="_blank" rel="noopener noreferrer" class="contact-link">${iconHtml}${c.name}</a> `;
+                }
+                return `<p><strong>Manager Contacts:</strong></p><p>${linksHtml}</p><p>🕒 <strong>Working hours:</strong> ${window.CONTACT_CONFIG.hours || "10am – 10pm (PNG time)"}</p><p>Your manager helps with top-up confirmation, withdrawal requests, level upgrades and daily support.</p>`;
             }
-            return `<p><strong>Manager Contacts:</strong></p><p>${linksHtml}</p><p>🕒 <strong>Working hours:</strong> ${window.CONTACT_CONFIG.hours || "10am – 10pm (PNG time)"}</p><p>Your manager helps with top-up confirmation, withdrawal requests, level upgrades and daily support.</p>`;
+            else if (window.CONTACT_CONFIG.telegram && window.CONTACT_CONFIG.signal) {
+                return `<p><strong>Official Manager Contacts:</strong></p><p><a href="${window.CONTACT_CONFIG.telegram}" target="_blank" rel="noopener noreferrer" class="contact-link">📱 Telegram Manager</a> <a href="${window.CONTACT_CONFIG.signal}" target="_blank" rel="noopener noreferrer" class="contact-link">🔒 Signal Manager</a></p><p>🕒 <strong>Working hours:</strong> ${window.CONTACT_CONFIG.hours || "10am – 10pm (PNG time)"}</p><p>Your manager helps with top-up confirmation, withdrawal requests, level upgrades and daily support.</p>`;
+            }
         }
-        else if (window.CONTACT_CONFIG.telegram && window.CONTACT_CONFIG.signal) {
-            return `<p><strong>Official Manager Contacts:</strong></p><p><a href="${window.CONTACT_CONFIG.telegram}" target="_blank" rel="noopener noreferrer" class="contact-link">📱 Telegram Manager</a> <a href="${window.CONTACT_CONFIG.signal}" target="_blank" rel="noopener noreferrer" class="contact-link">🔒 Signal Manager</a></p><p>🕒 <strong>Working hours:</strong> ${window.CONTACT_CONFIG.hours || "10am – 10pm (PNG time)"}</p><p>Your manager helps with top-up confirmation, withdrawal requests, level upgrades and daily support.</p>`;
-        }
+        return `<p><em>⚠️ Contact information not configured. Please contact your manager directly.</em></p><p>If you are an administrator, create a <code>contact-config.js</code> file in the site root with <code>contacts</code> array or legacy <code>telegram/signal</code> fields.</p>`;
     }
-    return `<p><em>⚠️ Contact information not configured. Please contact your manager directly.</em></p><p>If you are an administrator, create a <code>contact-config.js</code> file in the site root with <code>contacts</code> array or legacy <code>telegram/signal</code> fields.</p>`;
-}
 
     ARTICLES["contact-manager"] = {
         title: "📞 Contact Manager",
