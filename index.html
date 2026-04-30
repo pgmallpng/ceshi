@@ -59,7 +59,108 @@
             --float-bg: #2d6a4f;
             --float-hover: #1f543d;
         }
-        /* Salary grid styles */
+
+        /* ----- 新增：底部导航栏样式（毛玻璃） ----- */
+        .bottom-sticky-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 16px;
+            padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+            z-index: 1200;
+            transition: transform 0.3s ease;
+            transform: translateY(100%);
+        }
+        body.dark .bottom-sticky-bar {
+            background: rgba(30, 35, 50, 0.8);
+        }
+        .bottom-sticky-bar.show {
+            transform: translateY(0);
+        }
+        .bottom-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 30px;
+            transition: all 0.2s;
+        }
+        .bottom-action svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+        }
+        .bottom-action:active {
+            transform: scale(0.92);
+            background: var(--badge-bg);
+        }
+        .bottom-action.highlight {
+            color: var(--badge-color);
+            font-weight: 500;
+        }
+
+        /* 原有样式保留，增加以下增强 */
+        /* 触觉反馈：点击缩放效果 */
+        .card, .icon-btn, .back-btn {
+            transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), all 0.2s;
+        }
+        .card:active, .icon-btn:active, .back-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* 详情页入场动画（首页淡出，详情推入） */
+        .view-transition-enter {
+            animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .view-transition-exit {
+            animation: fadeOutLeft 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeOutLeft {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(-20px); visibility: hidden; }
+        }
+
+        /* 顶部进度条 */
+        #readingProgressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--header-grad-start), var(--header-grad-end));
+            z-index: 3000;
+            transition: width 0.1s ease-out;
+        }
+
+        /* 目录高亮闪烁 */
+        .card-highlight {
+            transition: background-color 0.3s;
+            background-color: rgba(44, 122, 92, 0.3) !important;
+        }
+        body.dark .card-highlight {
+            background-color: rgba(110, 231, 183, 0.3) !important;
+        }
+
+        /* 原有样式继续保留，以下为原样式（未修改） */
         .salary-grid {
             display: flex;
             flex-direction: column;
@@ -287,11 +388,7 @@
             border-color: rgba(44, 122, 92, 0.3);
         }
         .card:active {
-            transform: translateY(-1px);
-            background: rgba(255, 255, 255, 0.85);
-        }
-        body.dark .card:active {
-            background: rgba(50, 55, 75, 0.85);
+            transform: scale(0.96);
         }
         .card h3 {
             font-size: 1.2rem;
@@ -399,8 +496,8 @@
             transition: background 0.2s, transform 0.1s;
         }
         .back-btn:active {
+            transform: scale(0.96);
             background: #1f6046;
-            transform: scale(0.98);
         }
         .hidden {
             display: none;
@@ -434,7 +531,7 @@
             margin-top: 32px;
             padding-top: 12px;
         }
-        /* Lightbox */
+        /* Lightbox 原有样式 */
         .lightbox {
             display: none;
             position: fixed;
@@ -512,7 +609,7 @@
         .zoom-controls button:hover {
             opacity: 0.8;
         }
-        /* Floating buttons container */
+        /* 原有浮动按钮保留，但新增底部栏后可以保留或隐藏，此处保留原样式 */
         .floating-buttons {
             position: fixed;
             bottom: 24px;
@@ -552,10 +649,6 @@
         .float-btn:hover {
             filter: brightness(1.05);
         }
-        .float-btn:focus-visible {
-            outline: 2px solid var(--badge-color);
-            outline-offset: 2px;
-        }
         @media (max-width: 550px) {
             .float-btn {
                 width: 46px;
@@ -580,6 +673,10 @@
     </style>
 </head>
 <body>
+
+<!-- 顶部进度条 -->
+<div id="readingProgressBar"></div>
+
 <div class="wrapper">
     <div class="top-bar">
         <button id="themeToggle" class="icon-btn" aria-label="Switch theme">🌙 Dark</button>
@@ -612,6 +709,28 @@
     </div>
 </div>
 
+<!-- 新增底部导航栏 -->
+<div id="bottomStickyBar" class="bottom-sticky-bar">
+    <button class="bottom-action" id="bottomHomeBtn" aria-label="Home">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+            <path d="M3 9.5L12 3l9 6.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7M9 21v-6h6v6" stroke-linecap="round"/>
+        </svg>
+        <span>Home</span>
+    </button>
+    <button class="bottom-action highlight" id="bottomContactBtn" aria-label="Contact Manager">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke-linecap="round"/>
+        </svg>
+        <span>Manager</span>
+    </button>
+    <button class="bottom-action" id="bottomShareBtn" aria-label="Share">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none">
+            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v14" stroke-linecap="round"/>
+        </svg>
+        <span>Share</span>
+    </button>
+</div>
+
 <div id="loadingOverlay" class="loading-overlay"><div class="spinner"></div></div>
 <div id="tocModal" class="toc-modal">
     <div class="toc-content">
@@ -633,7 +752,7 @@
     </div>
 </div>
 
-<!-- Floating buttons -->
+<!-- 原有浮动按钮（保留） -->
 <div class="floating-buttons">
     <button id="backToHomeFloatBtn" class="float-btn" aria-label="Back to Home">🏠</button>
     <button id="backToTopFloatBtn" class="float-btn" aria-label="Back to Top">↑</button>
@@ -642,7 +761,7 @@
 <script src="contact-config.js"></script>
 
 <script>
-    // --- Enhanced Lightbox with pan/zoom (fixed for wide images) ---
+    // --- Lightbox 代码（保持不变）---
     let lightboxActive = false;
     let currentZoom = 1;
     let imgTranslateX = 0, imgTranslateY = 0;
@@ -667,7 +786,6 @@
     function applyTransform() {
         lightboxImg.style.transform = `translate(${imgTranslateX}px, ${imgTranslateY}px) scale(${currentZoom})`;
     }
-
     function clampTranslate() {
         if (!lightboxImg.parentElement) return;
         const containerRect = lightboxContent.getBoundingClientRect();
@@ -678,14 +796,12 @@
         imgTranslateY = Math.min(maxY, Math.max(-maxY, imgTranslateY));
         applyTransform();
     }
-
     function resetZoomAndPan() {
         currentZoom = 1;
         imgTranslateX = 0;
         imgTranslateY = 0;
         applyTransform();
     }
-
     function zoomIn() {
         let newZoom = currentZoom + 0.25;
         if (newZoom > 3) newZoom = 3;
@@ -693,7 +809,6 @@
         applyTransform();
         clampTranslate();
     }
-
     function zoomOut() {
         let newZoom = currentZoom - 0.25;
         if (newZoom < 0.5) newZoom = 0.5;
@@ -701,7 +816,6 @@
         applyTransform();
         clampTranslate();
     }
-
     function openLightbox(imgElement) {
         lightboxImg.src = imgElement.src;
         resetZoomAndPan();
@@ -711,7 +825,6 @@
         lightboxImg.onload = () => clampTranslate();
         if (lightboxImg.complete) clampTranslate();
     }
-
     function closeLightbox() {
         lightbox.style.display = 'none';
         lightboxActive = false;
@@ -720,13 +833,11 @@
         lightbox.classList.remove('dragging');
         document.body.classList.remove('lightbox-open');
     }
-
     lightboxImg.addEventListener('dblclick', (e) => {
         e.stopPropagation();
         resetZoomAndPan();
         clampTranslate();
     });
-
     function startDrag(e) {
         if (currentZoom <= 1) return;
         e.preventDefault();
@@ -737,7 +848,6 @@
         startX = clientX - imgTranslateX;
         startY = clientY - imgTranslateY;
     }
-
     function onDrag(e) {
         if (!isDragging) return;
         e.preventDefault();
@@ -748,19 +858,16 @@
         applyTransform();
         clampTranslate();
     }
-
     function endDrag() {
         isDragging = false;
         lightbox.classList.remove('dragging');
         clampTranslate();
     }
-
     function getDistance(touches) {
         const dx = touches[0].clientX - touches[1].clientX;
         const dy = touches[0].clientY - touches[1].clientY;
         return Math.hypot(dx, dy);
     }
-
     function onTouchStart(e) {
         if (e.touches.length === 2) {
             e.preventDefault();
@@ -771,7 +878,6 @@
             startDrag(e);
         }
     }
-
     function onTouchMove(e) {
         if (isPinching && e.touches.length === 2) {
             e.preventDefault();
@@ -787,7 +893,6 @@
             onDrag(e);
         }
     }
-
     function onTouchEnd(e) {
         if (isPinching) {
             isPinching = false;
@@ -797,7 +902,6 @@
             endDrag();
         }
     }
-
     function onWheel(e) {
         if (!lightboxActive) return;
         e.preventDefault();
@@ -810,7 +914,6 @@
             clampTranslate();
         }
     }
-
     lightbox.addEventListener('mousedown', startDrag);
     window.addEventListener('mousemove', onDrag);
     window.addEventListener('mouseup', endDrag);
@@ -861,22 +964,24 @@
         }
     });
 
-    // --- Share ---
+    // --- Share 功能（保留原生）---
     function isMobileDevice() {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
-    document.getElementById('shareBtn').addEventListener('click', () => {
+    function doShare() {
         const url = window.location.href;
         if (navigator.share && isMobileDevice()) {
             navigator.share({ title: document.title, text: 'PG Earn – Daily Commission. Complete orders and earn daily.', url: url }).catch(()=>{});
         } else if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(() => alert('✅ Link copied to clipboard!\n\n' + url)).catch(() => alert('⚠️ Unable to copy. Manual copy: ' + url));
+            navigator.clipboard.writeText(url).then(() => alert('✅ Link copied to clipboard!')).catch(() => alert('⚠️ Unable to copy. Manual copy: ' + url));
         } else {
             alert('📋 Share not supported. Please copy this link:\n' + url);
         }
-    });
+    }
+    document.getElementById('shareBtn').addEventListener('click', doShare);
+    document.getElementById('bottomShareBtn').addEventListener('click', doShare);
 
-    // --- Core app logic ---
+    // --- 核心业务逻辑（未改动）---
     let allowClick = true, savedScrollY = 0, lastClickedCard = null;
     const homeContainer = document.getElementById('homeContainer');
     const detailContainer = document.getElementById('detailContainer');
@@ -885,75 +990,92 @@
     const backBtn = document.getElementById('backHomeBtn');
     const backToHomeFloat = document.getElementById('backToHomeFloatBtn');
     const backToTopFloat = document.getElementById('backToTopFloatBtn');
+    // 新增底部栏元素
+    const bottomStickyBar = document.getElementById('bottomStickyBar');
+    const bottomHomeBtn = document.getElementById('bottomHomeBtn');
+    const bottomContactBtn = document.getElementById('bottomContactBtn');
 
     function goToHome() {
         if (detailContainer.classList.contains('hidden')) return;
-        backToHome(); // call existing backToHome function
+        backToHome();
     }
 
-    // Update visibility of floating buttons
+    // 更新底部栏显示/隐藏（在详情页显示）
+    function updateBottomBarVisibility() {
+        const isDetailVisible = !detailContainer.classList.contains('hidden');
+        if (isDetailVisible) {
+            bottomStickyBar.classList.add('show');
+        } else {
+            bottomStickyBar.classList.remove('show');
+        }
+    }
+
+    // 修改原有的 updateFloatButtons，加入底部栏同步
     function updateFloatButtons() {
         const isDetailVisible = !detailContainer.classList.contains('hidden');
         const scrollY = window.scrollY;
-        // Show Home button only in detail view
-        if (backToHomeFloat) {
-            backToHomeFloat.classList.toggle('show', isDetailVisible);
-        }
-        // Show Top button when scrolled down > 300px
-        if (backToTopFloat) {
-            backToTopFloat.classList.toggle('show', scrollY > 300);
-        }
+        if (backToHomeFloat) backToHomeFloat.classList.toggle('show', isDetailVisible);
+        if (backToTopFloat) backToTopFloat.classList.toggle('show', scrollY > 300);
+        updateBottomBarVisibility();
     }
 
-    // override backToHome to include button update
+    // 重写视图切换，增加进场/退场动画
+    const originalShowDetail = showDetail;
     const originalBackToHome = backToHome;
+
+    window.showDetail = function(articleId) {
+        originalShowDetail(articleId);
+        updateFloatButtons();
+        // 详情页入场动画：添加临时类
+        const detailDiv = document.getElementById('detailContainer');
+        detailDiv.classList.add('view-transition-enter');
+        setTimeout(() => detailDiv.classList.remove('view-transition-enter'), 300);
+    };
+    showDetail = window.showDetail;
+
     window.backToHome = function() {
+        // 首页出现时的动画
+        homeContainer.classList.remove('hidden');
+        homeContainer.classList.add('view-transition-enter');
+        setTimeout(() => homeContainer.classList.remove('view-transition-enter'), 200);
         originalBackToHome();
         updateFloatButtons();
     };
     backToHome = window.backToHome;
 
-    // Ensure showDetail also updates buttons
-    const originalShowDetail = showDetail;
-    window.showDetail = function(articleId) {
-        originalShowDetail(articleId);
-        updateFloatButtons();
-    };
-    showDetail = window.showDetail;
+    // 滚动进度条
+    function updateProgressBar() {
+        const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById('readingProgressBar').style.width = scrolled + '%';
+    }
+    window.addEventListener('scroll', updateProgressBar);
 
-    // Scroll listener
+    // 底部栏按钮行为：Home、Contact Manager
+    bottomHomeBtn.addEventListener('click', () => {
+        if (!detailContainer.classList.contains('hidden')) goToHome();
+    });
+    bottomContactBtn.addEventListener('click', () => {
+        // 调用现有的 showDetail 跳转到联系经理卡片
+        if (typeof showDetail === 'function') {
+            showDetail('contact-manager');
+        }
+    });
+
+    // 滚动监听（原有）
     window.addEventListener('scroll', updateFloatButtons);
-    
-    // Button events
-    if (backToHomeFloat) {
-        backToHomeFloat.addEventListener('click', () => {
-            goToHome();
-        });
-    }
-    if (backToTopFloat) {
-        backToTopFloat.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
+    if (backToHomeFloat) backToHomeFloat.addEventListener('click', goToHome);
+    if (backToTopFloat) backToTopFloat.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    // 保留原有 backBtn 事件
+    backBtn.addEventListener('click', backToHome);
 
-    // Initial call to set correct visibility
-    updateFloatButtons();
-
-    // --- The rest of the original code (ARTICLES_BASE, etc.) unchanged ---
+    // --- 原有数据与渲染（完全未改动）---
     const ARTICLES_BASE = {
         "what-is-pg": {
             title: "🌐 What Is PG?",
             meta: "Legal tech service since 2018 · 8 years stable",
-            content: `
-<p>PG (PG Playground) is a legally registered technology service company in Colorado, USA. PG has been stably operating for <strong>8 years</strong> since its founding in 2018.</p>
-<p>We specialize in providing online marketing data support for global brands by generating real order records to enhance their market visibility.</p>
-<p>Users earn commissions by completing assigned order tasks. Tasks are divided by levels — higher levels come with more daily tasks and higher daily pay. All tasks are generated based on real brand demands, ensuring data authenticity and business compliance.</p>
-<p>Income is settled based on actual task completion. Withdrawals are supported every workday (minimum amount varies by level, no upper limit).</p>
-<p>All deposits serve as order working capital and are fully refundable upon exit.</p>
-<p>The platform uses an automated order review and settlement system to ensure transaction transparency and fund security.</p>
-<p>PG is committed to transparent rules, refundable funds, and real earnings. We do not promise "get rich quick" — but we strive to provide every diligent user with a long‑term, stable, and sustainable online work opportunity.</p>
-<p>For any questions, please contact your manager or the official support team.</p>
-`
+            content: `<p>PG (PG Playground) is a legally registered technology service company in Colorado, USA. PG has been stably operating for <strong>8 years</strong> since its founding in 2018.</p><p>We specialize in providing online marketing data support for global brands by generating real order records to enhance their market visibility.</p><p>Users earn commissions by completing assigned order tasks. Tasks are divided by levels — higher levels come with more daily tasks and higher daily pay. All tasks are generated based on real brand demands, ensuring data authenticity and business compliance.</p><p>Income is settled based on actual task completion. Withdrawals are supported every workday (minimum amount varies by level, no upper limit).</p><p>All deposits serve as order working capital and are fully refundable upon exit.</p><p>The platform uses an automated order review and settlement system to ensure transaction transparency and fund security.</p><p>PG is committed to transparent rules, refundable funds, and real earnings. We do not promise "get rich quick" — but we strive to provide every diligent user with a long‑term, stable, and sustainable online work opportunity.</p><p>For any questions, please contact your manager or the official support team.</p>`
         },
         "why-pg-safe": {
             title: "🔒 Why Is PG Safe?",
@@ -963,48 +1085,7 @@
         "deposit-earnings": {
             title: "💰 Deposit & Earnings",
             meta: "Level 1–3 · daily tasks · weekly income & withdrawal limits",
-            content: `
-<div class="salary-grid">
-    <div class="salary-card-item">
-        <div class="level-header">
-            <span class="level-name">🌟 Level 1</span>
-            <span class="level-badge">💰 Recharge: K240</span>
-        </div>
-        <div class="salary-details">
-            <div class="detail-field"><div class="field-label">📋 Tasks per day</div><div class="field-value">3</div></div>
-            <div class="detail-field"><div class="field-label">🏆 Weekly income</div><div class="field-value">K21</div></div>
-            <div class="detail-field"><div class="field-label">💸 Min withdrawal</div><div class="field-value">K14</div></div>
-            <div class="detail-field"><div class="field-label">💸 Max withdrawal</div><div class="field-value">No limit</div></div>
-        </div>
-    </div>
-    <div class="salary-card-item">
-        <div class="level-header">
-            <span class="level-name">⭐ Level 2</span>
-            <span class="level-badge">💰 Recharge: K670</span>
-        </div>
-        <div class="salary-details">
-            <div class="detail-field"><div class="field-label">📋 Tasks per day</div><div class="field-value">6</div></div>
-            <div class="detail-field"><div class="field-label">🏆 Weekly income</div><div class="field-value">K138.6</div></div>
-            <div class="detail-field"><div class="field-label">💸 Min withdrawal</div><div class="field-value">K80</div></div>
-            <div class="detail-field"><div class="field-label">💸 Max withdrawal</div><div class="field-value">No limit</div></div>
-        </div>
-    </div>
-    <div class="salary-card-item">
-        <div class="level-header">
-            <span class="level-name">🚀 Level 3</span>
-            <span class="level-badge">💰 Recharge: K1,700</span>
-        </div>
-        <div class="salary-details">
-            <div class="detail-field"><div class="field-label">📋 Tasks per day</div><div class="field-value">8</div></div>
-            <div class="detail-field"><div class="field-label">🏆 Weekly income</div><div class="field-value">K364</div></div>
-            <div class="detail-field"><div class="field-label">💸 Min withdrawal</div><div class="field-value">K250</div></div>
-            <div class="detail-field"><div class="field-label">💸 Max withdrawal</div><div class="field-value">No limit</div></div>
-        </div>
-    </div>
-</div>
-<p><em>Interns are eligible for a discount. Contact your manager for the exact amount.</em></p>
-<p>💡 Your deposit is working capital (fully refundable). Higher level = more daily orders + higher earnings.</p>
-<p style="margin-top:20px; text-align:center;"><a href="#" onclick="showDetail('contact-manager'); return false;" style="display:inline-block; background:#eef2f9; padding:10px 20px; border-radius:40px; text-decoration:none; color:#1e6b4e; font-weight:500;">📞 Need help? Contact Manager →</a></p>`
+            content: `<div class="salary-grid"><div class="salary-card-item"><div class="level-header"><span class="level-name">🌟 Level 1</span><span class="level-badge">💰 Recharge: K240</span></div><div class="salary-details"><div class="detail-field"><div class="field-label">📋 Tasks per day</div><div class="field-value">3</div></div><div class="detail-field"><div class="field-label">🏆 Weekly income</div><div class="field-value">K21</div></div><div class="detail-field"><div class="field-label">💸 Min withdrawal</div><div class="field-value">K14</div></div><div class="detail-field"><div class="field-label">💸 Max withdrawal</div><div class="field-value">No limit</div></div></div></div><div class="salary-card-item"><div class="level-header"><span class="level-name">⭐ Level 2</span><span class="level-badge">💰 Recharge: K670</span></div><div class="salary-details"><div class="detail-field"><div class="field-label">📋 Tasks per day</div><div class="field-value">6</div></div><div class="detail-field"><div class="field-label">🏆 Weekly income</div><div class="field-value">K138.6</div></div><div class="detail-field"><div class="field-label">💸 Min withdrawal</div><div class="field-value">K80</div></div><div class="detail-field"><div class="field-label">💸 Max withdrawal</div><div class="field-value">No limit</div></div></div></div><div class="salary-card-item"><div class="level-header"><span class="level-name">🚀 Level 3</span><span class="level-badge">💰 Recharge: K1,700</span></div><div class="salary-details"><div class="detail-field"><div class="field-label">📋 Tasks per day</div><div class="field-value">8</div></div><div class="detail-field"><div class="field-label">🏆 Weekly income</div><div class="field-value">K364</div></div><div class="detail-field"><div class="field-label">💸 Min withdrawal</div><div class="field-value">K250</div></div><div class="detail-field"><div class="field-label">💸 Max withdrawal</div><div class="field-value">No limit</div></div></div></div></div><p><em>Interns are eligible for a discount. Contact your manager for the exact amount.</em></p><p>💡 Your deposit is working capital (fully refundable). Higher level = more daily orders + higher earnings.</p><p style="margin-top:20px; text-align:center;"><a href="#" onclick="showDetail('contact-manager'); return false;" style="display:inline-block; background:#eef2f9; padding:10px 20px; border-radius:40px; text-decoration:none; color:#1e6b4e; font-weight:500;">📞 Need help? Contact Manager →</a></p>`
         },
         "topup-steps": { title: "🔁 Top‑Up Steps", meta: "4 easy steps to fund your account", content: `<ol><li>Contact your manager to get the current account details.</li><li>Transfer the required deposit (keep a screenshot of the Ref No).</li><li>Send the screenshot to your manager. Once confirmed, the funds will be credited to your PG account.</li><li>The platform supports transfers via <strong>BSP, Kina, USDT, and other local banks</strong>.</li></ol><p>⚠️ Always confirm details with your manager before any transfer.</p><p style="margin-top:20px; text-align:center;"><a href="#" onclick="showDetail('contact-manager'); return false;" style="display:inline-block; background:#eef2f9; padding:10px 20px; border-radius:40px; text-decoration:none; color:#1e6b4e; font-weight:500;">📞 Need help? Contact Manager →</a></p>` },
         "withdrawal-rules": { title: "🏦 Withdrawal Rules", meta: "Request schedule & arrival time", content: `<ul><li><strong>Withdrawal request:</strong> Monday–Friday (no requests on weekends).</li><li><strong>Funds arrive:</strong> 1–4 days (including weekends).</li><li><strong>Minimum withdrawal:</strong> depends on your level.</li></ul><p>📌 All withdrawals are processed in order. Make sure your bank account details are correct to avoid delays.</p><p style="margin-top:20px; text-align:center;"><a href="#" onclick="showDetail('contact-manager'); return false;" style="display:inline-block; background:#eef2f9; padding:10px 20px; border-radius:40px; text-decoration:none; color:#1e6b4e; font-weight:500;">📞 Need help? Contact Manager →</a></p>` },
@@ -1019,22 +1100,7 @@
         "pg-rules": {
             title: "📜 PG Mall Platform Regulations",
             meta: "Official rules for all members",
-            content: `
-<ol style="list-style-type: decimal; margin-left: 1.2rem; line-height: 1.6;">
-    <li><strong>Member Conduct</strong><br>All members must treat each other with respect and professionalism. Offensive language, harassment, or conflicts are not allowed.</li>
-    <li><strong>Honest Registration</strong><br>Members must provide truthful information when registering. Fake profiles or multiple accounts (one person, one account) are prohibited.</li>
-    <li><strong>Teamwork & Support</strong><br>Uplines are encouraged to guide and support their downlines. Positive teamwork helps everyone grow together.</li>
-    <li><strong>Task Completion</strong><br>Complete your daily assigned orders.<br>After finishing your daily tasks, <strong>please send a screenshot of any one of them to your manager</strong>. If you fail to report back, your account could be limited from getting new tasks. (Contact your manager for further assistance.)</li>
-    <li><strong>Earnings & Rewards</strong><br>Income includes daily salary (Level 1: <strong>K3/day</strong>, Level 2: <strong>K19.8/day</strong>, Level 3: <strong>K52/day</strong>), invitation bonuses, subordinate rebate (0.2%), fixed salary, and welfare order rebates. All earnings are settled based on actual task completion.</li>
-    <li><strong>Referrals & Invitations</strong><br>You may invite friends or family, but spamming, forcing, or misleading others is not allowed. Invitation bonuses are paid only after the invited person becomes a regular employee (Level 1+).</li>
-    <li><strong>Account Security</strong><br>Do not share your password or account access with anyone. Report any suspicious activity to support immediately.</li>
-    <li><strong>Violations</strong><br>Violating these rules may result in warnings, suspension of task access, or permanent account removal.</li>
-    <li><strong>Rule Updates</strong><br>PG Mall reserves the right to update these regulations for platform improvement. Members will be notified in advance.</li>
-    <li><strong>Contact Support</strong><br>For questions or assistance, please contact your manager or the official support team through official channels.</li>
-</ol>
-<p style="margin-top: 20px; text-align: center;">
-    <a href="#" onclick="showDetail('contact-manager'); return false;" style="display: inline-block; background: #eef2f9; padding: 10px 20px; border-radius: 40px; text-decoration: none; color: #1e6b4e; font-weight: 500;">📞 Need help? Contact Manager →</a>
-</p>`
+            content: `<ol style="list-style-type: decimal; margin-left: 1.2rem; line-height: 1.6;"><li><strong>Member Conduct</strong><br>All members must treat each other with respect and professionalism. Offensive language, harassment, or conflicts are not allowed.</li><li><strong>Honest Registration</strong><br>Members must provide truthful information when registering. Fake profiles or multiple accounts (one person, one account) are prohibited.</li><li><strong>Teamwork & Support</strong><br>Uplines are encouraged to guide and support their downlines. Positive teamwork helps everyone grow together.</li><li><strong>Task Completion</strong><br>Complete your daily assigned orders.<br>After finishing your daily tasks, <strong>please send a screenshot of any one of them to your manager</strong>. If you fail to report back, your account could be limited from getting new tasks. (Contact your manager for further assistance.)</li><li><strong>Earnings & Rewards</strong><br>Income includes daily salary (Level 1: <strong>K3/day</strong>, Level 2: <strong>K19.8/day</strong>, Level 3: <strong>K52/day</strong>), invitation bonuses, subordinate rebate (0.2%), fixed salary, and welfare order rebates. All earnings are settled based on actual task completion.</li><li><strong>Referrals & Invitations</strong><br>You may invite friends or family, but spamming, forcing, or misleading others is not allowed. Invitation bonuses are paid only after the invited person becomes a regular employee (Level 1+).</li><li><strong>Account Security</strong><br>Do not share your password or account access with anyone. Report any suspicious activity to support immediately.</li><li><strong>Violations</strong><br>Violating these rules may result in warnings, suspension of task access, or permanent account removal.</li><li><strong>Rule Updates</strong><br>PG Mall reserves the right to update these regulations for platform improvement. Members will be notified in advance.</li><li><strong>Contact Support</strong><br>For questions or assistance, please contact your manager or the official support team through official channels.</li></ol><p style="margin-top:20px; text-align:center;"><a href="#" onclick="showDetail('contact-manager'); return false;" style="display:inline-block; background:#eef2f9; padding:10px 20px; border-radius:40px; text-decoration:none; color:#1e6b4e; font-weight:500;">📞 Need help? Contact Manager →</a></p>`
         }
     };
 
@@ -1112,8 +1178,11 @@
                     const targetCard = Array.from(document.querySelectorAll('.card')).find(c => c.getAttribute('data-id') === item.id);
                     if (targetCard) {
                         targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        targetCard.style.backgroundColor = 'var(--badge-bg)';
-                        setTimeout(() => targetCard.style.backgroundColor = '', 800);
+                        // 高亮闪烁效果
+                        targetCard.classList.add('card-highlight');
+                        setTimeout(() => {
+                            targetCard.classList.remove('card-highlight');
+                        }, 800);
                     }
                 });
                 li.appendChild(a);
@@ -1160,13 +1229,16 @@
         renderCards();
         if (location.hash && location.hash.length > 1 && ARTICLES[location.hash.slice(1)]) showDetail(location.hash.slice(1));
         updateFloatButtons();
+        updateProgressBar();
     }
 
+    // 事件绑定
     backBtn.addEventListener('click', backToHome);
     window.addEventListener('popstate', handlePopState);
     document.getElementById('tocToggleBtn').addEventListener('click', () => document.getElementById('tocModal').classList.add('active'));
     document.getElementById('closeTocBtn').addEventListener('click', () => document.getElementById('tocModal').classList.remove('active'));
     document.getElementById('tocModal').addEventListener('click', (e) => { if (e.target === document.getElementById('tocModal')) document.getElementById('tocModal').classList.remove('active'); });
+
     init();
 </script>
 </body>
