@@ -327,29 +327,6 @@
             background: #1f6046;
             transform: scale(0.98);
         }
-        .floating-home {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #2c7a5c;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 12px 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: background 0.2s, transform 0.1s;
-        }
-        .floating-home:hover {
-            background: #1f6046;
-            transform: translateY(-2px);
-        }
         .hidden {
             display: none;
         }
@@ -467,10 +444,6 @@
             .detail-title {
                 font-size: 1.5rem;
             }
-            .floating-home {
-                padding: 10px 16px;
-                font-size: 0.8rem;
-            }
             .lightbox-close {
                 width: 36px;
                 height: 36px;
@@ -514,7 +487,6 @@
     </div>
 </div>
 
-<button id="floatingHomeBtn" class="floating-home hidden">🏠 Back to Contents</button>
 <div id="loadingOverlay" class="loading-overlay"><div class="spinner"></div></div>
 <div id="tocModal" class="toc-modal">
     <div class="toc-content">
@@ -540,7 +512,6 @@
 
 <script>
     // --- Enhanced Lightbox with pan/zoom (fixed for wide images) ---
-    // --- Enhanced Lightbox with pan/zoom (fixed z-index & drag) ---
     let lightboxActive = false;
     let currentZoom = 1;
     let imgTranslateX = 0, imgTranslateY = 0;
@@ -781,22 +752,26 @@
     const cardsArea = document.getElementById('cardsArea');
     const detailContentDiv = document.getElementById('detailContent');
     const backBtn = document.getElementById('backHomeBtn');
-    const floatingHomeBtn = document.getElementById('floatingHomeBtn');
-
-    function updateFloatingButton() {
-        detailContainer.classList.contains('hidden') ? floatingHomeBtn.classList.add('hidden') : floatingHomeBtn.classList.remove('hidden');
-    }
 
     const ARTICLES_BASE = {
         "what-is-pg": {
             title: "🌐 What Is PG?",
-            meta: "Online work platform since 2018",
-            content: `<p>The platform helps brands gather real order data to improve their online visibility.</p><p>As a member, you do daily tasks and earn commission. It's a steady, reliable, paid online job. The platform has run smoothly for over <strong>7 years</strong> — payments are always on time.</p>`
+            meta: "Legal tech service since 2018 · 8 years stable",
+            content: `
+<p>PG (PG Playground) is a legally registered technology service company in Colorado, USA. PG has been stably operating for <strong>8 years</strong> since its founding in 2018.</p>
+<p>We specialize in providing online marketing data support for global brands by generating real order records to enhance their market visibility.</p>
+<p>Users earn commissions by completing assigned order tasks. Tasks are divided by levels — higher levels come with more daily tasks and higher daily pay. All tasks are generated based on real brand demands, ensuring data authenticity and business compliance.</p>
+<p>Income is settled based on actual task completion. Withdrawals are supported every workday (minimum amount varies by level, no upper limit).</p>
+<p>All deposits serve as order working capital and are fully refundable upon exit.</p>
+<p>The platform uses an automated order review and settlement system to ensure transaction transparency and fund security.</p>
+<p>PG is committed to transparent rules, refundable funds, and real earnings. We do not promise "get rich quick" — but we strive to provide every diligent user with a long‑term, stable, and sustainable online work opportunity.</p>
+<p>For any questions, please contact your manager or the official support team.</p>
+`
         },
         "why-pg-safe": {
             title: "🔒 Why Is PG Safe?",
             meta: "Legal registration, fund security, transparent rules",
-            content: `<ul><li><strong>Legally Registered</strong> — Colorado, USA (2018), address publicly accessible</li><li><strong>Stable Operation</strong> — 7+ years of stable operation</li><li><strong>Fund Security</strong> — Deposit is working capital, earnings are labor‑based</li><li><strong>Transparent Rules</strong> — Every record traceable, income matched to orders</li><li><strong>Verifiable</strong> — Company info can be verified via official channels</li></ul><p>⭐ Thousands trust PG for daily online income – fully compliant.</p><div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;"><img src="images/pg-registration.jpg" alt="PG Registration Certificate" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="margin-top: 8px; font-size: 0.8rem; color: var(--text-muted);">PG Registration Certificate</div></div>`
+            content: `<ul><li><strong>Legally Registered</strong> — Colorado, USA (2018), address publicly accessible</li><li><strong>Stable Operation</strong> — Stably operated for 8 years</li><li><strong>Fund Security</strong> — Deposit is working capital, earnings are labor‑based</li><li><strong>Transparent Rules</strong> — Every record traceable, income matched to orders</li><li><strong>Verifiable</strong> — Company info can be verified via official channels</li></ul><p>⭐ Thousands trust PG for daily online income – fully compliant.</p><div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;"><img src="images/pg-registration.jpg" alt="PG Registration Certificate" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="margin-top: 8px; font-size: 0.8rem; color: var(--text-muted);">PG Registration Certificate</div></div>`
         },
         "deposit-earnings": {
             title: "💰 Deposit & Earnings",
@@ -931,7 +906,6 @@
             detailContainer.classList.remove('hidden');
             homeContainer.style.opacity = '';
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            updateFloatingButton();
             if (history.pushState) history.pushState({ view: 'detail', id: articleId }, '', `#${articleId}`);
         }, 150);
     }
@@ -943,7 +917,6 @@
             homeContainer.classList.remove('hidden');
             detailContainer.style.opacity = '';
             window.scrollTo({ top: savedScrollY, behavior: 'auto' });
-            updateFloatingButton();
             if (lastClickedCard) lastClickedCard.focus();
             if (location.hash) history.replaceState(null, '', ' ');
         }, 150);
@@ -956,12 +929,10 @@
 
     function init() {
         renderCards();
-        updateFloatingButton();
         if (location.hash && location.hash.length > 1 && ARTICLES[location.hash.slice(1)]) showDetail(location.hash.slice(1));
     }
 
     backBtn.addEventListener('click', backToHome);
-    floatingHomeBtn.addEventListener('click', backToHome);
     window.addEventListener('popstate', handlePopState);
     document.getElementById('tocToggleBtn').addEventListener('click', () => document.getElementById('tocModal').classList.add('active'));
     document.getElementById('closeTocBtn').addEventListener('click', () => document.getElementById('tocModal').classList.remove('active'));
