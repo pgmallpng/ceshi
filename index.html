@@ -29,6 +29,7 @@
             --card-text-highlight: #1e6b49;
             --header-grad-start: #1f6e43;
             --header-grad-end: #0f6b8c;
+            --level-card-bg: #f8fafc;
         }
         body.dark {
             --bg-body: #1a1e2a;
@@ -52,6 +53,76 @@
             --card-text-highlight: #6ee7b7;
             --header-grad-start: #facc15;
             --header-grad-end: #f97316;
+            --level-card-bg: #0f172a;
+        }
+        /* Salary grid styles (from Alisa.html) */
+        .salary-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .salary-card-item {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 18px 20px;
+            transition: transform 0.1s ease, box-shadow 0.2s;
+            box-shadow: var(--shadow-sm);
+        }
+        .salary-card-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        .level-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--badge-color);
+            padding-bottom: 8px;
+        }
+        .level-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--badge-color);
+            letter-spacing: -0.3px;
+        }
+        .level-badge {
+            background: var(--badge-bg);
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--badge-color);
+        }
+        .salary-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: space-between;
+        }
+        .detail-field {
+            flex: 1;
+            min-width: 100px;
+            background: var(--level-card-bg);
+            padding: 8px 12px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+        .field-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .field-value {
+            font-size: 1.1rem;
+            font-weight: 750;
+            color: var(--badge-color);
         }
         .level-card-text {
             font-size: 0.85rem;
@@ -451,6 +522,15 @@
                 top: 16px;
                 right: 16px;
             }
+            .level-name {
+                font-size: 1.2rem;
+            }
+            .detail-field {
+                min-width: calc(50% - 12px);
+            }
+            .salary-details {
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -775,37 +855,82 @@
         },
         "deposit-earnings": {
             title: "💰 Deposit & Earnings",
-            meta: "Level 1–3 · daily tasks · weekly income",
-    content: `
-<div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 8px 0 12px;">
+            meta: "Level 1–3 · daily tasks · weekly income & withdrawal limits",
+            content: `
+<div class="salary-grid">
     <!-- Level 1 -->
-    <div style="flex:1; min-width:150px; background:#f8fafc; border-radius:20px; padding:14px; border:1px solid #e2edf2;">
-        <div style="font-weight:700; font-size:1.1rem; color:#1a5d46; margin-bottom:8px;">🌟 Level 1 <span style="font-size:0.9rem; margin-left:8px;">Recharge: K240</span></div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px;">
-            <div class="level-card-text">📋 Tasks/day</div><div class="level-card-text"><strong>3</strong></div>
-            <div class="level-card-text">🏆 Weekly income</div><div class="level-card-text"><strong>K21</strong></div>
-            <div class="level-card-text">💸 Min withdrawal</div><div class="level-card-text"><strong>K14</strong></div>
-            <div class="level-card-text">💸 Max withdrawal</div><div class="level-card-text"><strong>No limit</strong></div>
+    <div class="salary-card-item">
+        <div class="level-header">
+            <span class="level-name">🌟 Level 1</span>
+            <span class="level-badge">💰 Recharge: K240</span>
+        </div>
+        <div class="salary-details">
+            <div class="detail-field">
+                <div class="field-label">📋 Tasks per day</div>
+                <div class="field-value">3</div>
+            </div>
+            <div class="detail-field">
+                <div class="field-label">🏆 Weekly income</div>
+                <div class="field-value">K21</div>
+            </div>
+            <div class="detail-field">
+                <div class="field-label">💸 Min withdrawal</div>
+                <div class="field-value">K14</div>
+            </div>
+            <div class="detail-field">
+                <div class="field-label">💸 Max withdrawal</div>
+                <div class="field-value">No limit</div>
+            </div>
         </div>
     </div>
     <!-- Level 2 -->
-    <div style="flex:1; min-width:150px; background:#f8fafc; border-radius:20px; padding:14px; border:1px solid #e2edf2;">
-        <div style="font-weight:700; font-size:1.1rem; color:#1a5d46; margin-bottom:8px;">⭐ Level 2 <span style="font-size:0.9rem; margin-left:8px;">Recharge: K670</span></div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px;">
-            <div class="level-card-text">📋 Tasks/day</div><div class="level-card-text"><strong>6</strong></div>
-            <div class="level-card-text">🏆 Weekly income</div><div class="level-card-text"><strong>K138.6</strong></div>
-            <div class="level-card-text">💸 Min withdrawal</div><div class="level-card-text"><strong>K80</strong></div>
-            <div class="level-card-text">💸 Max withdrawal</div><div class="level-card-text"><strong>No limit</strong></div>
+    <div class="salary-card-item">
+        <div class="level-header">
+            <span class="level-name">⭐ Level 2</span>
+            <span class="level-badge">💰 Recharge: K670</span>
+        </div>
+        <div class="salary-details">
+            <div class="detail-field">
+                <div class="field-label">📋 Tasks per day</div>
+                <div class="field-value">6</div>
+            </div>
+            <div class="detail-field">
+                <div class="field-label">🏆 Weekly income</div>
+                <div class="field-value">K138.6</div>
+            </div>
+            <div class="detail-field">
+                <div class="field-label">💸 Min withdrawal</div>
+                <div class="field-value">K80</div>
+            </div>
+            <div class="detail-field">
+                <div class="field-label">💸 Max withdrawal</div>
+                <div class="field-value">No limit</div>
+            </div>
         </div>
     </div>
     <!-- Level 3 -->
-    <div style="flex:1; min-width:150px; background:#f8fafc; border-radius:20px; padding:14px; border:1px solid #e2edf2;">
-        <div style="font-weight:700; font-size:1.1rem; color:#1a5d46; margin-bottom:8px;">🚀 Level 3 <span style="font-size:0.9rem; margin-left:8px;">Recharge: K1,700</span></div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px;">
-            <div class="level-card-text">📋 Tasks/day</div><div class="level-card-text"><strong>8</strong></div>
-            <div class="level-card-text">🏆 Weekly income</div><div class="level-card-text"><strong>K364</strong></div>
-            <div class="level-card-text">💸 Min withdrawal</div><div class="level-card-text"><strong>K250</strong></div>
-            <div class="level-card-text">💸 Max withdrawal</div><div class="level-card-text"><strong>No limit</strong></div>
+    <div class="salary-card-item">
+        <div class="level-header">
+            <span class="level-name">🚀 Level 3</span>
+            <span class="level-badge">💰 Recharge: K1,700</span>
+        </div>
+        <div class="salary-details">
+            <div class="detail-field">
+                <div class="field-label">📋 Tasks per day</div>
+                <div class="field-value">8</div>
+            </div>
+            <div class="detail-field">
+                <div class="field-label">🏆 Weekly income</div>
+                <div class="field-value">K364</div>
+            </div>
+            <div class="detail-field">
+                <div class="field-label">💸 Min withdrawal</div>
+                <div class="field-value">K250</div>
+            </div>
+            <div class="detail-field">
+                <div class="field-label">💸 Max withdrawal</div>
+                <div class="field-value">No limit</div>
+            </div>
         </div>
     </div>
 </div>
@@ -813,7 +938,7 @@
 <p>💡 Your deposit is working capital (fully refundable). Higher level = more daily orders + higher earnings.</p>
 <p style="margin-top:20px; text-align:center;"><a href="#" onclick="showDetail('contact-manager'); return false;" style="display:inline-block; background:#eef2f9; padding:10px 20px; border-radius:40px; text-decoration:none; color:#1e6b4e; font-weight:500;">📞 Need help? Contact Manager →</a></p>
 `
-},
+        },
         "topup-steps": { title: "🔁 Top‑Up Steps", meta: "4 easy steps to fund your account", content: `<ol><li>Contact your manager to get the current account details.</li><li>Transfer the required deposit (keep a screenshot of the Ref No).</li><li>Send the screenshot to your manager. Once confirmed, the funds will be credited to your PG account.</li><li>The platform supports transfers via <strong>BSP, Kina, USDT, and other local banks</strong>.</li></ol><p>⚠️ Always confirm details with your manager before any transfer.</p><p style="margin-top:20px; text-align:center;"><a href="#" onclick="showDetail('contact-manager'); return false;" style="display:inline-block; background:#eef2f9; padding:10px 20px; border-radius:40px; text-decoration:none; color:#1e6b4e; font-weight:500;">📞 Need help? Contact Manager →</a></p>` },
         "withdrawal-rules": { title: "🏦 Withdrawal Rules", meta: "Request schedule & arrival time", content: `<ul><li><strong>Withdrawal request:</strong> Monday–Friday (no requests on weekends).</li><li><strong>Funds arrive:</strong> 1–4 days (including weekends).</li><li><strong>Minimum withdrawal:</strong> depends on your level.</li></ul><p>📌 All withdrawals are processed in order. Make sure your bank account details are correct to avoid delays.</p><p style="margin-top:20px; text-align:center;"><a href="#" onclick="showDetail('contact-manager'); return false;" style="display:inline-block; background:#eef2f9; padding:10px 20px; border-radius:40px; text-decoration:none; color:#1e6b4e; font-weight:500;">📞 Need help? Contact Manager →</a></p>` },
         "why-topup": { title: "❓ Why Top Up?", meta: "Deposit = working capital (refundable)", content: `<p>The deposit is <strong>not a "fee"</strong> – it's working capital to support your order flow.</p><p>Each order requires matching funds to complete the process. Your deposit stays in your account as a tool for your daily tasks. Every order you complete earns you commission. When you upgrade or leave, the deposit is fully refunded.</p><p>✅ Your earnings are purely from completed tasks.</p><p style="margin-top:20px; text-align:center;"><a href="#" onclick="showDetail('contact-manager'); return false;" style="display:inline-block; background:#eef2f9; padding:10px 20px; border-radius:40px; text-decoration:none; color:#1e6b4e; font-weight:500;">📞 Need help? Contact Manager →</a></p>` },
