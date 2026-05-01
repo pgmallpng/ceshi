@@ -109,7 +109,7 @@
             margin-top: 6px;
         }
 
-        /* Header actions (buttons) placed outside .header */
+        /* Header actions (outside .header) */
         .header-actions {
             display: flex;
             gap: 16px;
@@ -239,31 +239,6 @@
             border-left: 5px solid #facc15;
             padding-left: 18px;
             margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .detail-title-icons {
-            display: flex;
-            gap: 12px;
-            margin-right: 8px;
-        }
-        .icon-btn-sm {
-            background: rgba(255,255,255,0.1);
-            border-radius: 40px;
-            padding: 6px 12px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .icon-btn-sm:active {
-            transform: scale(0.94);
         }
         .detail-meta {
             color: var(--text-muted);
@@ -579,9 +554,6 @@
             .detail-actions {
                 flex-direction: column;
             }
-            .detail-title-icons {
-                margin-left: auto;
-            }
         }
     </style>
 </head>
@@ -663,19 +635,23 @@
         function onWheel(e) { if (!lightboxActive) return; e.preventDefault(); const delta = e.deltaY > 0 ? -0.1 : 0.1; let newZoom = currentZoom + delta; newZoom = Math.min(Math.max(newZoom, 0.5), 3); if (newZoom !== currentZoom) { currentZoom = newZoom; applyTransform(); clampTranslate(); } }
         lightbox.addEventListener('mousedown', startDrag); window.addEventListener('mousemove', onDrag); window.addEventListener('mouseup', endDrag); lightbox.addEventListener('touchstart', onTouchStart, { passive: false }); lightbox.addEventListener('touchmove', onTouchMove, { passive: false }); lightbox.addEventListener('touchend', onTouchEnd); lightbox.addEventListener('wheel', onWheel, { passive: false }); lightbox.addEventListener('click', (e) => { if (e.target === lightbox || e.target === lightboxContent) closeLightbox(); }); closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); }); zoomInBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomIn(); }); zoomOutBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomOut(); }); zoomResetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetZoomAndPan(); clampTranslate(); });
 
-        // ---------- Share function ----------
+        // ---------- Share function (enhanced for desktop) ----------
         function doShare() {
             const url = window.location.href;
             if (navigator.share) {
                 navigator.share({ title: document.title, text: 'PG Earn – Daily Commission. Complete orders and earn daily.', url: url }).catch(()=>{});
             } else if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(() => alert('✅ Link copied to clipboard!')).catch(() => alert('⚠️ Unable to copy. Manual copy: ' + url));
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('✅ Link copied to clipboard!');
+                }).catch(() => {
+                    alert('⚠️ Manual copy: ' + url);
+                });
             } else {
                 alert('📋 Share not supported. Please copy this link:\n' + url);
             }
         }
 
-        // ---------- Data source (with needManager field, but we ignore it and always show both buttons) ----------
+        // ---------- Data source ----------
         const CARDS_DATA = [
             { id: "what-is-pg", title: "🌐 What Is PG?", meta: "Legal tech service since 2018 · 8 years stable", desc: "Online work platform since 2018",
               content: `<p>PG (PG Playground) is a legally registered technology service company in Colorado, USA. PG has been stably operating for <strong>8 years</strong> since its founding in 2018.</p><p>We specialize in providing online marketing data support for global brands by generating real order records to enhance their market visibility.</p><p>Users earn commissions by completing assigned order tasks. Tasks are divided by levels — higher levels come with more daily tasks and higher daily pay. All tasks are generated based on real brand demands, ensuring data authenticity and business compliance.</p><p>Income is settled based on actual task completion. Withdrawals are supported every workday (minimum amount varies by level, no upper limit).</p><p>All deposits serve as order working capital and are fully refundable upon exit.</p><p>The platform uses an automated order review and settlement system to ensure transaction transparency and fund security.</p><p>PG is committed to transparent rules, refundable funds, and real earnings. We do not promise "get rich quick" — but we strive to provide every diligent user with a long‑term, stable, and sustainable online work opportunity.</p><p>For any questions, please contact your manager or the official support team.</p>` },
@@ -705,7 +681,7 @@
             ARTICLES[card.id] = { title: card.title, meta: card.meta, content: card.content };
         });
 
-        // Build contact-manager content dynamically (remains)
+        // Build contact-manager content
         function buildContactManagerContent() {
             if (window.CONTACT_CONFIG) {
                 if (window.CONTACT_CONFIG.contacts && Array.isArray(window.CONTACT_CONFIG.contacts)) {
@@ -785,18 +761,8 @@
             isTransitioning = true;
             savedScrollY = window.scrollY;
 
-            // Build title with two icons
-            const titleHtml = `
-                ${article.title}
-                <div class="detail-title-icons">
-                    <span class="icon-btn-sm" id="detailTocIcon">📑 Contents</span>
-                    <span class="icon-btn-sm" id="detailShareIcon">🔗 Share</span>
-                </div>
-            `;
-
-            // Build detail content including bottom actions (both buttons always)
             const detailHtml = `
-                <div class="detail-title">${titleHtml}</div>
+                <div class="detail-title">${article.title}</div>
                 <div class="detail-meta">📌 ${article.meta}</div>
                 <div class="detail-text">${article.content}</div>
                 <div class="detail-actions">
@@ -807,20 +773,6 @@
             detailContentDiv.innerHTML = detailHtml;
 
             // Bind events
-            const detailTocIcon = document.getElementById('detailTocIcon');
-            if (detailTocIcon) {
-                detailTocIcon.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    tocModal.classList.add('active');
-                });
-            }
-            const detailShareIcon = document.getElementById('detailShareIcon');
-            if (detailShareIcon) {
-                detailShareIcon.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    doShare();
-                });
-            }
             const contactBtn = document.getElementById('contactManagerBtnDetail');
             if (contactBtn) {
                 contactBtn.addEventListener('click', () => showDetail('contact-manager'));
@@ -876,7 +828,7 @@
         closeTocBtn.addEventListener('click', () => tocModal.classList.remove('active'));
         tocModal.addEventListener('click', (e) => { if (e.target === tocModal) tocModal.classList.remove('active'); });
 
-        // TOC list click handling (same as before)
+        // TOC list click handling
         tocList.addEventListener('click', (e) => {
             const a = e.target.closest('a');
             if (!a) return;
@@ -928,7 +880,6 @@
         renderTOC();
         initRouting();
 
-        // Additional keyframes
         const style = document.createElement('style');
         style.textContent = `
             .view-exit { animation: fadeOutLeft 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards !important; }
