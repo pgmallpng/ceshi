@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>PG Earn – Daily Commission | Online Work Platform</title>
-<meta property="og:title" content="PG Earn – Daily Commission | Online Work Platform">
-<meta property="og:description" content="PG Guide Center – Platform introduction, security, deposit/withdrawal rules & step-by-step guides. 8 years stable operation, transparent, compliant.">
-<meta property="og:image" content="https://raw.githubusercontent.com/pgmallpng/MiaClaire/main/images/share-preview.png">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PG Earn – Daily Commission">
-<meta name="twitter:description" content="Earn daily commission, 8 years stable. Complete tasks, withdraw easily.">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/pgmallpng/MiaClaire/main/images/share-preview.png">
+    <title>PG Earn – Daily Commission | Online Jobs</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💰%3C/text%3E%3C/svg%3E">
+
+    <!-- Open Graph / Social Media (no og:url for multi‑repo compatibility) -->
+    <meta property="og:title" content="PG Earn – Daily Commission | Online Work Platform">
+    <meta property="og:description" content="PG Guide Center – Platform introduction, security, deposit/withdrawal rules & step-by-step guides. 8 years stable operation, transparent, compliant.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/pgmallpng/MiaClaire/main/images/share-preview.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PG Earn – Daily Commission">
+    <meta name="twitter:description" content="Earn daily commission, 8 years stable. Complete tasks, withdraw easily.">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/pgmallpng/MiaClaire/main/images/share-preview.png">
+
     <style id="dynamic-styles">
         /* base styles without blur (will be overridden if hardware accel) */
         :root {
@@ -33,7 +36,7 @@
             --footer-color: #94a3b8;
             --divider: #334155;
             --loading-bg: rgba(0,0,0,0.7);
-            --backdrop-blur: none; /* disabled by default */
+            --backdrop-blur: none;
             --card-text-highlight: #6ee7b7;
             --header-grad-start: #facc15;
             --header-grad-end: #f97316;
@@ -41,7 +44,6 @@
             --btn-glass: rgba(255, 255, 255, 0.1);
             --btn-green: #2c7a5c;
         }
-        /* enhanced styles (with blur) will be injected if hardware accel detected */
         * {
             margin: 0;
             padding: 0;
@@ -63,7 +65,6 @@
             position: relative;
             z-index: 1;
         }
-        /* Shared header & actions */
         .header {
             text-align: center;
             margin-bottom: 28px;
@@ -112,7 +113,6 @@
             transform: scale(0.96);
             background: rgba(255, 255, 255, 0.2);
         }
-        /* Cards */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
@@ -162,7 +162,6 @@
             font-size: 0.65rem;
             font-weight: 500;
         }
-        /* Detail view */
         .detail-view {
             background: var(--detail-bg);
             border: 1px solid var(--border-light);
@@ -543,31 +542,24 @@
 <script>
     (function() {
         // ---------- Performance detection and style upgrade ----------
-function supportsBackdropFilter() {
-    const el = document.createElement('div');
-    if (!('backdropFilter' in el.style) && !('webkitBackdropFilter' in el.style)) return false;
-    
-    const canvas = document.createElement('canvas');
-    let gl = null;
-    try {
-        gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    } catch(e) { return false; }
-    if (!gl) return false;
-    
-    const renderer = gl.getParameter(gl.RENDERER);
-    const softwareKeywords = [
-        'swiftshader', 'llvmpipe', 'software', 
-        'microsoft basic render', 'direct3d11', 'angle (microsoft'
-    ];
-    const lowerRenderer = renderer.toLowerCase();
-    const isSoftware = softwareKeywords.some(keyword => lowerRenderer.includes(keyword));
-    if (isSoftware) return false;
-    
-    const ua = navigator.userAgent.toLowerCase();
-    if (ua.includes('vmware') || ua.includes('virtualbox')) return false;
-    
-    return true;
-}
+        function supportsBackdropFilter() {
+            const el = document.createElement('div');
+            if (!('backdropFilter' in el.style) && !('webkitBackdropFilter' in el.style)) return false;
+            const canvas = document.createElement('canvas');
+            let gl = null;
+            try {
+                gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            } catch(e) { return false; }
+            if (!gl) return false;
+            const renderer = gl.getParameter(gl.RENDERER);
+            const softwareKeywords = ['swiftshader', 'llvmpipe', 'software', 'microsoft basic render', 'direct3d11', 'angle (microsoft'];
+            const lowerRenderer = renderer.toLowerCase();
+            const isSoftware = softwareKeywords.some(keyword => lowerRenderer.includes(keyword));
+            if (isSoftware) return false;
+            const ua = navigator.userAgent.toLowerCase();
+            if (ua.includes('vmware') || ua.includes('virtualbox')) return false;
+            return true;
+        }
         if (supportsBackdropFilter()) {
             const style = document.createElement('style');
             style.textContent = `
@@ -610,7 +602,6 @@ function supportsBackdropFilter() {
             `;
             document.head.appendChild(style);
         } else {
-            // fallback: no blur, no spots
             const style = document.createElement('style');
             style.textContent = `
                 .card, .detail-view, .header, .glass-btn, .detail-btn, .toc-content {
@@ -628,7 +619,7 @@ function supportsBackdropFilter() {
             document.head.appendChild(style);
         }
 
-        // ---------- Lightbox (unchanged) ----------
+        // ---------- Lightbox ----------
         let lightboxActive = false, currentZoom = 1, imgTranslateX = 0, imgTranslateY = 0, startX = 0, startY = 0, isDragging = false, initialDistance = 0, initialScale = 1, isPinching = false;
         const lightbox = document.getElementById('lightbox'), lightboxImg = document.getElementById('lightbox-img'), lightboxContent = document.getElementById('lightboxContent'), zoomInBtn = document.getElementById('zoomInBtn'), zoomOutBtn = document.getElementById('zoomOutBtn'), zoomResetBtn = document.getElementById('zoomResetBtn'), closeBtn = document.getElementById('lightboxCloseBtn');
         [zoomInBtn, zoomOutBtn, zoomResetBtn, closeBtn].forEach(btn => btn.style.zIndex = '1003');
@@ -650,7 +641,7 @@ function supportsBackdropFilter() {
         function onWheel(e) { if (!lightboxActive) return; e.preventDefault(); const delta = e.deltaY > 0 ? -0.1 : 0.1; let newZoom = currentZoom + delta; newZoom = Math.min(Math.max(newZoom, 0.5), 3); if (newZoom !== currentZoom) { currentZoom = newZoom; applyTransform(); clampTranslate(); } }
         lightbox.addEventListener('mousedown', startDrag); window.addEventListener('mousemove', onDrag); window.addEventListener('mouseup', endDrag); lightbox.addEventListener('touchstart', onTouchStart, { passive: false }); lightbox.addEventListener('touchmove', onTouchMove, { passive: false }); lightbox.addEventListener('touchend', onTouchEnd); lightbox.addEventListener('wheel', onWheel, { passive: false }); lightbox.addEventListener('click', (e) => { if (e.target === lightbox || e.target === lightboxContent) closeLightbox(); }); closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); }); zoomInBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomIn(); }); zoomOutBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomOut(); }); zoomResetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetZoomAndPan(); clampTranslate(); });
 
-        // ---------- Share function ----------
+        // ---------- Share ----------
         function doShare() {
             const url = window.location.href;
             if (navigator.share) {
@@ -662,7 +653,7 @@ function supportsBackdropFilter() {
             }
         }
 
-        // ---------- Data ----------
+        // ---------- Data (cards) ----------
         const CARDS_DATA = [
             { id: "what-is-pg", title: "🌐 What Is PG?", meta: "Legal tech service since 2018 · 8 years stable", desc: "Online work platform since 2018",
               content: `<p>PG (PG Playground) is a legally registered technology service company in Colorado, USA. PG has been stably operating for <strong>8 years</strong> since its founding in 2018.</p><p>We specialize in providing online marketing data support for global brands by generating real order records to enhance their market visibility.</p><p>Users earn commissions by completing assigned order tasks. Tasks are divided by levels — higher levels come with more daily tasks and higher daily pay. All tasks are generated based on real brand demands, ensuring data authenticity and business compliance.</p><p>Income is settled based on actual task completion. Withdrawals are supported every workday (minimum amount varies by level, no upper limit).</p><p>All deposits serve as order working capital and are fully refundable upon exit.</p><p>The platform uses an automated order review and settlement system to ensure transaction transparency and fund security.</p><p>PG is committed to transparent rules, refundable funds, and real earnings. We do not promise "get rich quick" — but we strive to provide every diligent user with a long‑term, stable, and sustainable online work opportunity.</p><p>For any questions, please contact your manager or the official support team.</p>` },
@@ -677,14 +668,19 @@ function supportsBackdropFilter() {
             { id: "why-topup", title: "❓ Why Top Up?", meta: "Deposit = working capital (refundable)", desc: "Deposit is working capital, fully refundable",
               content: `<p>The deposit is <strong>not a "fee"</strong> – it's working capital to support your order flow.</p><p>Each order requires matching funds to complete the process. Your deposit stays in your account as a tool for your daily tasks. Every order you complete earns you commission. When you upgrade or leave, the deposit is fully refunded.</p><p>✅ Your earnings are purely from completed tasks.</p>` },
             { id: "task-steps", title: "📝 Task Steps", meta: "Step-by-step guide for interns & level 1-3", desc: "Step-by-step: add address → submit order",
-              content: `<p><strong>📍 1. Add your shipping address (one time only)</strong><br>Go to <strong>User Center</strong> (bottom right) → scroll down to find "Shipping Address" → enter your address once.</p><p><strong>🏠 2. Enter the task page</strong><br>On Home screen, tap <strong>"intern"</strong> (if you are an intern) or your level button (<strong>Level 1/2/3</strong>). Then select the first item and click <strong>"Buy Now"</strong>.</p><p><strong>🛒 3. Review order & submit</strong><br>After selecting <strong>"Select All"</strong>, click <strong>"Checkout"</strong> → then click <strong>"Submit Order and Confirm"</strong>.</p><div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin:20px 0;"><div style="text-align:center; width:160px;"><img src="images/address.jpg" alt="Shipping address" style="width:100%; border-radius:12px; cursor:pointer;" onclick="openLightbox(this)" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27100%27%20height%3D%27100%27%3E%3Crect%20fill%3D%27%23ccc%27%20width%3D%27100%27%20height%3D%27100%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23666%27%3ENo%20image%3C%2Ftext%3E%3C%2Fsvg%3E'"><div style="font-size:0.7rem; color:#5c7e97;">📍 Shipping address</div></div><div style="width:100%;"><div style="overflow-x:auto; -webkit-overflow-scrolling:touch; text-align:center;"><img src="images/checkout.png" alt="Full order process" style="max-width:none; height:auto; width:auto; min-width:200px; max-height:300px; border-radius:12px; cursor:pointer;" onclick="openLightbox(this)" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%27100%27%3E%3Crect%20fill%3D%27%23ccc%27%20width%3D%27200%27%20height%3D%27100%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23666%27%3ENo%20image%3C%2Ftext%3E%3C%2Fsvg%3E'"></div><div style="font-size:0.7rem; color:#5c7e97; text-align:center;">📋 Swipe right to see full task flow →</div></div></div><p>✅ Once submitted, the system starts a countdown. When the countdown ends, the commission will be automatically credited to your balance.</p><p><em>This order is intended to help brands improve their product sales data. No physical product will be shipped to you.</em></p>` },
-            // ---------- Final Order Guide with corrected status colors ----------
+              content: `<p><strong>📍 1. Add your shipping address (one time only)</strong><br>Go to <strong>User Center</strong> (bottom right) → scroll down to find "Shipping Address" → enter your address once.</p><p><strong>🏠 2. Enter the task page</strong><br>On Home screen, tap <strong>"intern"</strong> (if you are an intern) or your level button (<strong>Level 1/2/3</strong>). Then select the first item and click <strong>"Buy Now"</strong>.</p><p><strong>🛒 3. Review order & submit</strong><br>After selecting <strong>"Select All"</strong>, click <strong>"Checkout"</strong> → then click <strong>"Submit Order and Confirm"</strong>.</p><div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin:20px 0;"><div style="text-align:center; width:160px;"><img src="images/address.jpg" alt="Shipping address" style="width:100%; border-radius:12px; cursor:pointer;" onclick="openLightbox(this)"><div style="font-size:0.7rem; color:#5c7e97;">📍 Shipping address</div></div><div style="width:100%;"><div style="overflow-x:auto; -webkit-overflow-scrolling:touch; text-align:center;"><img src="images/checkout.png" alt="Full order process" style="max-width:none; height:auto; width:auto; min-width:200px; max-height:300px; border-radius:12px; cursor:pointer;" onclick="openLightbox(this)"></div><div style="font-size:0.7rem; color:#5c7e97; text-align:center;">📋 Swipe right to see full task flow →</div></div></div><p>✅ Once submitted, the system starts a countdown. When the countdown ends, the commission will be automatically credited to your balance.</p><p><em>This order is intended to help brands improve their product sales data. No physical product will be shipped to you.</em></p>` },
+            // ---------- Final Order Guide with two ways to access My Orders and picture placeholder ----------
             { id: "order-problems", title: "📋 Order Guide", meta: "Auto completion & commission crediting · Order status explained", desc: "Countdown, commission, colors & limits",
               content: `<p>After you submit an order, the system starts a <strong>countdown (Review time)</strong>. When the countdown ends, the order is automatically completed, and the commission is automatically credited to your User Center balance.</p>
 <p>Then you can submit a new order to continue working. Your daily order limit (Level 1: 3, Level 2: 6, Level 3: 8) frees up a slot once the countdown ends.</p>
 <hr style="margin: 16px 0; border-color: var(--divider);">
 <p><strong>📋 Understanding Your Orders</strong><br>
-Each order card in "My Orders" shows: Order number, date, items, total amount, <strong>commission</strong>, payment status, shipping status, and countdown progress (<strong>Time Left</strong> & <strong>Shipped</strong>).</p>
+<strong>How to find "My Orders":</strong><br>
+- From the PG homepage, tap <strong>User Center</strong> (bottom right). Scroll down if needed — you will see <strong>"My Orders"</strong>.<br>
+- Alternatively, if your PG app has a bottom navigation bar, you may find <strong>"My Orders"</strong> directly there.<br>
+Once opened, you will see two tabs: <strong>Pending processing</strong> (active orders) and <strong>Completed</strong> (finished orders).</p>
+<p><img src="images/my-orders-entry.png" alt="How to find My Orders" style="max-width: 100%; border-radius: 12px; cursor: pointer; margin: 12px 0;" onclick="openLightbox(this)"></p>
+<p>Each order card shows: Order number, date, items, total amount, <strong>commission</strong>, payment status (<code>Completed</code>), shipping status (<code>Pending processing</code>), and countdown progress (<strong>Time Left</strong> & <strong>Shipped</strong>).</p>
 
 <!-- Commission table -->
 <div style="overflow-x: auto; margin: 16px 0;">
@@ -699,27 +695,9 @@ Each order card in "My Orders" shows: Order number, date, items, total amount, <
        </tr>
     </thead>
     <tbody>
-      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-        <td style="padding: 8px 6px; text-align: center;"><strong>Level 1</strong></td>
-        <td style="padding: 8px 6px; text-align: center;">K1</td>
-        <td style="padding: 8px 6px; text-align: center;">3</td>
-        <td style="padding: 8px 6px; text-align: center;"><strong>K3</strong></td>
-        <td style="padding: 8px 6px; text-align: center;">K21</td>
-      </tr>
-      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-        <td style="padding: 8px 6px; text-align: center;"><strong>Level 2</strong></td>
-        <td style="padding: 8px 6px; text-align: center;">K3.3</td>
-        <td style="padding: 8px 6px; text-align: center;">6</td>
-        <td style="padding: 8px 6px; text-align: center;"><strong>K19.8</strong></td>
-        <td style="padding: 8px 6px; text-align: center;">K138.6</td>
-      </tr>
-      <tr>
-        <td style="padding: 8px 6px; text-align: center;"><strong>Level 3</strong></td>
-        <td style="padding: 8px 6px; text-align: center;">K6.5</td>
-        <td style="padding: 8px 6px; text-align: center;">8</td>
-        <td style="padding: 8px 6px; text-align: center;"><strong>K52</strong></td>
-        <td style="padding: 8px 6px; text-align: center;">K364</td>
-      </tr>
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 8px 6px; text-align: center;"><strong>Level 1</strong></td><td style="padding: 8px 6px; text-align: center;">K1</td><td style="padding: 8px 6px; text-align: center;">3</td><td style="padding: 8px 6px; text-align: center;"><strong>K3</strong></td><td style="padding: 8px 6px; text-align: center;">K21</td></tr>
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 8px 6px; text-align: center;"><strong>Level 2</strong></td><td style="padding: 8px 6px; text-align: center;">K3.3</td><td style="padding: 8px 6px; text-align: center;">6</td><td style="padding: 8px 6px; text-align: center;"><strong>K19.8</strong></td><td style="padding: 8px 6px; text-align: center;">K138.6</td></tr>
+      <tr><td style="padding: 8px 6px; text-align: center;"><strong>Level 3</strong></td><td style="padding: 8px 6px; text-align: center;">K6.5</td><td style="padding: 8px 6px; text-align: center;">8</td><td style="padding: 8px 6px; text-align: center;"><strong>K52</strong></td><td style="padding: 8px 6px; text-align: center;">K364</td></tr>
     </tbody>
   </table>
 </div>
