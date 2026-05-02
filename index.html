@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>PG Earn – Daily Commission | Online Jobs</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💰%3C/text%3E%3C/svg%3E">
-    <style>
+    <style id="dynamic-styles">
+        /* base styles without blur (will be overridden if hardware accel) */
         :root {
             --bg-body: #0f172a;
             --bg-card: rgba(255, 255, 255, 0.05);
@@ -24,7 +25,7 @@
             --footer-color: #94a3b8;
             --divider: #334155;
             --loading-bg: rgba(0,0,0,0.7);
-            --backdrop-blur: blur(12px);
+            --backdrop-blur: none; /* disabled by default */
             --card-text-highlight: #6ee7b7;
             --header-grad-start: #facc15;
             --header-grad-end: #f97316;
@@ -32,14 +33,13 @@
             --btn-glass: rgba(255, 255, 255, 0.1);
             --btn-green: #2c7a5c;
         }
-
+        /* enhanced styles (with blur) will be injected if hardware accel detected */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-
         body {
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background: linear-gradient(145deg, #0f172a 0%, #1a3a24 100%);
@@ -49,48 +49,17 @@
             min-height: 100vh;
             position: relative;
         }
-
-        /* Background light spots */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 10%;
-            left: -10%;
-            width: 60%;
-            height: 50%;
-            background: radial-gradient(circle, rgba(80, 150, 100, 0.25), transparent 70%);
-            filter: blur(80px);
-            z-index: 0;
-            pointer-events: none;
-            will-change: transform;
-        }
-        body::after {
-            content: "";
-            position: fixed;
-            bottom: 0;
-            right: -10%;
-            width: 50%;
-            height: 40%;
-            background: radial-gradient(circle, rgba(50, 120, 80, 0.2), transparent 70%);
-            filter: blur(100px);
-            z-index: 0;
-            pointer-events: none;
-            will-change: transform;
-        }
-
         .wrapper {
             max-width: 780px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
         }
-
-        /* Header section */
+        /* Shared header & actions */
         .header {
             text-align: center;
             margin-bottom: 28px;
             background: var(--header-bg);
-            backdrop-filter: var(--backdrop-blur);
             border-radius: 32px;
             padding: 24px 16px;
             box-shadow: var(--shadow-sm);
@@ -108,8 +77,6 @@
             color: var(--text-muted);
             margin-top: 6px;
         }
-
-        /* Header actions (outside .header) */
         .header-actions {
             display: flex;
             gap: 16px;
@@ -119,7 +86,6 @@
         .glass-btn {
             flex: 1;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50px;
             padding: 12px 16px;
@@ -138,10 +104,8 @@
             transform: scale(0.96);
             background: rgba(255, 255, 255, 0.2);
         }
-
-        /* Cards glassmorphism */
+        /* Cards */
         .card {
-            backdrop-filter: var(--backdrop-blur);
             background: var(--bg-card);
             border: 1px solid var(--border-light);
             box-shadow: var(--shadow-sm);
@@ -190,10 +154,8 @@
             font-size: 0.65rem;
             font-weight: 500;
         }
-
         /* Detail view */
         .detail-view {
-            backdrop-filter: var(--backdrop-blur);
             background: var(--detail-bg);
             border: 1px solid var(--border-light);
             border-radius: 32px;
@@ -207,8 +169,6 @@
             opacity: 1;
             transform: scale(1);
         }
-
-        /* Staggered animation for detail children */
         .detail-title,
         .detail-meta,
         .detail-text {
@@ -231,7 +191,6 @@
             transform: translateY(0);
             transition-delay: 0.2s;
         }
-
         .detail-title {
             font-size: 1.8rem;
             font-weight: 700;
@@ -261,8 +220,6 @@
         .detail-text li {
             margin: 0.4rem 0;
         }
-
-        /* Detail bottom actions */
         .detail-actions {
             display: flex;
             gap: 12px;
@@ -272,7 +229,6 @@
         .detail-btn {
             flex: 1;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 16px;
             padding: 14px 16px;
@@ -295,8 +251,6 @@
             border-color: rgba(255,255,255,0.3);
             color: white;
         }
-
-        /* TOC modal */
         .toc-modal {
             position: fixed;
             top: 0;
@@ -318,7 +272,6 @@
         }
         .toc-content {
             background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: var(--backdrop-blur);
             width: 80%;
             max-width: 400px;
             border-radius: 32px;
@@ -350,13 +303,11 @@
         .toc-list a:hover {
             background: rgba(255,255,255,0.1);
         }
-
         .card-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
-
         .contact-link {
             display: inline-block;
             background: var(--contact-bg);
@@ -373,11 +324,9 @@
             transform: translateY(-1px);
             background: #2d3748;
         }
-
         .hidden {
             display: none;
         }
-
         footer {
             text-align: center;
             font-size: 0.7rem;
@@ -385,8 +334,6 @@
             margin-top: 32px;
             padding-top: 12px;
         }
-
-        /* Lightbox (unchanged) */
         .lightbox {
             display: none;
             position: fixed;
@@ -398,9 +345,7 @@
             z-index: 2000;
             cursor: grab;
         }
-        .lightbox.dragging {
-            cursor: grabbing;
-        }
+        .lightbox.dragging { cursor: grabbing; }
         .lightbox-content {
             position: relative;
             width: 100%;
@@ -438,9 +383,7 @@
             z-index: 1002;
             backdrop-filter: blur(4px);
         }
-        .lightbox-close:hover {
-            background: rgba(0,0,0,0.8);
-        }
+        .lightbox-close:hover { background: rgba(0,0,0,0.8); }
         .zoom-controls {
             position: absolute;
             bottom: 20px;
@@ -461,13 +404,10 @@
             width: 32px;
             text-align: center;
         }
-
         .card-highlight {
             transition: background-color 0.3s;
             background-color: rgba(110, 231, 183, 0.3) !important;
         }
-
-        /* Salary grid styles */
         .salary-grid {
             display: flex;
             flex-direction: column;
@@ -540,63 +480,46 @@
             margin-bottom: 4px;
             color: var(--card-text-highlight);
         }
-
         @media (max-width: 550px) {
-            .level-name {
-                font-size: 1.2rem;
-            }
-            .detail-field {
-                min-width: calc(50% - 12px);
-            }
-            .salary-details {
-                gap: 10px;
-            }
-            .detail-actions {
-                flex-direction: column;
-            }
+            .level-name { font-size: 1.2rem; }
+            .detail-field { min-width: calc(50% - 12px); }
+            .salary-details { gap: 10px; }
+            .detail-actions { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 <div class="wrapper">
-    <!-- Header -->
     <div class="header">
         <h1>💰 PG Earn – Daily Commission</h1>
         <p>Complete orders for brands · Earn every day</p>
     </div>
-
-    <!-- Header actions (outside .header) -->
     <div class="header-actions">
         <button id="headerTocBtn" class="glass-btn">📑 View Contents</button>
         <button id="headerShareBtn" class="glass-btn">🔗 Share Guide</button>
     </div>
-
     <div id="homeContainer">
         <div id="cardsArea" class="card-list"></div>
         <footer>✅ Select any card for detailed guide</footer>
     </div>
-
     <div id="detailContainer" class="hidden">
         <div class="detail-view">
             <div id="detailContent"></div>
         </div>
         <footer>✅ Use the buttons below to navigate</footer>
     </div>
-
     <div style="text-align: center; font-size: 0.7rem; color: var(--footer-color); margin-top: 20px; padding: 12px 0 8px; border-top: 1px solid var(--divider);">
         This is a personal help site. All rules are subject to the manager’s reply.
     </div>
 </div>
-
 <div id="loadingOverlay" class="loading-overlay"><div class="spinner"></div></div>
 <div id="tocModal" class="toc-modal">
     <div class="toc-content">
         <h4>📖 Table of Contents</h4>
         <ul id="tocList" class="toc-list"></ul>
-        <button id="closeTocBtn" style="margin-top:16px; width:100%; padding:8px; border-radius:40px; border:1px solid var(--border-light); background:rgba(15,23,42,0.9); backdrop-filter:var(--backdrop-blur); cursor:pointer;">Close</button>
+        <button id="closeTocBtn" style="margin-top:16px; width:100%; padding:8px; border-radius:40px; border:1px solid var(--border-light); background:rgba(15,23,42,0.9); cursor:pointer;">Close</button>
     </div>
 </div>
-
 <div id="lightbox" class="lightbox">
     <div class="lightbox-content" id="lightboxContent">
         <img id="lightbox-img" src="" alt="Full size">
@@ -608,12 +531,96 @@
         <button id="zoomInBtn" title="Zoom in">+</button>
     </div>
 </div>
-
 <script src="contact-config.js"></script>
-
 <script>
     (function() {
-        // ---------- Lightbox logic (unchanged) ----------
+        // ---------- Performance detection and style upgrade ----------
+function supportsBackdropFilter() {
+    const el = document.createElement('div');
+    if (!('backdropFilter' in el.style) && !('webkitBackdropFilter' in el.style)) return false;
+    
+    const canvas = document.createElement('canvas');
+    let gl = null;
+    try {
+        gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    } catch(e) { return false; }
+    if (!gl) return false;
+    
+    const renderer = gl.getParameter(gl.RENDERER);
+    const softwareKeywords = [
+        'swiftshader', 'llvmpipe', 'software', 
+        'microsoft basic render', 'direct3d11', 'angle (microsoft'
+    ];
+    const lowerRenderer = renderer.toLowerCase();
+    const isSoftware = softwareKeywords.some(keyword => lowerRenderer.includes(keyword));
+    if (isSoftware) return false;
+    
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.includes('vmware') || ua.includes('virtualbox')) return false;
+    
+    return true;
+}
+        if (supportsBackdropFilter()) {
+            const style = document.createElement('style');
+            style.textContent = `
+                :root {
+                    --backdrop-blur: blur(12px);
+                    --bg-card: rgba(255, 255, 255, 0.05);
+                    --header-bg: rgba(15, 23, 42, 0.8);
+                    --detail-bg: rgba(255, 255, 255, 0.05);
+                    --btn-glass: rgba(255, 255, 255, 0.1);
+                }
+                .card, .detail-view, .header, .glass-btn, .detail-btn, .toc-content {
+                    backdrop-filter: var(--backdrop-blur);
+                }
+                body::before {
+                    content: "";
+                    position: fixed;
+                    top: 10%;
+                    left: -10%;
+                    width: 60%;
+                    height: 50%;
+                    background: radial-gradient(circle, rgba(80, 150, 100, 0.25), transparent 70%);
+                    filter: blur(80px);
+                    z-index: 0;
+                    pointer-events: none;
+                    will-change: transform;
+                }
+                body::after {
+                    content: "";
+                    position: fixed;
+                    bottom: 0;
+                    right: -10%;
+                    width: 50%;
+                    height: 40%;
+                    background: radial-gradient(circle, rgba(50, 120, 80, 0.2), transparent 70%);
+                    filter: blur(100px);
+                    z-index: 0;
+                    pointer-events: none;
+                    will-change: transform;
+                }
+            `;
+            document.head.appendChild(style);
+        } else {
+            // fallback: no blur, no spots
+            const style = document.createElement('style');
+            style.textContent = `
+                .card, .detail-view, .header, .glass-btn, .detail-btn, .toc-content {
+                    backdrop-filter: none;
+                }
+                body::before, body::after {
+                    display: none;
+                }
+                :root {
+                    --bg-card: rgba(15, 23, 42, 0.7);
+                    --detail-bg: rgba(15, 23, 42, 0.7);
+                    --header-bg: rgba(15, 23, 42, 0.9);
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // ---------- Lightbox (unchanged) ----------
         let lightboxActive = false, currentZoom = 1, imgTranslateX = 0, imgTranslateY = 0, startX = 0, startY = 0, isDragging = false, initialDistance = 0, initialScale = 1, isPinching = false;
         const lightbox = document.getElementById('lightbox'), lightboxImg = document.getElementById('lightbox-img'), lightboxContent = document.getElementById('lightboxContent'), zoomInBtn = document.getElementById('zoomInBtn'), zoomOutBtn = document.getElementById('zoomOutBtn'), zoomResetBtn = document.getElementById('zoomResetBtn'), closeBtn = document.getElementById('lightboxCloseBtn');
         [zoomInBtn, zoomOutBtn, zoomResetBtn, closeBtn].forEach(btn => btn.style.zIndex = '1003');
@@ -635,53 +642,66 @@
         function onWheel(e) { if (!lightboxActive) return; e.preventDefault(); const delta = e.deltaY > 0 ? -0.1 : 0.1; let newZoom = currentZoom + delta; newZoom = Math.min(Math.max(newZoom, 0.5), 3); if (newZoom !== currentZoom) { currentZoom = newZoom; applyTransform(); clampTranslate(); } }
         lightbox.addEventListener('mousedown', startDrag); window.addEventListener('mousemove', onDrag); window.addEventListener('mouseup', endDrag); lightbox.addEventListener('touchstart', onTouchStart, { passive: false }); lightbox.addEventListener('touchmove', onTouchMove, { passive: false }); lightbox.addEventListener('touchend', onTouchEnd); lightbox.addEventListener('wheel', onWheel, { passive: false }); lightbox.addEventListener('click', (e) => { if (e.target === lightbox || e.target === lightboxContent) closeLightbox(); }); closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); }); zoomInBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomIn(); }); zoomOutBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomOut(); }); zoomResetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetZoomAndPan(); clampTranslate(); });
 
-        // ---------- Share function (enhanced for desktop) ----------
+        // ---------- Share function ----------
         function doShare() {
             const url = window.location.href;
             if (navigator.share) {
                 navigator.share({ title: document.title, text: 'PG Earn – Daily Commission. Complete orders and earn daily.', url: url }).catch(()=>{});
             } else if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(() => {
-                    alert('✅ Link copied to clipboard!');
-                }).catch(() => {
-                    alert('⚠️ Manual copy: ' + url);
-                });
+                navigator.clipboard.writeText(url).then(() => alert('✅ Link copied to clipboard!')).catch(() => alert('⚠️ Unable to copy. Manual copy: ' + url));
             } else {
                 alert('📋 Share not supported. Please copy this link:\n' + url);
             }
         }
 
-        // ---------- Data source ----------
+        // ---------- Data ----------
         const CARDS_DATA = [
             { id: "what-is-pg", title: "🌐 What Is PG?", meta: "Legal tech service since 2018 · 8 years stable", desc: "Online work platform since 2018",
               content: `<p>PG (PG Playground) is a legally registered technology service company in Colorado, USA. PG has been stably operating for <strong>8 years</strong> since its founding in 2018.</p><p>We specialize in providing online marketing data support for global brands by generating real order records to enhance their market visibility.</p><p>Users earn commissions by completing assigned order tasks. Tasks are divided by levels — higher levels come with more daily tasks and higher daily pay. All tasks are generated based on real brand demands, ensuring data authenticity and business compliance.</p><p>Income is settled based on actual task completion. Withdrawals are supported every workday (minimum amount varies by level, no upper limit).</p><p>All deposits serve as order working capital and are fully refundable upon exit.</p><p>The platform uses an automated order review and settlement system to ensure transaction transparency and fund security.</p><p>PG is committed to transparent rules, refundable funds, and real earnings. We do not promise "get rich quick" — but we strive to provide every diligent user with a long‑term, stable, and sustainable online work opportunity.</p><p>For any questions, please contact your manager or the official support team.</p>` },
             { id: "why-pg-safe", title: "🔒 Why Is PG Safe?", meta: "Legal registration, fund security, transparent rules", desc: "Legal, stable, fund security & verifiable",
               content: `<ul><li><strong>Legally Registered</strong> — Colorado, USA (2018), address publicly accessible</li><li><strong>Stable Operation</strong> — Stably operated for 8 years</li><li><strong>Fund Security</strong> — Deposit is working capital, earnings are labor‑based</li><li><strong>Transparent Rules</strong> — Every record traceable, income matched to orders</li><li><strong>Verifiable</strong> — Company info can be verified via official channels</li></ul><p>⭐ Thousands trust PG for daily online income – fully compliant.</p><div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;"><img src="images/pg-registration.jpg" alt="PG Registration Certificate" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="margin-top: 8px; font-size: 0.8rem; color: var(--text-muted);">PG Registration Certificate</div><div style="margin-top: 12px;"><a href="https://www.coloradosos.gov/biz/BusinessEntityDetail.do?quitButtonDestination=BusinessEntityCriteriaExt&fileId=20181650293&masterFileId=" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: var(--contact-bg); padding: 6px 14px; border-radius: 40px; text-decoration: none; color: var(--badge-color); font-weight: 500; font-size: 0.85rem;">🔍 Verify on Colorado SOS</a></div></div>` },
-            { id: "deposit-earnings", title: "💰 Deposit & Earnings", meta: "Level 1–3 · daily tasks · weekly income & withdrawal limits", desc: "Weekly earnings: K21 (L1) · K138.6 (L2) · K364 (L3)",
+            { id: "deposit-earnings", title: "💰 Earn per Level", meta: "Level 1–3 · daily tasks · weekly income & withdrawal limits", desc: "Weekly earnings: K21 (L1) · K138.6 (L2) · K364 (L3)",
               content: `<div class="salary-grid"><div class="salary-card-item"><div class="level-header"><span class="level-name">🌟 Level 1</span><span class="level-badge">💰 Recharge: K240</span></div><div class="salary-details"><div class="detail-field"><div class="field-label">📋 Tasks per day</div><div class="field-value">3</div></div><div class="detail-field"><div class="field-label">🏆 Weekly income</div><div class="field-value">K21</div></div><div class="detail-field"><div class="field-label">💸 Min withdrawal</div><div class="field-value">K14</div></div><div class="detail-field"><div class="field-label">💸 Max withdrawal</div><div class="field-value">No limit</div></div></div></div><div class="salary-card-item"><div class="level-header"><span class="level-name">⭐ Level 2</span><span class="level-badge">💰 Recharge: K670</span></div><div class="salary-details"><div class="detail-field"><div class="field-label">📋 Tasks per day</div><div class="field-value">6</div></div><div class="detail-field"><div class="field-label">🏆 Weekly income</div><div class="field-value">K138.6</div></div><div class="detail-field"><div class="field-label">💸 Min withdrawal</div><div class="field-value">K80</div></div><div class="detail-field"><div class="field-label">💸 Max withdrawal</div><div class="field-value">No limit</div></div></div></div><div class="salary-card-item"><div class="level-header"><span class="level-name">🚀 Level 3</span><span class="level-badge">💰 Recharge: K1,700</span></div><div class="salary-details"><div class="detail-field"><div class="field-label">📋 Tasks per day</div><div class="field-value">8</div></div><div class="detail-field"><div class="field-label">🏆 Weekly income</div><div class="field-value">K364</div></div><div class="detail-field"><div class="field-label">💸 Min withdrawal</div><div class="field-value">K250</div></div><div class="detail-field"><div class="field-label">💸 Max withdrawal</div><div class="field-value">No limit</div></div></div></div></div><p><em>Interns are eligible for a discount. Contact your manager for the exact amount.</em></p><p>💡 Your deposit is working capital (fully refundable). Higher level = more daily orders + higher earnings.</p>` },
             { id: "topup-steps", title: "🔁 Top‑Up Steps", meta: "4 easy steps to fund your account", desc: "Contact manager → transfer → confirm → credit",
               content: `<ol><li>Contact your manager to get the current account details.</li><li>Transfer the required deposit (keep a screenshot of the Ref No).</li><li>Send the screenshot to your manager. Once confirmed, the funds will be credited to your PG account.</li><li>The platform supports transfers via <strong>BSP, Kina, USDT, and other local banks</strong>.</li></ol><p>⚠️ Always confirm details with your manager before any transfer.</p>` },
-            { id: "withdrawal-rules", title: "🏦 Withdrawal Rules", meta: "Request schedule & arrival time", desc: "Mon–Fri only, arrive 1–4 days",
+            { id: "withdrawal-rules", title: "🏦 Withdrawal", meta: "Request schedule & arrival time", desc: "Mon–Fri only, arrive 1–4 days",
               content: `<ul><li><strong>Withdrawal request:</strong> Monday–Friday (no requests on weekends).</li><li><strong>Funds arrive:</strong> 1–4 days (including weekends).</li><li><strong>Minimum withdrawal:</strong> depends on your level.</li></ul><p>📌 All withdrawals are processed in order. Make sure your bank account details are correct to avoid delays.</p>` },
             { id: "why-topup", title: "❓ Why Top Up?", meta: "Deposit = working capital (refundable)", desc: "Deposit is working capital, fully refundable",
               content: `<p>The deposit is <strong>not a "fee"</strong> – it's working capital to support your order flow.</p><p>Each order requires matching funds to complete the process. Your deposit stays in your account as a tool for your daily tasks. Every order you complete earns you commission. When you upgrade or leave, the deposit is fully refunded.</p><p>✅ Your earnings are purely from completed tasks.</p>` },
             { id: "task-steps", title: "📝 Task Steps", meta: "Step-by-step guide for interns & level 1-3", desc: "Step-by-step: add address → submit order",
               content: `<p><strong>📍 1. Add your shipping address (one time only)</strong><br>Go to <strong>User Center</strong> (bottom right) → scroll down to find "Shipping Address" → enter your address once.</p><p><strong>🏠 2. Enter the task page</strong><br>On Home screen, tap <strong>"intern"</strong> (if you are an intern) or your level button (<strong>Level 1/2/3</strong>). Then select the first item and click <strong>"Buy Now"</strong>.</p><p><strong>🛒 3. Review order & submit</strong><br>After selecting <strong>"Select All"</strong>, click <strong>"Checkout"</strong> → then click <strong>"Submit Order and Confirm"</strong>.</p><div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin:20px 0;"><div style="text-align:center; width:160px;"><img src="images/address.jpg" alt="Shipping address" style="width:100%; border-radius:12px; cursor:pointer;" onclick="openLightbox(this)" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27100%27%20height%3D%27100%27%3E%3Crect%20fill%3D%27%23ccc%27%20width%3D%27100%27%20height%3D%27100%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23666%27%3ENo%20image%3C%2Ftext%3E%3C%2Fsvg%3E'"><div style="font-size:0.7rem; color:#5c7e97;">📍 Shipping address</div></div><div style="width:100%;"><div style="overflow-x:auto; -webkit-overflow-scrolling:touch; text-align:center;"><img src="images/checkout.png" alt="Full order process" style="max-width:none; height:auto; width:auto; min-width:200px; max-height:300px; border-radius:12px; cursor:pointer;" onclick="openLightbox(this)" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%27100%27%3E%3Crect%20fill%3D%27%23ccc%27%20width%3D%27200%27%20height%3D%27100%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23666%27%3ENo%20image%3C%2Ftext%3E%3C%2Fsvg%3E'"></div><div style="font-size:0.7rem; color:#5c7e97; text-align:center;">📋 Swipe right to see full task flow →</div></div></div><p>✅ Once submitted, the system starts a countdown. When the countdown ends, the commission will be automatically credited to your balance.</p><p><em>This order is intended to help brands improve their product sales data. No physical product will be shipped to you.</em></p>` },
-            { id: "order-problems", title: "⏳ Order Process", meta: "Automatic completion & commission crediting", desc: "Automatic countdown, commission auto‑credit",
-              content: `<p>After you submit an order, the system starts a <strong>countdown (Review time)</strong>. When the countdown ends, the order is automatically completed, and the commission is automatically credited to your User Center balance.</p><p>Then you can submit a new order to continue working. Your daily order limit (Level 1: 3, Level 2: 6, Level 3: 8) frees up a slot once the countdown ends.</p><p><strong>Important:</strong> Wait patiently during the countdown. Once credited, check your balance in "User Center". Then you can start a new order.</p>` },
+            // ---------- UPDATED: Order Process card with detailed order rules ----------
+            { id: "order-problems", title: "⏳ Order Process", meta: "Auto completion & commission crediting · Order status explained", desc: "Countdown, commission, colors & concurrent limits",
+              content: `<p>After you submit an order, the system starts a <strong>countdown (Review time)</strong>. When the countdown ends, the order is automatically completed, and the commission is automatically credited to your User Center balance.</p>
+<p>Then you can submit a new order to continue working. Your daily order limit (Level 1: 3, Level 2: 6, Level 3: 8) frees up a slot once the countdown ends.</p>
+<hr style="margin: 16px 0; border-color: var(--divider);">
+<p><strong>📋 Understanding Your Orders</strong><br>
+Each order card in "My Orders" shows: Order number, date, items, total amount, <strong>commission</strong>, payment status (<code>Completed</code>), shipping status (<code>Pending processing</code>), and countdown progress (<strong>Time Left</strong> & <strong>Shipped</strong>).</p>
+<p><strong>⏱️ Countdown & Commission (by level)</strong><br>
+- Base countdown for any order is <strong>1 day</strong> (only whole days).<br>
+- Daily base commission:<br>
+ Level 1: <strong>K1/day</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3/day</strong> &nbsp;|&nbsp; Level 3: <strong>K6.5/day</strong><br>
+- Total commission = daily base × countdown days.<br>
+<em>Example: Level 1 order with 15-day countdown → K15 commission.</em></p>
+<p><strong>🎨 Order Status Colors</strong><br>
+<span style="color:#f87171;">🔴 Red order title</span> – Order (or part of a combined order) is completed, commission settled.<br>
+<span style="color:#4ade80;">🟢 Green order title</span> – Order still processing, countdown not finished.</p>
+<p><strong>📦 Combined Orders (batch)</strong><br>
+When you submit 2–3 orders together, they appear in the same batch. Different countdowns mean some may finish earlier (turn red) while others remain green.</p>
+<p><strong>📌 Concurrent order limits</strong><br>
+- Level 1: up to <strong>3</strong> orders at the same time<br>
+- Level 2: up to <strong>6</strong> orders<br>
+- Level 3: up to <strong>8</strong> orders<br>
+(Once an order completes, a new slot opens.)</p>
+<p><strong>Important:</strong> Wait patiently during the countdown. Once credited, check your balance in "User Center". Then you can start a new order.</p>` },
             { id: "extra-earnings", title: "💡 Extra Earnings", meta: "Beyond daily order commissions", desc: "Invitation bonuses, subordinate rebates, fixed salary & welfare orders",
               content: `<p>In addition to the income from daily orders on the PG platform, you can also earn extra income through methods such as:</p><ul><li><strong>Invitation bonuses</strong> — earn rewards for each new member you refer.</li><li><strong>Subordinate rebates</strong> — receive a percentage of your team's order commissions.</li><li><strong>Fixed salary</strong> — qualified members can enjoy a stable monthly base pay.</li><li><strong>Welfare product orders</strong> — special high‑value tasks with extra rewards.</li></ul><p>✅ Ask your manager for details and eligibility requirements for each extra earning method.</p>` },
-            { id: "pg-rules", title: "📜 PG Mall Platform Regulations", meta: "Official rules for all members", desc: "Platform guidelines and policies",
+            { id: "pg-rules", title: "📜 Platform Regulations", meta: "Official rules for all members", desc: "Platform guidelines and policies",
               content: `<ol style="list-style-type: decimal; margin-left: 1.2rem; line-height: 1.6;"><li><strong>Member Conduct</strong><br>All members must treat each other with respect and professionalism. Offensive language, harassment, or conflicts are not allowed.</li><li><strong>Honest Registration</strong><br>Members must provide truthful information when registering. Fake profiles or multiple accounts (one person, one account) are prohibited.</li><li><strong>Teamwork & Support</strong><br>Uplines are encouraged to guide and support their downlines. Positive teamwork helps everyone grow together.</li><li><strong>Task Completion</strong><br>Complete your daily assigned orders.<br>After finishing your daily tasks, <strong>please send a screenshot of any one of them to your manager</strong>. If you fail to report back, your account could be limited from getting new tasks. (Contact your manager for further assistance.)</li><li><strong>Earnings & Rewards</strong><br>Income includes daily salary (Level 1: <strong>K3/day</strong>, Level 2: <strong>K19.8/day</strong>, Level 3: <strong>K52/day</strong>), invitation bonuses, subordinate rebate (0.2%), fixed salary, and welfare order rebates. All earnings are settled based on actual task completion.</li><li><strong>Referrals & Invitations</strong><br>You may invite friends or family, but spamming, forcing, or misleading others is not allowed. Invitation bonuses are paid only after the invited person becomes a regular employee (Level 1+).</li><li><strong>Account Security</strong><br>Do not share your password or account access with anyone. Report any suspicious activity to support immediately.</li><li><strong>Violations</strong><br>Violating these rules may result in warnings, suspension of task access, or permanent account removal.</li><li><strong>Rule Updates</strong><br>PG Mall reserves the right to update these regulations for platform improvement. Members will be notified in advance.</li><li><strong>Contact Support</strong><br>For questions or assistance, please contact your manager or the official support team through official channels.</li></ol>` }
         ];
 
-        // Build ARTICLES
         const ARTICLES = {};
-        CARDS_DATA.forEach(card => {
-            ARTICLES[card.id] = { title: card.title, meta: card.meta, content: card.content };
-        });
-
-        // Build contact-manager content
+        CARDS_DATA.forEach(card => { ARTICLES[card.id] = { title: card.title, meta: card.meta, content: card.content }; });
         function buildContactManagerContent() {
             if (window.CONTACT_CONFIG) {
                 if (window.CONTACT_CONFIG.contacts && Array.isArray(window.CONTACT_CONFIG.contacts)) {
@@ -697,16 +717,8 @@
             }
             return `<p><em>⚠️ Contact information not configured. Please contact your manager directly.</em></p><p>If you are an administrator, create a <code>contact-config.js</code> file in the site root with <code>contacts</code> array or legacy <code>telegram/signal</code> fields.</p>`;
         }
-        ARTICLES['contact-manager'] = {
-            title: "📞 Contact Manager",
-            meta: "Direct support for deposit/withdrawal/upgrades",
-            content: buildContactManagerContent()
-        };
-
-        // Card list for rendering
+        ARTICLES['contact-manager'] = { title: "📞 Contact Manager", meta: "Direct support for deposit/withdrawal/upgrades", content: buildContactManagerContent() };
         const CARD_LIST = CARDS_DATA.map(card => ({ id: card.id, title: card.title, desc: card.desc }));
-
-        // DOM elements
         const homeContainer = document.getElementById('homeContainer');
         const detailContainer = document.getElementById('detailContainer');
         const cardsArea = document.getElementById('cardsArea');
@@ -716,10 +728,8 @@
         const closeTocBtn = document.getElementById('closeTocBtn');
         const tocList = document.getElementById('tocList');
         const headerShareBtn = document.getElementById('headerShareBtn');
-
         let savedScrollY = 0;
         let isTransitioning = false;
-
         function renderCards() {
             if (!cardsArea) return;
             cardsArea.innerHTML = '';
@@ -729,17 +739,10 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.setAttribute('data-id', item.id);
-                card.innerHTML = `
-                    <div class="card-header">
-                        <h3>${item.title}</h3>
-                        <div class="badge">📖 Read more →</div>
-                    </div>
-                    <p>${shortDesc}</p>
-                `;
+                card.innerHTML = `<div class="card-header"><h3>${item.title}</h3><div class="badge">📖 Read more →</div></div><p>${shortDesc}</p>`;
                 cardsArea.appendChild(card);
             });
         }
-
         function renderTOC() {
             if (!tocList) return;
             tocList.innerHTML = '';
@@ -753,36 +756,16 @@
                 tocList.appendChild(li);
             });
         }
-
         function showDetail(articleId) {
             if (isTransitioning) return;
             const article = ARTICLES[articleId];
             if (!article) return;
             isTransitioning = true;
             savedScrollY = window.scrollY;
-
-            const detailHtml = `
-                <div class="detail-title">${article.title}</div>
-                <div class="detail-meta">📌 ${article.meta}</div>
-                <div class="detail-text">${article.content}</div>
-                <div class="detail-actions">
-                    <button class="detail-btn" id="contactManagerBtnDetail">💬 Contact Manager</button>
-                    <button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail">🏠 Back to Guides</button>
-                </div>
-            `;
+            const detailHtml = `<div class="detail-title">${article.title}</div><div class="detail-meta">📌 ${article.meta}</div><div class="detail-text">${article.content}</div><div class="detail-actions"><button class="detail-btn" id="contactManagerBtnDetail">💬 Contact Manager</button><button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail">🏠 Back to Guides</button></div>`;
             detailContentDiv.innerHTML = detailHtml;
-
-            // Bind events
-            const contactBtn = document.getElementById('contactManagerBtnDetail');
-            if (contactBtn) {
-                contactBtn.addEventListener('click', () => showDetail('contact-manager'));
-            }
-            const backBtn = document.getElementById('backToGuidesBtnDetail');
-            if (backBtn) {
-                backBtn.addEventListener('click', backToHome);
-            }
-
-            // Animate entrance
+            document.getElementById('contactManagerBtnDetail')?.addEventListener('click', () => showDetail('contact-manager'));
+            document.getElementById('backToGuidesBtnDetail')?.addEventListener('click', backToHome);
             const detailDiv = document.querySelector('.detail-view');
             detailDiv.classList.remove('active');
             void detailDiv.offsetWidth;
@@ -797,7 +780,6 @@
                 isTransitioning = false;
             }, 200);
         }
-
         function backToHome() {
             if (isTransitioning) return;
             isTransitioning = true;
@@ -813,22 +795,16 @@
                 isTransitioning = false;
             }, 200);
         }
-
-        // Event delegation for cards
         cardsArea.addEventListener('click', (e) => {
             const card = e.target.closest('.card');
             if (!card) return;
             const id = card.getAttribute('data-id');
             if (id) showDetail(id);
         });
-
-        // TOC modal from header button and modal list
         tocToggleBtn.addEventListener('click', () => tocModal.classList.add('active'));
         headerShareBtn.addEventListener('click', doShare);
         closeTocBtn.addEventListener('click', () => tocModal.classList.remove('active'));
         tocModal.addEventListener('click', (e) => { if (e.target === tocModal) tocModal.classList.remove('active'); });
-
-        // TOC list click handling
         tocList.addEventListener('click', (e) => {
             const a = e.target.closest('a');
             if (!a) return;
@@ -855,37 +831,20 @@
                 }
             }
         });
-
-        // Popstate handling
         window.addEventListener('popstate', (e) => {
             const state = e.state;
-            if (state && state.view === 'detail' && state.id && ARTICLES[state.id]) {
-                showDetail(state.id);
-            } else {
-                if (!detailContainer.classList.contains('hidden')) backToHome();
-            }
+            if (state && state.view === 'detail' && state.id && ARTICLES[state.id]) showDetail(state.id);
+            else if (!detailContainer.classList.contains('hidden')) backToHome();
         });
-
         function initRouting() {
             const hash = location.hash.slice(1);
-            if (hash && ARTICLES[hash]) {
-                showDetail(hash);
-            } else {
-                homeContainer.classList.remove('hidden');
-                detailContainer.classList.add('hidden');
-            }
+            if (hash && ARTICLES[hash]) showDetail(hash);
+            else { homeContainer.classList.remove('hidden'); detailContainer.classList.add('hidden'); }
         }
-
-        renderCards();
-        renderTOC();
-        initRouting();
-
-        const style = document.createElement('style');
-        style.textContent = `
-            .view-exit { animation: fadeOutLeft 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards !important; }
-            @keyframes fadeOutLeft { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-20px); visibility: hidden; } }
-        `;
-        document.head.appendChild(style);
+        renderCards(); renderTOC(); initRouting();
+        const styleNode = document.createElement('style');
+        styleNode.textContent = `.view-exit { animation: fadeOutLeft 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards !important; } @keyframes fadeOutLeft { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-20px); visibility: hidden; } }`;
+        document.head.appendChild(styleNode);
     })();
 </script>
 </body>
