@@ -759,6 +759,19 @@
         
         function showDetail(articleId, fromBack = false) {
             if (isTransitioning) return;
+   if (currentFilter !== 'all') {
+        const visibleIds = getVisibleIds();
+        if (!visibleIds.includes(articleId)) {
+            currentFilter = 'all';
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(btn => {
+                if (btn.getAttribute('data-filter') === 'all') btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+            renderCards();
+            renderTOC();
+        }
+    }
             const article = ARTICLES[articleId];
             if (!article) return;
             isTransitioning = true;
