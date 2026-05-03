@@ -647,7 +647,15 @@
             { id: "order-guide", title: "📋 Order Guide", meta: "Order fields, status colors & batch completion", desc: "Entry, fields, red/green colors, batch logic",
               content: `<p><strong>Two ways to access your orders:</strong><br>\n- After submitting a task, you are redirected to "My Orders".<br>\n- From the home screen, tap <strong>"User Center"</strong> → <strong>"My Orders"</strong>.</p>\n<p><strong>Order card fields:</strong><br>\nEach order card shows: Order number, date, product(s), total amount, <strong>commission earned</strong>, payment status, shipping status, and countdown timer (<strong>Time Left</strong> / <strong>Shipped</strong>).</p>\n<p><strong>🎨 Order Status Colors</strong><br>\n<span style="color:#f87171;">🔴 Red order title</span> – Appears only in the <strong>"Pending processing"</strong> list. This individual order has finished its countdown, but other orders in the same batch are still running.<br>\n<span style="color:#4ade80;">🟢 Green order title</span> – Order countdown is still in progress.<br>\nAfter <strong>all</strong> orders in a batch are completed, the entire batch moves to the <strong>"Completed"</strong> list (no red labels there).</p>\n<p><strong>📦 Batch orders</strong><br>\nWhen you submit 2–3 orders together, they appear as one batch. Different countdowns may cause some to finish earlier (turn red) while others remain green.</p>\n<p><strong>📌 Maximum concurrent orders</strong><br>\n- Level 1: <strong>3</strong> orders &nbsp;|&nbsp; Level 2: <strong>6</strong> orders &nbsp;|&nbsp; Level 3: <strong>8</strong> orders<br>\n(You can run this many orders at the same time. When one finishes, you can add a new one.)</p>\n<div class="warning-box">💡 Wait patiently during countdown. Once credited, check your balance in "User Center", then start a new order.</div>\n<div style="margin: 20px 0; text-align: center;">\n  <img src="images/order-status-sample.jpg" alt="Order status sample: red and green titles" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)" onerror="this.style.display='none'">\n  <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 6px;">Example: red (finished) and green (pending) orders in batch</div>\n</div>` },
             { id: "commission-rules", title: "📊 Commission Rules", meta: "Daily base × countdown days + quick reference", desc: "Calculate commission: daily base * days",
-              content: `<p><strong>Single order commission formula:</strong><br>\nCommission = <strong>Daily base × Countdown days</strong><br>\n(Countdown is always whole days, minimum 1 day)</p>\n<p><strong>Daily base per level:</strong><br>\nLevel 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;|&nbsp; Level 3: <strong>K6.5</strong></p>\n<p><strong>Example:</strong> Level 1 order with 15-day countdown → K1 × 15 = <strong>K15 commission</strong>.</p>\n<div style="overflow-x: auto; margin: 16px 0;">\n  <table style="min-width: 280px;">\n    <thead><tr><th>Level</th><th>Daily base</th><th>Max orders</th><th>Daily total</th><th>Weekly total</th></tr></thead>\n    <tbody>\n      <tr><td><strong>Level 1</strong></td><td>K1</td><td>3</td><td><strong>K3</strong></td><td>K21</td></tr>\n      <tr><td><strong>Level 2</strong></td><td>K3.3</td><td>6</td><td><strong>K19.8</strong></td><td>K138.6</td></tr>\n      <tr><td><strong>Level 3</strong></td><td>K6.5</td><td>8</td><td><strong>K52</strong></td><td>K364</td></tr>\n    </tbody>\n  </table>\n</div>\n<p><em>Longer countdowns increase your commission proportionally.</em></p>` },
+              content: `<p><strong>Single order commission formula:</strong><br>\nCommission = <strong>Daily base × Countdown days</strong><br>\n(Countdown is always whole days, minimum 1 day)</p>\n<p><strong>Daily base per level:</strong><br>\nLevel 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;|&nbsp; Level 3: <strong>K6.5</strong></p>\n<p><strong>Example:</strong> Level 1 order with 15-day countdown → K1 × 15 = <strong>K15 commission</strong>.</p>\n<div style="overflow-x: auto; margin: 16px 0;">\n  <table style="min-width: 280px;">\n    <thead><tr><th>Level</th><th>Daily base</th><th>Max orders</th><th>Daily total</th><th>Weekly total</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Level 1</strong></td><td>K1</td><td>3</td><td><strong>K3</strong></td><td>K21</td></tr>
+      <tr><td><strong>Level 2</strong></td><td>K3.3</td><td>6</td><td><strong>K19.8</strong></td><td>K138.6</td></tr>
+      <tr><td><strong>Level 3</strong></td><td>K6.5</td><td>8</td><td><strong>K52</strong></td><td>K364</td></tr>
+    </tbody>
+   </table>
+</div>
+<p><em>Longer countdowns increase your commission proportionally.</em></p>` },
             { id: "extra-earnings", title: "💡 Extra Earnings", meta: "Beyond daily order commissions", desc: "Invitation bonuses, subordinate rebates, fixed salary & welfare orders",
               content: `<p>In addition to the income from daily orders on the PG platform, you can also earn extra income through methods such as:</p><ul><li><strong>Invitation bonuses</strong> — earn rewards for each new member you refer.</li><li><strong>Subordinate rebates</strong> — receive a percentage of your team's order commissions.</li><li><strong>Fixed salary</strong> — qualified members can enjoy a stable monthly base pay.</li><li><strong>Welfare product orders</strong> — special high‑value tasks with extra rewards.</li></ul><div class="warning-box">✅ Ask your manager for details and eligibility requirements for each extra earning method.</div>` },
             { id: "pg-rules", title: "📜 Platform Regulations", meta: "Official rules for all members", desc: "Platform guidelines and policies",
@@ -746,7 +754,7 @@
         function goHomeAndFilter(newFilter) {
             if (isTransitioning) return;
             if (!detailContainer.classList.contains('hidden')) {
-                backToHome(true); // skip pushState to avoid duplicate
+                backToHome(true);
             }
             currentFilter = newFilter;
             const btns = document.querySelectorAll('.filter-btn');
@@ -764,7 +772,6 @@
             if (!article) return;
             isTransitioning = true;
             savedScrollY = window.scrollY;
-            // Build buttons: for contact-manager card, remove the contact button
             let actionsHtml = '';
             if (articleId === 'contact-manager') {
                 actionsHtml = `<div class="detail-actions"><button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail">🏠 Back to Guides</button></div>`;
