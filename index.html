@@ -135,17 +135,20 @@
             gap: 16px;
         }
         .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: 28px;
-            padding: 18px;
-            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-            cursor: pointer;
-        }
-        .card:active {
-            transform: scale(0.98);
-            background: rgba(255, 255, 255, 0.08);
-        }
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+    border-radius: 28px;
+    padding: 18px;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+.card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(110, 231, 183, 0.5);
+    box-shadow: var(--shadow-hover);
+}
         .card-header {
             display: flex;
             justify-content: space-between;
@@ -649,6 +652,16 @@
               content: `<p><strong>Single order commission formula:</strong><br>\nCommission = <strong>Daily base × Countdown days</strong><br>\n(Countdown is always whole days, minimum 1 day)</p>\n<p><strong>Daily base per level:</strong><br>\nLevel 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;|&nbsp; Level 3: <strong>K6.5</strong></p>\n<p><strong>Example:</strong> Level 1 order with 15-day countdown → K1 × 15 = <strong>K15 commission</strong>.</p>\n<div style="overflow-x: auto; margin: 16px 0;">\n  <table style="min-width: 280px;">\n    <thead>\n      <tr><th>Level</th><th>Daily base</th><th>Max orders</th><th>Daily total</th><th>Weekly total</th></tr>\n    </thead>\n    <tbody>\n      <tr><td><strong>Level 1</strong></td><td>K1</td><td>3</td><td><strong>K3</strong></td><td>K21</td></tr>\n      <tr><td><strong>Level 2</strong></td><td>K3.3</td><td>6</td><td><strong>K19.8</strong></td><td>K138.6</td></tr>\n      <tr><td><strong>Level 3</strong></td><td>K6.5</td><td>8</td><td><strong>K52</strong></td><td>K364</td></tr>\n    </tbody>\n  </table>\n</div>\n<p><em>Longer countdowns increase your commission proportionally.</em></p>` },
             { id: "extra-earnings", title: "💡 Extra Earnings", meta: "Beyond daily order commissions", desc: "Invitation bonuses, subordinate rebates, fixed salary & welfare orders",
               content: `<p>In addition to the income from daily orders on the PG platform, you can also earn extra income through methods such as:</p><ul><li><strong>Invitation bonuses</strong> — earn rewards for each new member you refer.</li><li><strong>Subordinate rebates</strong> — receive a percentage of your team's order commissions.</li><li><strong>Fixed salary</strong> — qualified members can enjoy a stable monthly base pay.</li><li><strong>Welfare product orders</strong> — special high‑value tasks with extra rewards.</li></ul><div class="warning-box">✅ Ask your manager for details and eligibility requirements for each extra earning method.</div>` },
+            { id: "platform-synergy", title: "🔄 Platform Synergy & Growth Path", meta: "Invite → Bonus → Welfare orders → Upgrade → Team salary → Downline rebates", desc: "How invitations, bonuses, upgrades, team salary and rebates work together",
+              content: `<p>PG's activity system is highly interconnected — every action fuels the next opportunity:</p>
+<ol style="margin-left: 1.2rem; line-height: 1.6;">
+  <li><strong>Invite new members</strong> → Earn <strong>invitation bonus</strong> once they become regular staff (Level 1+).</li>
+  <li><strong>Use your bonus</strong> → Participate in <strong>Welfare Product Orders</strong> which yield higher commissions.</li>
+  <li><strong>Accumulate earnings</strong> → Upgrade to Level 2 or Level 3, unlocking more daily tasks and higher income.</li>
+  <li><strong>Build your team</strong> → When your downline members upgrade (e.g., to Level 2+), you receive <strong>fixed team salary</strong> and <strong>downline rebates (0.2% of their order commissions)</strong>.</li>
+  <li><strong>Scale up</strong> → More active team members = more passive income, creating a sustainable growth loop.</li>
+</ol>
+<div class="warning-box">💡 Every level deposit is fully refundable when you upgrade.</div>` },
             { id: "pg-rules", title: "📜 Platform Regulations", meta: "Official rules for all members", desc: "Platform guidelines and policies",
               content: `<ol style="list-style-type: decimal; margin-left: 1.2rem; line-height: 1.6;"><li><strong>Member Conduct</strong><br>All members must treat each other with respect and professionalism. Offensive language, harassment, or conflicts are not allowed.</li><li><strong>Honest Registration</strong><br>Members must provide truthful information when registering. Fake profiles or multiple accounts (one person, one account) are prohibited.</li><li><strong>Teamwork & Support</strong><br>Uplines are encouraged to guide and support their downlines. Positive teamwork helps everyone grow together.</li><li><strong>Task Completion</strong><br>Complete your daily assigned orders.<br>After finishing your daily tasks, <strong>please send a screenshot of any one of them to your manager</strong>. If you fail to report back, your account could be limited from getting new tasks. (Contact your manager for further assistance.)</li><li><strong>Earnings & Rewards</strong><br>Income includes daily salary (Level 1: <strong>K3/day</strong>, Level 2: <strong>K19.8/day</strong>, Level 3: <strong>K52/day</strong>), invitation bonuses, subordinate rebate (0.2%), fixed salary, and welfare order rebates. All earnings are settled based on actual task completion.</li><li><strong>Referrals & Invitations</strong><br>You may invite friends or family, but spamming, forcing, or misleading others is not allowed. Invitation bonuses are paid only after the invited person becomes a regular employee (Level 1+).</li><li><strong>Account Security</strong><br>Do not share your password or account access with anyone. Report any suspicious activity to support immediately.</li><li><strong>Violations</strong><br>Violating these rules may result in warnings, suspension of task access, or permanent account removal.</li><li><strong>Rule Updates</strong><br>PG Mall reserves the right to update these regulations for platform improvement. Members will be notified in advance.</li><li><strong>Contact Support</strong><br>For questions or assistance, please contact your manager or the official support team through official channels.</li></ol>` }
         ];
@@ -683,12 +696,13 @@
             { id: "order-guide", title: "📋 Order Guide", desc: "Order fields, status colors & batch completion" },
             { id: "commission-rules", title: "📊 Commission Rules", desc: "Calculate commission: daily base × days" },
             { id: "extra-earnings", title: "💡 Extra Earnings", desc: "Invitation bonuses, rebates, fixed salary" },
+            { id: "platform-synergy", title: "🔄 Platform Synergy & Growth Path", desc: "Invite → Bonus → Welfare orders → Upgrade → Team salary → Rebates" },
             { id: "pg-rules", title: "📜 Platform Regulations", desc: "Platform guidelines and policies" },
             { id: "contact-manager", title: "📞 Contact Manager", desc: "Direct support for deposit/withdrawal/upgrades" }
         ];
         
         const INTERN_IDS = ["deposit-earnings", "topup-steps", "withdrawal-rules", "why-topup", "task-steps"];
-        const STAFF_IDS = ["deposit-earnings", "order-guide", "commission-rules", "extra-earnings", "pg-rules"];
+        const STAFF_IDS = ["deposit-earnings", "order-guide", "commission-rules", "extra-earnings", "platform-synergy", "pg-rules"];
         
         let currentFilter = "all";
         const homeContainer = document.getElementById('homeContainer');
