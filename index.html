@@ -801,7 +801,7 @@
                 homeContainer.classList.remove('hidden');
                 detailContainer.classList.remove('view-exit');
                 window.scrollTo({ top: savedScrollY, behavior: 'auto' });
-                if (!skipPushState && location.hash) {
+                if (location.hash) {
                     const cleanUrl = window.location.pathname + window.location.search;
                     history.replaceState(null, '', cleanUrl);
                 }
