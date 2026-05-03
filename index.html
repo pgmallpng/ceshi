@@ -14,7 +14,6 @@
     <meta name="twitter:image" content="https://raw.githubusercontent.com/pgmallpng/MiaClaire/main/images/share-preview.png">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💰%3C/text%3E%3C/svg%3E">
     <style>
-        /* ----- global reset & variables ----- */
         :root {
             --bg-body: #0f172a;
             --bg-card: rgba(255, 255, 255, 0.05);
@@ -48,7 +47,7 @@
             color: var(--text-primary);
             padding: 16px;
             min-height: 100vh;
-            font-size: 16px; /* base for mobile */
+            font-size: 16px;
         }
         .wrapper {
             max-width: 780px;
@@ -56,7 +55,6 @@
             position: relative;
             z-index: 1;
         }
-        /* ----- header & filters ----- */
         .header {
             text-align: center;
             margin-bottom: 24px;
@@ -95,7 +93,7 @@
             font-weight: 600;
             color: var(--text-primary);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: 0.2s;
             text-align: center;
         }
         .filter-btn.active {
@@ -131,7 +129,6 @@
             transform: scale(0.96);
             background: rgba(255, 255, 255, 0.2);
         }
-        /* ----- card grid ----- */
         .card-list {
             display: flex;
             flex-direction: column;
@@ -176,7 +173,6 @@
             font-size: 0.85rem;
             line-height: 1.4;
         }
-        /* ----- detail view ----- */
         .detail-view {
             background: var(--detail-bg);
             border: 1px solid var(--border-light);
@@ -232,7 +228,6 @@
         .detail-text p { margin-bottom: 1rem; }
         .detail-text ul, .detail-text ol { margin: 0.8rem 0 1rem 1.6rem; }
         .detail-text li { margin: 0.4rem 0; }
-        /* table */
         .detail-text table {
             width: 100%;
             border-collapse: collapse;
@@ -287,7 +282,6 @@
             border-color: rgba(255,255,255,0.3);
             color: white;
         }
-        /* floating contact button */
         .floating-contact {
             position: fixed;
             bottom: 24px;
@@ -307,7 +301,6 @@
             border: none;
         }
         .floating-contact:active { transform: scale(0.94); background: #3e9a75; }
-        /* TOC modal */
         .toc-modal {
             position: fixed;
             top: 0;
@@ -366,7 +359,6 @@
             margin-top: 32px;
             padding-top: 12px;
         }
-        /* lightbox (unchanged) */
         .lightbox {
             display: none;
             position: fixed;
@@ -540,7 +532,7 @@
         <div class="detail-view">
             <div id="detailContent"></div>
         </div>
-        <footer>✅ Use buttons below to navigate</footer>
+        <footer></footer>
     </div>
     <div class="disclaimer" style="text-align: center; font-size: 0.7rem; color: var(--footer-color); margin-top: 20px; padding: 12px 0 8px; border-top: 1px solid var(--divider);">
         This is a personal help site. All rules are subject to the manager’s reply.
@@ -568,7 +560,7 @@
 <script src="contact-config.js"></script>
 <script>
     (function() {
-        // ----- hardware acceleration & backdrop filter detection -----
+        // backdrop filter detection
         function supportsBackdropFilter() {
             const el = document.createElement('div');
             if (!('backdropFilter' in el.style) && !('webkitBackdropFilter' in el.style)) return false;
@@ -601,7 +593,7 @@
             document.head.appendChild(style);
         }
 
-        // ----- lightbox (global openLightbox) -----
+        // lightbox
         let lightboxActive = false, currentZoom = 1, imgTranslateX = 0, imgTranslateY = 0, startX = 0, startY = 0, isDragging = false, initialDistance = 0, initialScale = 1, isPinching = false;
         const lightbox = document.getElementById('lightbox'), lightboxImg = document.getElementById('lightbox-img'), lightboxContent = document.getElementById('lightboxContent'), zoomInBtn = document.getElementById('zoomInBtn'), zoomOutBtn = document.getElementById('zoomOutBtn'), zoomResetBtn = document.getElementById('zoomResetBtn'), closeBtn = document.getElementById('lightboxCloseBtn');
         [zoomInBtn, zoomOutBtn, zoomResetBtn, closeBtn].forEach(btn => btn.style.zIndex = '1003');
@@ -624,7 +616,7 @@
         function onWheel(e) { if (!lightboxActive) return; e.preventDefault(); const delta = e.deltaY > 0 ? -0.1 : 0.1; let newZoom = currentZoom + delta; newZoom = Math.min(Math.max(newZoom, 0.5), 3); if (newZoom !== currentZoom) { currentZoom = newZoom; applyTransform(); clampTranslate(); } }
         lightbox.addEventListener('mousedown', startDrag); window.addEventListener('mousemove', onDrag); window.addEventListener('mouseup', endDrag); lightbox.addEventListener('touchstart', onTouchStart, { passive: false }); lightbox.addEventListener('touchmove', onTouchMove, { passive: false }); lightbox.addEventListener('touchend', onTouchEnd); lightbox.addEventListener('wheel', onWheel, { passive: false }); lightbox.addEventListener('click', (e) => { if (e.target === lightbox || e.target === lightboxContent) closeLightbox(); }); closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); }); zoomInBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomIn(); }); zoomOutBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomOut(); }); zoomResetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetZoomAndPan(); clampTranslate(); });
 
-        // ----- share -----
+        // share
         function doShare() {
             const url = window.location.href;
             if (navigator.share) {
@@ -636,7 +628,7 @@
             }
         }
 
-        // ----- card data (all content in English, no Chinese) -----
+        // card data
         const CARDS_DATA = [
             { id: "what-is-pg", title: "🌐 What Is PG?", meta: "Legal tech service since 2018 · 8 years stable", desc: "Online work platform since 2018",
               content: `<p>PG (PG Playground) is a legally registered technology service company in Colorado, USA. PG has been stably operating for <strong>8 years</strong> since its founding in 2018.</p><p>We specialize in providing online marketing data support for global brands by generating real order records to enhance their market visibility.</p><p>Users earn commissions by completing assigned order tasks. Tasks are divided by levels — higher levels come with more daily tasks and higher daily pay. All tasks are generated based on real brand demands, ensuring data authenticity and business compliance.</p><p>Income is settled based on actual task completion. Withdrawals are supported every workday (minimum amount varies by level, no upper limit).</p><p>All deposits serve as order working capital and are fully refundable upon exit.</p><p>The platform uses an automated order review and settlement system to ensure transaction transparency and fund security.</p><p>PG is committed to transparent rules, refundable funds, and real earnings. We do not promise "get rich quick" — but we strive to provide every diligent user with a long‑term, stable, and sustainable online work opportunity.</p><p>For any questions, please contact your manager or the official support team.</p>` },
@@ -652,46 +644,10 @@
               content: `<p>The deposit is <strong>not a "fee"</strong> – it's working capital to support your order flow.</p><p>Each order requires matching funds to complete the process. Your deposit stays in your account as a tool for your daily tasks. Every order you complete earns you commission. When you upgrade or leave, the deposit is fully refunded.</p><div class="warning-box">✅ Your earnings are purely from completed tasks.</div>` },
             { id: "task-steps", title: "📝 Task Steps", meta: "Step-by-step guide for interns & level 1-3", desc: "Step-by-step: add address → submit order",
               content: `<p><strong>📍 1. Add your shipping address (one time only)</strong><br>Go to <strong>User Center</strong> (bottom right) → scroll down to find "Shipping Address" → enter your address once.</p><p><strong>🏠 2. Enter the task page</strong><br>On Home screen, tap <strong>"intern"</strong> (if you are an intern) or your level button (<strong>Level 1/2/3</strong>). Then select the first item and click <strong>"Buy Now"</strong>.</p><p><strong>🛒 3. Review order & submit</strong><br>After selecting <strong>"Select All"</strong>, click <strong>"Checkout"</strong> → then click <strong>"Submit Order and Confirm"</strong>.</p><div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin:20px 0;"><div style="text-align:center; width:160px;"><img src="images/address.jpg" alt="Shipping address" style="width:100%; border-radius:12px; cursor:pointer;" onclick="openLightbox(this)" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27100%27%20height%3D%27100%27%3E%3Crect%20fill%3D%27%23ccc%27%20width%3D%27100%27%20height%3D%27100%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23666%27%3ENo%20image%3C%2Ftext%3E%3C%2Fsvg%3E'"><div style="font-size:0.7rem; color:#5c7e97;">📍 Shipping address</div></div><div style="width:100%;"><div class="scrollable-img"><img src="images/checkout.png" alt="Full order process" style="max-height:300px; border-radius:12px; cursor:pointer;" onclick="openLightbox(this)" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%27100%27%3E%3Crect%20fill%3D%27%23ccc%27%20width%3D%27200%27%20height%3D%27100%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23666%27%3ENo%20image%3C%2Ftext%3E%3C%2Fsvg%3E'"></div><div style="font-size:0.7rem; color:#5c7e97; text-align:center;">📋 Swipe right to see full task flow →</div></div></div><p>✅ Once submitted, the system starts a countdown. When the countdown ends, the commission will be automatically credited to your balance.</p><p><em>This order is intended to help brands improve their product sales data. No physical product will be shipped to you.</em></p>` },
-            // Order Guide (split from old order-problems)
             { id: "order-guide", title: "📋 Order Guide", meta: "Order fields, status colors & batch completion", desc: "Entry, fields, red/green colors, batch logic",
-              content: `<p><strong>Two ways to access your orders:</strong><br>
-- After submitting a task, you are redirected to "My Orders".<br>
-- From the home screen, tap <strong>"User Center"</strong> → <strong>"My Orders"</strong>.</p>
-<p><strong>Order card fields:</strong><br>
-Each order card shows: Order number, date, product(s), total amount, <strong>commission earned</strong>, payment status, shipping status, and countdown timer (<strong>Time Left</strong> / <strong>Shipped</strong>).</p>
-<p><strong>🎨 Order Status Colors</strong><br>
-<span style="color:#f87171;">🔴 Red order title</span> – Appears only in the <strong>"Pending processing"</strong> list. This individual order has finished its countdown, but other orders in the same batch are still running.<br>
-<span style="color:#4ade80;">🟢 Green order title</span> – Order countdown is still in progress.<br>
-After <strong>all</strong> orders in a batch are completed, the entire batch moves to the <strong>"Completed"</strong> list (no red labels there).</p>
-<p><strong>📦 Batch orders</strong><br>
-When you submit 2–3 orders together, they appear as one batch. Different countdowns may cause some to finish earlier (turn red) while others remain green.</p>
-<p><strong>📌 Maximum concurrent orders</strong><br>
-- Level 1: <strong>3</strong> orders &nbsp;|&nbsp; Level 2: <strong>6</strong> orders &nbsp;|&nbsp; Level 3: <strong>8</strong> orders<br>
-(You can run this many orders at the same time. When one finishes, you can add a new one.)</p>
-<div class="warning-box">💡 Wait patiently during countdown. Once credited, check your balance in "User Center", then start a new order.</div>
-<div style="margin: 20px 0; text-align: center;">
-  <img src="images/order-status-sample.jpg" alt="Order status sample: red and green titles" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)" onerror="this.style.display='none'">
-  <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 6px;">Example: red (finished) and green (pending) orders in batch</div>
-</div>` },
-            // Commission Rules
-            { id: "commission-rules", title: "📊 Commission Rules", meta: "Daily base × countdown days + quick reference", desc: "Calculate your commission: daily base * days",
-              content: `<p><strong>Single order commission formula:</strong><br>
-Commission = <strong>Daily base × Countdown days</strong><br>
-(Countdown is always whole days, minimum 1 day)</p>
-<p><strong>Daily base per level:</strong><br>
-Level 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;|&nbsp; Level 3: <strong>K6.5</strong></p>
-<p><strong>Example:</strong> Level 1 order with 15-day countdown → K1 × 15 = <strong>K15 commission</strong>.</p>
-<div style="overflow-x: auto; margin: 16px 0;">
-  <table style="min-width: 280px;">
-    <thead><tr><th>Level</th><th>Daily base</th><th>Max orders</th><th>Daily total</th><th>Weekly total</th></tr></thead>
-    <tbody>
-      <tr><td><strong>Level 1</strong></td><td>K1</td><td>3</td><td><strong>K3</strong></td><td>K21</td></tr>
-      <tr><td><strong>Level 2</strong></td><td>K3.3</td><td>6</td><td><strong>K19.8</strong></td><td>K138.6</td></tr>
-      <tr><td><strong>Level 3</strong></td><td>K6.5</td><td>8</td><td><strong>K52</strong></td><td>K364</td></tr>
-    </tbody>
-  </table>
-</div>
-<p><em>Longer countdowns increase your commission proportionally.</em></p>` },
+              content: `<p><strong>Two ways to access your orders:</strong><br>\n- After submitting a task, you are redirected to "My Orders".<br>\n- From the home screen, tap <strong>"User Center"</strong> → <strong>"My Orders"</strong>.</p>\n<p><strong>Order card fields:</strong><br>\nEach order card shows: Order number, date, product(s), total amount, <strong>commission earned</strong>, payment status, shipping status, and countdown timer (<strong>Time Left</strong> / <strong>Shipped</strong>).</p>\n<p><strong>🎨 Order Status Colors</strong><br>\n<span style="color:#f87171;">🔴 Red order title</span> – Appears only in the <strong>"Pending processing"</strong> list. This individual order has finished its countdown, but other orders in the same batch are still running.<br>\n<span style="color:#4ade80;">🟢 Green order title</span> – Order countdown is still in progress.<br>\nAfter <strong>all</strong> orders in a batch are completed, the entire batch moves to the <strong>"Completed"</strong> list (no red labels there).</p>\n<p><strong>📦 Batch orders</strong><br>\nWhen you submit 2–3 orders together, they appear as one batch. Different countdowns may cause some to finish earlier (turn red) while others remain green.</p>\n<p><strong>📌 Maximum concurrent orders</strong><br>\n- Level 1: <strong>3</strong> orders &nbsp;|&nbsp; Level 2: <strong>6</strong> orders &nbsp;|&nbsp; Level 3: <strong>8</strong> orders<br>\n(You can run this many orders at the same time. When one finishes, you can add a new one.)</p>\n<div class="warning-box">💡 Wait patiently during countdown. Once credited, check your balance in "User Center", then start a new order.</div>\n<div style="margin: 20px 0; text-align: center;">\n  <img src="images/order-status-sample.jpg" alt="Order status sample: red and green titles" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)" onerror="this.style.display='none'">\n  <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 6px;">Example: red (finished) and green (pending) orders in batch</div>\n</div>` },
+            { id: "commission-rules", title: "📊 Commission Rules", meta: "Daily base × countdown days + quick reference", desc: "Calculate commission: daily base * days",
+              content: `<p><strong>Single order commission formula:</strong><br>\nCommission = <strong>Daily base × Countdown days</strong><br>\n(Countdown is always whole days, minimum 1 day)</p>\n<p><strong>Daily base per level:</strong><br>\nLevel 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;|&nbsp; Level 3: <strong>K6.5</strong></p>\n<p><strong>Example:</strong> Level 1 order with 15-day countdown → K1 × 15 = <strong>K15 commission</strong>.</p>\n<div style="overflow-x: auto; margin: 16px 0;">\n  <table style="min-width: 280px;">\n    <thead><tr><th>Level</th><th>Daily base</th><th>Max orders</th><th>Daily total</th><th>Weekly total</th></tr></thead>\n    <tbody>\n      <tr><td><strong>Level 1</strong></td><td>K1</td><td>3</td><td><strong>K3</strong></td><td>K21</td></tr>\n      <tr><td><strong>Level 2</strong></td><td>K3.3</td><td>6</td><td><strong>K19.8</strong></td><td>K138.6</td></tr>\n      <tr><td><strong>Level 3</strong></td><td>K6.5</td><td>8</td><td><strong>K52</strong></td><td>K364</td></tr>\n    </tbody>\n  </table>\n</div>\n<p><em>Longer countdowns increase your commission proportionally.</em></p>` },
             { id: "extra-earnings", title: "💡 Extra Earnings", meta: "Beyond daily order commissions", desc: "Invitation bonuses, subordinate rebates, fixed salary & welfare orders",
               content: `<p>In addition to the income from daily orders on the PG platform, you can also earn extra income through methods such as:</p><ul><li><strong>Invitation bonuses</strong> — earn rewards for each new member you refer.</li><li><strong>Subordinate rebates</strong> — receive a percentage of your team's order commissions.</li><li><strong>Fixed salary</strong> — qualified members can enjoy a stable monthly base pay.</li><li><strong>Welfare product orders</strong> — special high‑value tasks with extra rewards.</li></ul><div class="warning-box">✅ Ask your manager for details and eligibility requirements for each extra earning method.</div>` },
             { id: "pg-rules", title: "📜 Platform Regulations", meta: "Official rules for all members", desc: "Platform guidelines and policies",
@@ -701,7 +657,6 @@ Level 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;
         const ARTICLES = {};
         CARDS_DATA.forEach(card => { ARTICLES[card.id] = { title: card.title, meta: card.meta, content: card.content }; });
         
-        // Contact manager (dynamic from external config)
         function buildContactManagerContent() {
             if (window.CONTACT_CONFIG) {
                 if (window.CONTACT_CONFIG.contacts && Array.isArray(window.CONTACT_CONFIG.contacts)) {
@@ -718,7 +673,6 @@ Level 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;
         }
         ARTICLES['contact-manager'] = { title: "📞 Contact Manager", meta: "Direct support for deposit/withdrawal/upgrades", content: buildContactManagerContent() };
 
-        // List of all cards (including contact-manager)
         const ALL_CARDS = [
             { id: "what-is-pg", title: "🌐 What Is PG?", desc: "Online work platform since 2018" },
             { id: "why-pg-safe", title: "🔒 Why Is PG Safe?", desc: "Legal, stable, fund security & verifiable" },
@@ -734,9 +688,6 @@ Level 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;
             { id: "contact-manager", title: "📞 Contact Manager", desc: "Direct support for deposit/withdrawal/upgrades" }
         ];
         
-        // Filter sets as requested:
-        // Intern: cards 3,4,5,6,7  -> deposit-earnings, topup-steps, withdrawal-rules, why-topup, task-steps
-        // Staff: cards 3,8,9,10,11 -> deposit-earnings, order-guide, commission-rules, extra-earnings, pg-rules
         const INTERN_IDS = ["deposit-earnings", "topup-steps", "withdrawal-rules", "why-topup", "task-steps"];
         const STAFF_IDS = ["deposit-earnings", "order-guide", "commission-rules", "extra-earnings", "pg-rules"];
         
@@ -778,8 +729,10 @@ Level 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;
         
         function renderTOC() {
             if (!tocList) return;
+            const visibleIds = getVisibleIds();
             tocList.innerHTML = '';
             ALL_CARDS.forEach(card => {
+                if (!visibleIds.includes(card.id)) return;
                 const li = document.createElement('li');
                 const a = document.createElement('a');
                 a.href = '#';
@@ -790,15 +743,39 @@ Level 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;
             });
         }
         
-        function showDetail(articleId) {
+        function goHomeAndFilter(newFilter) {
+            if (isTransitioning) return;
+            if (!detailContainer.classList.contains('hidden')) {
+                backToHome(true); // skip pushState to avoid duplicate
+            }
+            currentFilter = newFilter;
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(btn => {
+                if (btn.getAttribute('data-filter') === newFilter) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+            renderCards();
+            renderTOC();
+        }
+        
+        function showDetail(articleId, fromBack = false) {
             if (isTransitioning) return;
             const article = ARTICLES[articleId];
             if (!article) return;
             isTransitioning = true;
             savedScrollY = window.scrollY;
-            const detailHtml = `<div class="detail-title">${article.title}</div><div class="detail-meta">📌 ${article.meta}</div><div class="detail-text">${article.content}</div><div class="detail-actions"><button class="detail-btn" id="contactManagerBtnDetail">💬 Contact Manager</button><button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail">🏠 Back to Guides</button></div>`;
+            // Build buttons: for contact-manager card, remove the contact button
+            let actionsHtml = '';
+            if (articleId === 'contact-manager') {
+                actionsHtml = `<div class="detail-actions"><button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail">🏠 Back to Guides</button></div>`;
+            } else {
+                actionsHtml = `<div class="detail-actions"><button class="detail-btn" id="contactManagerBtnDetail">💬 Contact Manager</button><button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail">🏠 Back to Guides</button></div>`;
+            }
+            const detailHtml = `<div class="detail-title">${article.title}</div><div class="detail-meta">📌 ${article.meta}</div><div class="detail-text">${article.content}</div>${actionsHtml}`;
             detailContentDiv.innerHTML = detailHtml;
-            document.getElementById('contactManagerBtnDetail')?.addEventListener('click', () => showDetail('contact-manager'));
+            if (articleId !== 'contact-manager') {
+                document.getElementById('contactManagerBtnDetail')?.addEventListener('click', () => showDetail('contact-manager'));
+            }
             document.getElementById('backToGuidesBtnDetail')?.addEventListener('click', backToHome);
             const detailDiv = document.querySelector('.detail-view');
             detailDiv.classList.remove('active');
@@ -809,13 +786,13 @@ Level 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;
                 detailContainer.classList.remove('hidden');
                 homeContainer.classList.remove('view-exit');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                if (history.pushState) history.pushState({ view: 'detail', id: articleId }, '', `#${articleId}`);
+                if (!fromBack && history.pushState) history.pushState({ view: 'detail', id: articleId }, '', `#${articleId}`);
                 detailDiv.classList.add('active');
                 isTransitioning = false;
             }, 200);
         }
         
-        function backToHome() {
+        function backToHome(skipPushState = false) {
             if (isTransitioning) return;
             isTransitioning = true;
             const detailDiv = document.querySelector('.detail-view');
@@ -826,12 +803,11 @@ Level 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;
                 homeContainer.classList.remove('hidden');
                 detailContainer.classList.remove('view-exit');
                 window.scrollTo({ top: savedScrollY, behavior: 'auto' });
-                if (location.hash) history.replaceState(null, '', ' ');
+                if (!skipPushState && location.hash) history.replaceState(null, '', ' ');
                 isTransitioning = false;
             }, 200);
         }
         
-        // floating button -> contact manager card
         floatingBtn.addEventListener('click', () => {
             if (!detailContainer.classList.contains('hidden')) {
                 backToHome();
@@ -861,41 +837,35 @@ Level 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;
             tocModal.classList.remove('active');
             if (!detailContainer.classList.contains('hidden')) {
                 backToHome();
-                setTimeout(() => {
-                    const target = document.querySelector(`.card[data-id="${id}"]`);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        target.classList.add('card-highlight');
-                        setTimeout(() => target.classList.remove('card-highlight'), 800);
-                    }
-                }, 250);
+                setTimeout(() => showDetail(id), 250);
             } else {
-                const target = document.querySelector(`.card[data-id="${id}"]`);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    target.classList.add('card-highlight');
-                    setTimeout(() => target.classList.remove('card-highlight'), 800);
+                const targetCard = document.querySelector(`.card[data-id="${id}"]`);
+                if (targetCard) {
+                    targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    targetCard.classList.add('card-highlight');
+                    setTimeout(() => targetCard.classList.remove('card-highlight'), 800);
+                } else {
+                    showDetail(id);
                 }
             }
         });
         
-        // filter buttons
         const filterBtns = document.querySelectorAll('.filter-btn');
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const filter = btn.getAttribute('data-filter');
                 if (filter === currentFilter) return;
-                currentFilter = filter;
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                renderCards();
+                goHomeAndFilter(filter);
             });
         });
         
         window.addEventListener('popstate', (e) => {
             const state = e.state;
-            if (state && state.view === 'detail' && state.id && ARTICLES[state.id]) showDetail(state.id);
-            else if (!detailContainer.classList.contains('hidden')) backToHome();
+            if (state && state.view === 'detail' && state.id && ARTICLES[state.id]) {
+                showDetail(state.id, true);
+            } else if (!detailContainer.classList.contains('hidden')) {
+                backToHome(true);
+            }
         });
         
         function initRouting() {
