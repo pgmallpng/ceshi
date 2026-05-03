@@ -661,7 +661,18 @@
   <li><strong>Build your team</strong> → When your downline members upgrade (e.g., to Level 2+), you receive <strong>fixed team salary</strong> and <strong>downline rebates (0.2% of the product value of their orders)</strong>.</li>
   <li><strong>Scale up</strong> → More active team members = more passive income, creating a sustainable growth loop.</li>
 </ol>
-<div class="warning-box">💡 Every level deposit is fully refundable when you upgrade.</div>` },
+<div class="warning-box">💡 Every level deposit is fully refundable when you upgrade.</div>` },            
+            { id: "order-block-reasons", title: "🚫 Order Block Reasons", meta: "3 common errors & how to fix them", desc: "Why you can't place an order and what to do",
+              content: `<p>As a staff member, you may occasionally see one of these three error messages when trying to place an order. Here's what they mean and how to resolve them:</p>
+<ol style="margin-left: 1.2rem; line-height: 1.8;">
+  <li><strong>"This product can only be purchased 1 item per day..."</strong><br>
+  You have already added this product to your cart but haven't submitted the order. Go to your <strong>shopping cart</strong> and complete the checkout. You cannot add the same product again until the existing order is submitted or removed.</li>
+  <li><strong>"Insufficient Deposit"</strong><br>
+  You are trying to submit more orders than your level's concurrent processing limit (Level 1: 3, Level 2: 6, Level 3: 8). Check <strong>"My Orders"</strong> for pending orders. Delete some items from your cart so that total pending + new orders ≤ your limit.</li>
+  <li><strong>"Your account status does not allow placing orders"</strong><br>
+  Your account has been flagged as inactive because you haven't contacted your manager for a long time. Reach out to your manager to request reinstatement of order privileges.</li>
+</ol>
+<div class="warning-box">💡 Always monitor "My Orders" and clear pending items before adding new tasks. Contact your manager if you're unsure about any error.</div>` },
             { id: "pg-rules", title: "📜 Platform Regulations", meta: "Official rules for all members", desc: "Platform guidelines and policies",
               content: `<ol style="list-style-type: decimal; margin-left: 1.2rem; line-height: 1.6;"><li><strong>Member Conduct</strong><br>All members must treat each other with respect and professionalism. Offensive language, harassment, or conflicts are not allowed.</li><li><strong>Honest Registration</strong><br>Members must provide truthful information when registering. Fake profiles or multiple accounts (one person, one account) are prohibited.</li><li><strong>Teamwork & Support</strong><br>Uplines are encouraged to guide and support their downlines. Positive teamwork helps everyone grow together.</li><li><strong>Task Completion</strong><br>Complete your daily assigned orders.<br>After finishing your daily tasks, <strong>please send a screenshot of any one of them to your manager</strong>. If you fail to report back, your account could be limited from getting new tasks. (Contact your manager for further assistance.)</li><li><strong>Earnings & Rewards</strong><br>Income includes daily salary (Level 1: <strong>K3/day</strong>, Level 2: <strong>K19.8/day</strong>, Level 3: <strong>K52/day</strong>), invitation bonuses, subordinate rebate (0.2%), fixed salary, and welfare order rebates. All earnings are settled based on actual task completion.</li><li><strong>Referrals & Invitations</strong><br>You may invite friends or family, but spamming, forcing, or misleading others is not allowed. Invitation bonuses are paid only after the invited person becomes a regular employee (Level 1+).</li><li><strong>Account Security</strong><br>Do not share your password or account access with anyone. Report any suspicious activity to support immediately.</li><li><strong>Violations</strong><br>Violating these rules may result in warnings, suspension of task access, or permanent account removal.</li><li><strong>Rule Updates</strong><br>PG Mall reserves the right to update these regulations for platform improvement. Members will be notified in advance.</li><li><strong>Contact Support</strong><br>For questions or assistance, please contact your manager or the official support team through official channels.</li></ol>` }
         ];
@@ -697,12 +708,13 @@
             { id: "commission-rules", title: "📊 Commission Rules", desc: "Calculate commission: daily base × days" },
             { id: "extra-earnings", title: "💡 Extra Earnings", desc: "Invitation bonuses, rebates, fixed salary" },
             { id: "platform-synergy", title: "🔄 Synergy & Growth", desc: "Invite → Bonus → Welfare orders → Upgrade → Team salary → Rebates" },
+            { id: "order-block-reasons", title: "🚫 Order Block Reasons", desc: "3 common errors & how to fix them" },
             { id: "pg-rules", title: "📜 Platform Regulations", desc: "Platform guidelines and policies" },
             { id: "contact-manager", title: "📞 Contact Manager", desc: "Direct support for deposit/withdrawal/upgrades" }
         ];
         
         const INTERN_IDS = ["deposit-earnings", "topup-steps", "withdrawal-rules", "why-topup", "task-steps"];
-        const STAFF_IDS = ["deposit-earnings", "order-guide", "commission-rules", "extra-earnings", "platform-synergy", "pg-rules"];
+        const STAFF_IDS = ["deposit-earnings", "order-guide", "commission-rules", "extra-earnings", "platform-synergy", "order-block-reasons", "pg-rules"];
         
         let currentFilter = "all";
         const homeContainer = document.getElementById('homeContainer');
