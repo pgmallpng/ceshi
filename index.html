@@ -72,6 +72,16 @@
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header h1 svg {
+            width: 32px;
+            height: 32px;
+            stroke: #3b82f6;
+            stroke-width: 1.5;
+            fill: none;
         }
         .header p {
             color: var(--text-muted);
@@ -179,7 +189,6 @@
             opacity: 0.7;
         }
 
-        /* 双列网格卡片样式 */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -264,6 +273,18 @@
             padding-left: 18px;
             margin-bottom: 12px;
         }
+        .detail-title span {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .detail-title svg {
+            width: 28px;
+            height: 28px;
+            stroke: #3b82f6;
+            stroke-width: 1.5;
+            fill: none;
+        }
         .detail-meta {
             color: var(--text-muted);
             font-size: 0.8rem;
@@ -339,6 +360,13 @@
             justify-content: center;
             gap: 8px;
         }
+        .detail-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            fill: none;
+        }
         .detail-btn:hover {
             background: #e2e8f0;
         }
@@ -369,8 +397,14 @@
             cursor: pointer;
             z-index: 1000;
             transition: transform 0.2s, background 0.2s;
-            font-size: 28px;
             border: 1px solid var(--border-light);
+        }
+        .floating-contact svg {
+            width: 28px;
+            height: 28px;
+            stroke: #3b82f6;
+            stroke-width: 1.5;
+            fill: none;
         }
         .floating-contact:hover {
             background: white;
@@ -634,7 +668,12 @@
 <body>
 <div class="wrapper">
     <div class="header">
-        <h1>💰 PG Earn – Daily Commission</h1>
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            PG Earn – Daily Commission
+        </h1>
         <p>Complete orders for brands — Earn every day</p>
     </div>
     <div class="filter-bar">
@@ -643,11 +682,20 @@
         <button class="filter-btn" data-filter="staff">Staff</button>
     </div>
     <div class="header-actions">
-        <button id="headerTocBtn" class="glass-btn">📑 View Contents</button>
-        <button id="headerShareBtn" class="glass-btn">🔗 Share Guide</button>
+        <button id="headerTocBtn" class="glass-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h7" />
+            </svg>
+            View Contents
+        </button>
+        <button id="headerShareBtn" class="glass-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+            Share Guide
+        </button>
     </div>
     <div id="homeContainer">
-        <!-- 顶部介绍区（What Is PG 精简版） -->
         <div class="intro-section">
             <div class="intro-title">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -676,7 +724,11 @@
         This is a personal help site. All rules are subject to the manager’s reply.
     </div>
 </div>
-<div id="floatingContactBtn" class="floating-contact" title="Contact Manager">💬</div>
+<div id="floatingContactBtn" class="floating-contact" title="Contact Manager">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+</div>
 <div id="tocModal" class="toc-modal">
     <div class="toc-content">
         <h4>📖 Table of Contents</h4>
@@ -733,7 +785,6 @@
             }
         }
 
-        // card data (移除了原标题中的 emoji)
         const CARDS_DATA = [
             { id: "what-is-pg", title: "What Is PG?", meta: "Legal tech service since 2018 · 8 years stable", desc: "Online work platform since 2018",
               content: `<p>PG (PG Playground) is a legally registered technology service company in Colorado, USA. PG has been stably operating for <strong>8 years</strong> since its founding in 2018.</p>
@@ -771,13 +822,13 @@
 <p>✅ Once submitted, the system starts a countdown. When the countdown ends, the commission will be automatically credited to your balance.</p>
 <p><em>This order is intended to help brands improve their product sales data. No physical product will be shipped to you.</em></p>` },
             { id: "order-guide", title: "Order Guide", meta: "Order fields, status colors & batch completion", desc: "Entry, fields, red/green colors, batch logic",
-              content: `<p><strong>Two ways to access your orders:</strong><br>\n- After submitting a task, you are redirected to "My Orders".<br>\n- From the home screen, tap <strong>"User Center"</strong> → <strong>"My Orders"</strong>.</p>\n<p><strong>Order card fields:</strong><br>\nEach order card shows: Order number, date, product(s), total amount, <strong>commission earned</strong>, payment status, shipping status, and countdown timer (<strong>Time Left</strong> / <strong>Shipped</strong>).</p>\n<p><strong>⏰ Expire At (exact date & time):</strong> Every order card displays the exact expiration date and time (e.g., "Expire At: 2026-05-09 10:23:15"). By checking the "Expire At" time of all your orders, you can see exactly when each commission will be credited and when you will be able to submit a new order.</p>\n<div style="margin: 20px 0; text-align: center;"><img src="images/order-expire-example.jpg" alt="Example of order countdown and Expire At time" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 6px;">Example: countdown timers and Expire At times</div></div>\n<p><strong>🎨 Order Status Colors</strong><br>\n<span style="color:#f87171;">🔴 Red order title</span> – Appears only in the <strong>"Pending processing"</strong> list. This individual order has finished its countdown, but other orders in the same batch are still running.<br>\n<span style="color:#4ade80;">🟢 Green order title</span> – Order countdown is still in progress.<br>\nAfter <strong>all</strong> orders in a batch are completed, the entire batch moves to the <strong>"Completed"</strong> list (no red labels there).</p>\n<p><strong>📦 Batch orders</strong><br>\nWhen you submit 2 or more orders together, they appear as one batch. Different countdowns may cause some to finish earlier (turn red) while others remain green.</p>\n<p><strong>📌 Maximum concurrent orders</strong><br>\n- Level 1: <strong>3</strong> orders &nbsp;|&nbsp; Level 2: <strong>6</strong> orders &nbsp;|&nbsp; Level 3: <strong>8</strong> orders<br>\n(You can run this many orders at the same time. When one finishes, you can add a new one.)</p>\n<div class="warning-box">💡 Wait patiently during countdown. Once credited, check your balance in "User Center", then start a new order.</div>\n<div style="margin-top: 24px; text-align: center;"><button class="detail-btn" style="display: inline-flex; width: auto; padding: 8px 20px;" onclick="showDetail('commission-rules')">📊 Learn about Commission Rules →</button></div>` },
+              content: `<p><strong>Two ways to access your orders:</strong><br>\n- After submitting a task, you are redirected to "My Orders".<br>\n- From the home screen, tap <strong>"User Center"</strong> → <strong>"My Orders"</strong>.</p>\n<p><strong>Order card fields:</strong><br>\nEach order card shows: Order number, date, product(s), total amount, <strong>commission earned</strong>, payment status, shipping status, and countdown timer (<strong>Time Left</strong> / <strong>Shipped</strong>).</p>\n<p><strong>⏰ Expire At (exact date & time):</strong> Every order card displays the exact expiration date and time (e.g., "Expire At: 2026-05-09 10:23:15"). By checking the "Expire At" time of all your orders, you can see exactly when each commission will be credited and when you will be able to submit a new order.</p>\n<div style="margin: 20px 0; text-align: center;"><img src="images/order-expire-example.jpg" alt="Example of order countdown and Expire At time" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 6px;">Example: countdown timers and Expire At times</div></div>\n<p><strong>🎨 Order Status Colors</strong><br>\n<span style="color:#f87171;">🔴 Red order title</span> – Appears only in the <strong>"Pending processing"</strong> list. This individual order has finished its countdown, but other orders in the same batch are still running.<br>\n<span style="color:#4ade80;">🟢 Green order title</span> – Order countdown is still in progress.<br>\nAfter <strong>all</strong> orders in a batch are completed, the entire batch moves to the <strong>"Completed"</strong> list (no red labels there).</p>\n<p><strong>📦 Batch orders</strong><br>\nWhen you submit 2 or more orders together, they appear as one batch. Different countdowns may cause some to finish earlier (turn red) while others remain green.</p>\n<p><strong>📌 Maximum concurrent orders</strong><br>\n- Level 1: <strong>3</strong> orders &nbsp;|&nbsp; Level 2: <strong>6</strong> orders &nbsp;|&nbsp; Level 3: <strong>8</strong> orders<br>\n(You can run this many orders at the same time. When one finishes, you can add a new one.)</p>\n<div class="warning-box">💡 Wait patiently during countdown. Once credited, check your balance in "User Center", then start a new order.</div>\n<div style="margin-top: 24px; text-align: center;"><button class="detail-btn" style="display: inline-flex; width: auto; padding: 8px 20px;" onclick="showDetail('commission-rules')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg> Learn about Commission Rules →</button></div>` },
             { id: "commission-rules", title: "Commission Rules", meta: "Daily base × countdown days + quick reference", desc: "Calculate commission: daily base * days",
               content: `<p><strong>Single order commission formula:</strong><br>\nCommission = <strong>Daily base × Countdown days</strong><br>\n(Countdown is always whole days, minimum 1 day)</p>\n<p><strong>Base per order per day:</strong><br>\nLevel 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;|&nbsp; Level 3: <strong>K6.5</strong></p>\n<p><strong>Example:</strong> Level 1 order with 15-day countdown → K1 × 15 = <strong>K15 commission</strong>.</p>\n<div style="overflow-x: auto; margin: 16px 0;"><table style="min-width: 280px;"><thead><tr><th>Level</th><th>Daily base</th><th>Max orders</th><th>Daily total</th><th>Weekly total</th></tr></thead><tbody><tr><td style="text-align: center;"><strong>Level 1</strong></td><td style="text-align: center;">K1</td><td style="text-align: center;">3</td><td style="text-align: center;"><strong>K3</strong></td><td style="text-align: center;">K21</td></tr><tr><td style="text-align: center;"><strong>Level 2</strong></td><td style="text-align: center;">K3.3</td><td style="text-align: center;">6</td><td style="text-align: center;"><strong>K19.8</strong></td><td style="text-align: center;">K138.6</td></tr><tr><td style="text-align: center;"><strong>Level 3</strong></td><td style="text-align: center;">K6.5</td><td style="text-align: center;">8</td><td style="text-align: center;"><strong>K52</strong></td><td style="text-align: center;">K364</td></tr></tbody></table></div>\n<p><em>Longer countdowns increase your commission proportionally.</em></p>` },
             { id: "extra-earnings", title: "Extra Earnings", meta: "Beyond daily order commissions", desc: "Invitation bonuses, subordinate rebates, fixed salary & welfare orders",
               content: `<p>In addition to daily order commissions, PG offers several extra earning methods:</p><h4>🔹 Invitation Bonus (Limited-time activity)</h4><p>Amount and rules are announced in the official PG discussion group. Contact your manager for current offers.</p><h4>🔹 Subordinate Rebate (0.2% of product value)</h4><p>When your downline Employees complete daily orders, you earn 0.2% of the <strong>product value</strong> of each order.<br>Example: A Level 2 Employee buys an item worth K110. Your rebate = K110 × 0.2% = <strong>K0.22</strong> per order. Automatically added to your balance.</p><h4>🔹 Welfare Product Orders</h4><p>Limited‑quantity orders offered by the platform. Purchasing with your user center balance earns a higher rebate. These orders do <strong>not</strong> affect your daily order volume.<br>Example: 15‑day countdown, product value K200, commission <strong>K80</strong> (much higher than standard orders).</p><h4>🔹 Fixed Salary & Tax Subsidies</h4><p>Based on the number of your downline Employees who are Level 2 or above (registered using your invitation link), you receive the following fixed salary and tax subsidies. The fixed salary is paid in two installments: on the <strong>1st</strong> and <strong>15th</strong> of each month.</p><div style="overflow-x: auto; margin: 12px 0;"><table style="min-width: 280px;"><thead><tr><th>Team Employees (Level 2+)</th><th>Fixed salary (K)</th><th>Tax subsidies</th></tr></thead><tbody><tr><td style="text-align: center;">1</td><td style="text-align: center;">—</td><td style="text-align: center;">10%</td></tr><tr><td style="text-align: center;">5</td><td style="text-align: center;">100</td><td style="text-align: center;">10%</td></tr><tr><td style="text-align: center;">10</td><td style="text-align: center;">500</td><td style="text-align: center;">15%</td></tr><tr><td style="text-align: center;">20</td><td style="text-align: center;">1200</td><td style="text-align: center;">20%</td></tr><tr><td style="text-align: center;">30</td><td style="text-align: center;">3500</td><td style="text-align: center;">20%</td></tr><tr><td style="text-align: center;">50</td><td style="text-align: center;">6500</td><td style="text-align: center;">20%</td></tr></tbody></table></div><p>📌 Tax subsidies apply even with 1 qualifying downline. Fixed salary starts from 5 downline Employees. To receive tax subsidies, once you meet the requirements, please contact your manager to apply.</p><div class="warning-box">✅ All extra earnings are calculated automatically. For details and eligibility, contact your manager.</div>` },
             { id: "platform-synergy", title: "Synergy & Growth", meta: "Invite → Bonus → Welfare orders → Upgrade → Team salary → Downline rebates", desc: "How invitations, bonuses, upgrades, team salary and rebates work together",
-              content: `<p>PG's activity system is highly interconnected — every action fuels the next opportunity:</p><ol style="margin-left: 1.2rem; line-height: 1.6;"><li><strong>Invite new members</strong> → Earn <strong>invitation bonus</strong> once they become regular Employees (Level 1+).</li><li><strong>Use your bonus</strong> → Participate in <strong>Welfare Product Orders</strong> which yield higher commissions.</li><li><strong>Accumulate earnings</strong> → Upgrade to Level 2 or Level 3, unlocking more daily tasks and higher income.</li><li><strong>Build your team</strong> → When your downline members upgrade (e.g., to Level 2+), you receive <strong>fixed team salary</strong> and <strong>downline rebates (0.2% of the product value of their orders)</strong>.</li><li><strong>Scale up</strong> → More active team members = more passive income, creating a sustainable growth loop.</li></ol><div class="warning-box">💡 Every level deposit is fully refundable when you upgrade.</div><div style="margin-top: 24px; text-align: center;"><button class="detail-btn" style="display: inline-flex; width: auto; padding: 8px 20px;" onclick="showDetail('extra-earnings')">💰 Learn about Extra Earnings →</button></div>` },
+              content: `<p>PG's activity system is highly interconnected — every action fuels the next opportunity:</p><ol style="margin-left: 1.2rem; line-height: 1.6;"><li><strong>Invite new members</strong> → Earn <strong>invitation bonus</strong> once they become regular Employees (Level 1+).</li><li><strong>Use your bonus</strong> → Participate in <strong>Welfare Product Orders</strong> which yield higher commissions.</li><li><strong>Accumulate earnings</strong> → Upgrade to Level 2 or Level 3, unlocking more daily tasks and higher income.</li><li><strong>Build your team</strong> → When your downline members upgrade (e.g., to Level 2+), you receive <strong>fixed team salary</strong> and <strong>downline rebates (0.2% of the product value of their orders)</strong>.</li><li><strong>Scale up</strong> → More active team members = more passive income, creating a sustainable growth loop.</li></ol><div class="warning-box">💡 Every level deposit is fully refundable when you upgrade.</div><div style="margin-top: 24px; text-align: center;"><button class="detail-btn" style="display: inline-flex; width: auto; padding: 8px 20px;" onclick="showDetail('extra-earnings')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Learn about Extra Earnings →</button></div>` },
             { id: "order-block-reasons", title: "Order Block Reasons", meta: "3 common errors & how to fix them", desc: "Why you can't place an order and what to do",
               content: `<p>As an Employee, you may occasionally see one of these three error messages when trying to place an order. Here's what they mean and how to resolve them:</p><ol style="margin-left: 1.2rem; line-height: 1.8;"><li><strong>"This product can only be purchased 1 item per day..."</strong><br>You have already added this product to your cart but haven't submitted the order. Go to your <strong>shopping cart</strong> and complete the checkout. You cannot add the same product again until the existing order is submitted or removed.</li><li><strong>"Insufficient Deposit"</strong><br>You are trying to submit more orders than your level's concurrent processing limit (Level 1: 3, Level 2: 6, Level 3: 8). Check <strong>"My Orders"</strong> for pending orders. Delete some items from your cart so that total pending + new orders ≤ your limit.</li><li><strong>"Your account status does not allow placing orders"</strong><br>Your account has been flagged as inactive because you haven't contacted your manager for a long time. Reach out to your manager to request reinstatement of order privileges.</li></ol><div class="warning-box">💡 Always monitor "My Orders" and clear pending items before adding new tasks. Contact your manager if you're unsure about any error.</div>` },
             { id: "letter-to-team", title: "A Letter to Our Team", meta: "An honest, sustainable opportunity", desc: "We are here to place an honest, sustainable opportunity into your hands.",
@@ -805,7 +856,6 @@
         }
         ARTICLES['contact-manager'] = { title: "📞 Contact Manager", meta: "Direct support for deposit/withdrawal/upgrades", content: buildContactManagerContent() };
 
-        // 移除了 what-is-pg 卡片，用顶部的 intro-section 替代
         const ALL_CARDS = [
             { id: "why-pg-safe", title: "Why Is PG Safe?", desc: "Legal, stable, fund security & verifiable" },
             { id: "deposit-earnings", title: "Earn per Level", desc: "Weekly earnings: K21 (L1) · K138.6 (L2) · K364 (L3)" },
@@ -840,7 +890,6 @@
         let savedScrollY = 0;
         let isTransitioning = false;
 
-        // 为每个卡片定义对应的 SVG 图标（使用 Heroicons 风格的线性图标）
         function getCardIcon(cardId) {
             const icons = {
                 'why-pg-safe': `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>`,
@@ -941,11 +990,21 @@
             savedScrollY = window.scrollY;
             let actionsHtml = '';
             if (articleId === 'contact-manager') {
-                actionsHtml = `<div class="detail-actions"><button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail">🏠 Back to Guides</button></div>`;
+                actionsHtml = `<div class="detail-actions"><button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg> Back to Guides</button></div>`;
             } else {
-                actionsHtml = `<div class="detail-actions"><button class="detail-btn" id="contactManagerBtnDetail">💬 Contact Manager</button><button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail">🏠 Back to Guides</button></div>`;
+                actionsHtml = `<div class="detail-actions">
+                    <button class="detail-btn" id="contactManagerBtnDetail">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        Contact Manager
+                    </button>
+                    <button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                        Back to Guides
+                    </button>
+                </div>`;
             }
-            const detailHtml = `<div class="detail-title">${article.title}</div><div class="detail-meta">📌 ${article.meta}</div><div class="detail-text">${article.content}</div>${actionsHtml}`;
+            const detailIcon = getCardIcon(articleId);
+            const detailHtml = `<div class="detail-title"><span>${detailIcon} ${article.title}</span></div><div class="detail-meta">📌 ${article.meta}</div><div class="detail-text">${article.content}</div>${actionsHtml}`;
             detailContentDiv.innerHTML = detailHtml;
             if (articleId !== 'contact-manager') {
                 document.getElementById('contactManagerBtnDetail')?.addEventListener('click', () => showDetail('contact-manager'));
