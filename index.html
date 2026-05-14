@@ -16,24 +16,22 @@
     <style>
         :root {
             --bg-body: #f8f9fa;
-            --bg-card: #ffffff;
+            --bg-card-odd: #ffffff;
+            --bg-card-even: #f1f5f9;
             --text-primary: #1e293b;
             --text-secondary: #475569;
             --text-muted: #64748b;
             --border-light: #e2e8f0;
             --badge-bg: #eef2ff;
             --badge-color: #3b82f6;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --divider: #e2e8f0;
             --header-bg: transparent;
             --detail-bg: transparent;
             --contact-bg: #f1f5f9;
             --footer-color: #94a3b8;
-            --divider: #e2e8f0;
             --warning-bg: #fef3c7;
             --warning-border: #f59e0b;
             --level-card-bg: #f8fafc;
-            --btn-glass: rgba(255, 255, 255, 0.9);
         }
         * {
             margin: 0;
@@ -51,7 +49,7 @@
             line-height: 1.5;
         }
         .wrapper {
-            max-width: 1200px;
+            max-width: 780px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
@@ -133,56 +131,78 @@
         .glass-btn:active {
             transform: scale(0.96);
         }
+
+        .intro-section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+        }
+        .intro-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1e293b;
+        }
+        .intro-excerpt {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        .intro-link {
+            background: transparent;
+            border: none;
+            color: var(--badge-color);
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            padding: 0;
+        }
+        .intro-link:active {
+            opacity: 0.7;
+        }
+        /* 卡片列表改为单列，无边框圆角，交替背景，横线分隔 */
         .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
             margin-bottom: 32px;
         }
         .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 20px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            padding: 24px 16px;
+            transition: background 0.2s ease;
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--divider);
+        }
+        .card:last-child {
+            border-bottom: none;
+        }
+        .card:nth-child(odd) {
+            background: var(--bg-card-odd);
+        }
+        .card:nth-child(even) {
+            background: var(--bg-card-even);
         }
         .card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-        .card-tag {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--badge-color);
-            background: var(--badge-bg);
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-            width: fit-content;
-        }
-        .card-header {
-            margin-bottom: 12px;
+            background: #eef2ff; 
         }
         .card-header h3 {
             font-size: 1.25rem;
             font-weight: 600;
             color: var(--text-primary);
-            margin: 0;
+            margin: 0 0 8px 0;
         }
         .card-excerpt {
             font-size: 0.85rem;
             color: var(--text-secondary);
             line-height: 1.4;
-            margin-bottom: 0;
-            flex-grow: 1;
         }
+
         .detail-view {
             background: transparent;
             border: none;
@@ -366,7 +386,7 @@
             max-height: 80vh;
             overflow-y: auto;
             border: 1px solid var(--border-light);
-            box-shadow: var(--shadow-hover);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
         }
         .toc-content h4 {
             margin-bottom: 16px;
@@ -558,9 +578,8 @@
             cursor: pointer;
         }
         @media (max-width: 640px) {
-            .card-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
+            .card {
+                padding: 20px 12px;
             }
             .detail-title {
                 font-size: 1.5rem;
@@ -568,6 +587,9 @@
             .filter-btn {
                 padding: 6px 16px;
                 font-size: 0.8rem;
+            }
+            .intro-section {
+                padding: 20px 16px;
             }
         }
         .view-exit {
@@ -603,6 +625,17 @@
         <button id="headerShareBtn" class="glass-btn">🔗 Share Guide</button>
     </div>
     <div id="homeContainer">
+        <!--  -->
+        <div class="intro-section">
+            <div class="intro-title">🌐 What Is PG?</div>
+            <div class="intro-excerpt">
+                PG (PG Playground) is a legally registered technology service company in Colorado, USA, operating stably since 2018. 
+                It provides online marketing data support for global brands by generating real order records. 
+                Users earn commissions by completing order tasks — a real job, not an investment.
+            </div>
+            <button class="intro-link" onclick="showDetail('what-is-pg')">Read more →</button>
+        </div>
+
         <div id="cardsArea" class="card-grid"></div>
         <footer>✅ Select any card for detailed guide</footer>
     </div>
@@ -638,9 +671,6 @@
 <script src="contact-config.js"></script>
 <script>
     (function() {
-        // backdrop filter detection
-
-
         // lightbox
         let lightboxActive = false, currentZoom = 1, imgTranslateX = 0, imgTranslateY = 0, startX = 0, startY = 0, isDragging = false, initialDistance = 0, initialScale = 1, isPinching = false;
         const lightbox = document.getElementById('lightbox'), lightboxImg = document.getElementById('lightbox-img'), lightboxContent = document.getElementById('lightboxContent'), zoomInBtn = document.getElementById('zoomInBtn'), zoomOutBtn = document.getElementById('zoomOutBtn'), zoomResetBtn = document.getElementById('zoomResetBtn'), closeBtn = document.getElementById('lightboxCloseBtn');
@@ -653,7 +683,6 @@
         function openLightbox(imgElement) { lightboxImg.src = imgElement.src; resetZoomAndPan(); lightbox.style.display = 'flex'; lightboxActive = true; document.body.classList.add('lightbox-open'); lightboxImg.onload = () => clampTranslate(); if (lightboxImg.complete) clampTranslate(); }
         function closeLightbox() { lightbox.style.display = 'none'; lightboxActive = false; resetZoomAndPan(); isDragging = false; lightbox.classList.remove('dragging'); document.body.classList.remove('lightbox-open'); }
         window.openLightbox = openLightbox;
-        window.showDetail = showDetail;
         lightboxImg.addEventListener('dblclick', (e) => { e.stopPropagation(); resetZoomAndPan(); clampTranslate(); });
         function startDrag(e) { if (currentZoom <= 1) return; e.preventDefault(); isDragging = true; lightbox.classList.add('dragging'); const clientX = e.clientX ?? (e.touches ? e.touches[0].clientX : 0), clientY = e.clientY ?? (e.touches ? e.touches[0].clientY : 0); startX = clientX - imgTranslateX; startY = clientY - imgTranslateY; }
         function onDrag(e) { if (!isDragging) return; e.preventDefault(); const clientX = e.clientX ?? (e.touches ? e.touches[0].clientX : 0), clientY = e.clientY ?? (e.touches ? e.touches[0].clientY : 0); imgTranslateX = clientX - startX; imgTranslateY = clientY - startY; applyTransform(); clampTranslate(); }
@@ -717,9 +746,9 @@
             { id: "order-guide", title: "📋 Order Guide", meta: "Order fields, status colors & batch completion", desc: "Entry, fields, red/green colors, batch logic",
               content: `<p><strong>Two ways to access your orders:</strong><br>\n- After submitting a task, you are redirected to "My Orders".<br>\n- From the home screen, tap <strong>"User Center"</strong> → <strong>"My Orders"</strong>.</p>\n<p><strong>Order card fields:</strong><br>\nEach order card shows: Order number, date, product(s), total amount, <strong>commission earned</strong>, payment status, shipping status, and countdown timer (<strong>Time Left</strong> / <strong>Shipped</strong>).</p>\n<p><strong>⏰ Expire At (exact date & time):</strong> Every order card displays the exact expiration date and time (e.g., "Expire At: 2026-05-09 10:23:15"). By checking the "Expire At" time of all your orders, you can see exactly when each commission will be credited and when you will be able to submit a new order.</p>\n<div style="margin: 20px 0; text-align: center;"><img src="images/order-expire-example.jpg" alt="Example of order countdown and Expire At time" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 6px;">Example: countdown timers and Expire At times</div></div>\n<p><strong>🎨 Order Status Colors</strong><br>\n<span style="color:#f87171;">🔴 Red order title</span> – Appears only in the <strong>"Pending processing"</strong> list. This individual order has finished its countdown, but other orders in the same batch are still running.<br>\n<span style="color:#4ade80;">🟢 Green order title</span> – Order countdown is still in progress.<br>\nAfter <strong>all</strong> orders in a batch are completed, the entire batch moves to the <strong>"Completed"</strong> list (no red labels there).</p>\n<p><strong>📦 Batch orders</strong><br>\nWhen you submit 2 or more orders together, they appear as one batch. Different countdowns may cause some to finish earlier (turn red) while others remain green.</p>\n<p><strong>📌 Maximum concurrent orders</strong><br>\n- Level 1: <strong>3</strong> orders &nbsp;|&nbsp; Level 2: <strong>6</strong> orders &nbsp;|&nbsp; Level 3: <strong>8</strong> orders<br>\n(You can run this many orders at the same time. When one finishes, you can add a new one.)</p>\n<div class="warning-box">💡 Wait patiently during countdown. Once credited, check your balance in "User Center", then start a new order.</div>\n<div style="margin-top: 24px; text-align: center;"><button class="detail-btn" style="display: inline-flex; width: auto; padding: 8px 20px;" onclick="showDetail('commission-rules')">📊 Learn about Commission Rules →</button></div>` },
             { id: "commission-rules", title: "📊 Commission Rules", meta: "Daily base × countdown days + quick reference", desc: "Calculate commission: daily base * days",
-              content: `<p><strong>Single order commission formula:</strong><br>\nCommission = <strong>Daily base × Countdown days</strong><br>\n(Countdown is always whole days, minimum 1 day)</p>\n<p><strong>Base per order per day:</strong><br>\nLevel 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;|&nbsp; Level 3: <strong>K6.5</strong></p>\n<p><strong>Example:</strong> Level 1 order with 15-day countdown → K1 × 15 = <strong>K15 commission</strong>.</p>\n<div style="overflow-x: auto; margin: 16px 0;"><table style="min-width: 280px;"><thead><tr><th>Level</th><th>Daily base</th><th>Max orders</th><th>Daily total</th><th>Weekly total</th></tr></thead><tbody><tr><td style="text-align: center;"><strong>Level 1</strong></td><td style="text-align: center;">K1</td><td style="text-align: center;">3</td><td style="text-align: center;"><strong>K3</strong></td><td style="text-align: center;">K21</td></tr><tr><td style="text-align: center;"><strong>Level 2</strong></td><td style="text-align: center;">K3.3</td><td style="text-align: center;">6</td><td style="text-align: center;"><strong>K19.8</strong></td><td style="text-align: center;">K138.6</td></tr><tr><td style="text-align: center;"><strong>Level 3</strong></td><td style="text-align: center;">K6.5</td><td style="text-align: center;">8</td><td style="text-align: center;"><strong>K52</strong></td><td style="text-align: center;">K364</td></tr></tbody>}</div>\n<p><em>Longer countdowns increase your commission proportionally.</em></p>` },
+              content: `<p><strong>Single order commission formula:</strong><br>\nCommission = <strong>Daily base × Countdown days</strong><br>\n(Countdown is always whole days, minimum 1 day)</p>\n<p><strong>Base per order per day:</strong><br>\nLevel 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;|&nbsp; Level 3: <strong>K6.5</strong></p>\n<p><strong>Example:</strong> Level 1 order with 15-day countdown → K1 × 15 = <strong>K15 commission</strong>.</p>\n<div style="overflow-x: auto; margin: 16px 0;"><table style="min-width: 280px;"><thead><tr><th>Level</th><th>Daily base</th><th>Max orders</th><th>Daily total</th><th>Weekly total</th></tr></thead><tbody><tr><td style="text-align: center;"><strong>Level 1</strong></td><td style="text-align: center;">K1</td><td style="text-align: center;">3</td><td style="text-align: center;"><strong>K3</strong></td><td style="text-align: center;">K21</td></tr><tr><td style="text-align: center;"><strong>Level 2</strong></td><td style="text-align: center;">K3.3</td><td style="text-align: center;">6</td><td style="text-align: center;"><strong>K19.8</strong></td><td style="text-align: center;">K138.6</td></td><td style="text-align: center;"><strong>Level 3</strong></td><td style="text-align: center;">K6.5</td><td style="text-align: center;">8</td><td style="text-align: center;"><strong>K52</strong></td><td style="text-align: center;">K364</td></tr></tbody></table></div><p><em>Longer countdowns increase your commission proportionally.</em></p>` },
             { id: "extra-earnings", title: "💡 Extra Earnings", meta: "Beyond daily order commissions", desc: "Invitation bonuses, subordinate rebates, fixed salary & welfare orders",
-              content: `<p>In addition to daily order commissions, PG offers several extra earning methods:</p><h4>🔹 Invitation Bonus (Limited-time activity)</h4><p>Amount and rules are announced in the official PG discussion group. Contact your manager for current offers.</p><h4>🔹 Subordinate Rebate (0.2% of product value)</h4><p>When your downline Employees complete daily orders, you earn 0.2% of the <strong>product value</strong> of each order.<br>Example: A Level 2 Employee buys an item worth K110. Your rebate = K110 × 0.2% = <strong>K0.22</strong> per order. Automatically added to your balance.</p><h4>🔹 Welfare Product Orders</h4><p>Limited‑quantity orders offered by the platform. Purchasing with your user center balance earns a higher rebate. These orders do <strong>not</strong> affect your daily order volume.<br>Example: 15‑day countdown, product value K200, commission <strong>K80</strong> (much higher than standard orders).</p><h4>🔹 Fixed Salary & Tax Subsidies</h4><p>Based on the number of your downline Employees who are Level 2 or above (registered using your invitation link), you receive the following fixed salary and tax subsidies. The fixed salary is paid in two installments: on the <strong>1st</strong> and <strong>15th</strong> of each month.</p><div style="overflow-x: auto; margin: 12px 0;"><table style="min-width: 280px;"><thead><tr><th>Team Employees (Level 2+)</th><th>Fixed salary (K)</th><th>Tax subsidies</th></tr></thead><tbody><tr><td style="text-align: center;">1</td><td style="text-align: center;">—</td><td style="text-align: center;">10%</td></tr><tr><td style="text-align: center;">5</td><td style="text-align: center;">100</td><td style="text-align: center;">10%</td></tr><tr><td style="text-align: center;">10</td><td style="text-align: center;">500</td><td style="text-align: center;">15%</td></tr><tr><td style="text-align: center;">20</td><td style="text-align: center;">1200</td><td style="text-align: center;">20%</td></tr><tr><td style="text-align: center;">30</td><td style="text-align: center;">3500</td><td style="text-align: center;">20%</td></tr><tr><td style="text-align: center;">50</td><td style="text-align: center;">6500</td><td style="text-align: center;">20%</td></tr></tbody>}</div><p>📌 Tax subsidies apply even with 1 qualifying downline. Fixed salary starts from 5 downline Employees. To receive tax subsidies, once you meet the requirements, please contact your manager to apply.</p><div class="warning-box">✅ All extra earnings are calculated automatically. For details and eligibility, contact your manager.</div>` },
+              content: `<p>In addition to daily order commissions, PG offers several extra earning methods:</p><h4>🔹 Invitation Bonus (Limited-time activity)</h4><p>Amount and rules are announced in the official PG discussion group. Contact your manager for current offers.</p><h4>🔹 Subordinate Rebate (0.2% of product value)</h4><p>When your downline Employees complete daily orders, you earn 0.2% of the <strong>product value</strong> of each order.<br>Example: A Level 2 Employee buys an item worth K110. Your rebate = K110 × 0.2% = <strong>K0.22</strong> per order. Automatically added to your balance.</p><h4>🔹 Welfare Product Orders</h4><p>Limited‑quantity orders offered by the platform. Purchasing with your user center balance earns a higher rebate. These orders do <strong>not</strong> affect your daily order volume.<br>Example: 15‑day countdown, product value K200, commission <strong>K80</strong> (much higher than standard orders).</p><h4>🔹 Fixed Salary & Tax Subsidies</h4><p>Based on the number of your downline Employees who are Level 2 or above (registered using your invitation link), you receive the following fixed salary and tax subsidies. The fixed salary is paid in two installments: on the <strong>1st</strong> and <strong>15th</strong> of each month.</p><div style="overflow-x: auto; margin: 12px 0;"><table style="min-width: 280px;"><thead><tr><th>Team Employees (Level 2+)</th><th>Fixed salary (K)</th><th>Tax subsidies</th></tr></thead><tbody><tr><td style="text-align: center;">1</td><td style="text-align: center;">—</td><td style="text-align: center;">10%</td></tr><tr><td style="text-align: center;">5</td><td style="text-align: center;">100</td><td style="text-align: center;">10%</td></tr><tr><td style="text-align: center;">10</td><td style="text-align: center;">500</td><td style="text-align: center;">15%</td></tr><tr><td style="text-align: center;">20</td><td style="text-align: center;">1200</td><td style="text-align: center;">20%</td></tr><tr><td style="text-align: center;">30</td><td style="text-align: center;">3500</td><td style="text-align: center;">20%</td></tr><tr><td style="text-align: center;">50</td><td style="text-align: center;">6500</td><td style="text-align: center;">20%</td></tr></tbody></table></div><p>📌 Tax subsidies apply even with 1 qualifying downline. Fixed salary starts from 5 downline Employees. To receive tax subsidies, once you meet the requirements, please contact your manager to apply.</p><div class="warning-box">✅ All extra earnings are calculated automatically. For details and eligibility, contact your manager.</div>` },
             { id: "platform-synergy", title: "🔄 Synergy & Growth", meta: "Invite → Bonus → Welfare orders → Upgrade → Team salary → Downline rebates", desc: "How invitations, bonuses, upgrades, team salary and rebates work together",
               content: `<p>PG's activity system is highly interconnected — every action fuels the next opportunity:</p><ol style="margin-left: 1.2rem; line-height: 1.6;"><li><strong>Invite new members</strong> → Earn <strong>invitation bonus</strong> once they become regular Employees (Level 1+).</li><li><strong>Use your bonus</strong> → Participate in <strong>Welfare Product Orders</strong> which yield higher commissions.</li><li><strong>Accumulate earnings</strong> → Upgrade to Level 2 or Level 3, unlocking more daily tasks and higher income.</li><li><strong>Build your team</strong> → When your downline members upgrade (e.g., to Level 2+), you receive <strong>fixed team salary</strong> and <strong>downline rebates (0.2% of the product value of their orders)</strong>.</li><li><strong>Scale up</strong> → More active team members = more passive income, creating a sustainable growth loop.</li></ol><div class="warning-box">💡 Every level deposit is fully refundable when you upgrade.</div><div style="margin-top: 24px; text-align: center;"><button class="detail-btn" style="display: inline-flex; width: auto; padding: 8px 20px;" onclick="showDetail('extra-earnings')">💰 Learn about Extra Earnings →</button></div>` },
             { id: "order-block-reasons", title: "🚫 Order Block Reasons", meta: "3 common errors & how to fix them", desc: "Why you can't place an order and what to do",
@@ -749,8 +778,8 @@
         }
         ARTICLES['contact-manager'] = { title: "📞 Contact Manager", meta: "Direct support for deposit/withdrawal/upgrades", content: buildContactManagerContent() };
 
+        // del what-is-pg 
         const ALL_CARDS = [
-            { id: "what-is-pg", title: "🌐 What Is PG?", desc: "Online work platform since 2018" },
             { id: "why-pg-safe", title: "🔒 Why Is PG Safe?", desc: "Legal, stable, fund security & verifiable" },
             { id: "deposit-earnings", title: "💰 Earn per Level", desc: "Weekly earnings: K21 (L1) · K138.6 (L2) · K364 (L3)" },
             { id: "topup-steps", title: "🔁 Top‑Up Steps", desc: "Contact manager → transfer → confirm → credit" },
@@ -784,16 +813,8 @@
         let savedScrollY = 0;
         let isTransitioning = false;
 
-        function getCardThumbnail(cardId) {
-            if (cardId === 'why-pg-safe') return 'images/pg-registration.jpg';
-            if (cardId === 'task-steps') return 'images/address.jpg';
-            if (cardId === 'order-guide') return 'images/order-status-sample.jpg';
-            return null;
-        }
-
         function getCardTag(cardId) {
             const tags = {
-                'what-is-pg': 'Introduction',
                 'why-pg-safe': 'Security',
                 'deposit-earnings': 'Earnings',
                 'topup-steps': 'Guide',
@@ -820,12 +841,10 @@
                 if (!visible.includes(card.id)) return;
                 const article = ARTICLES[card.id];
                 const shortDesc = article ? article.meta : card.desc;
-                const tag = getCardTag(card.id);
                 const cardDiv = document.createElement('div');
                 cardDiv.className = 'card';
                 cardDiv.setAttribute('data-id', card.id);
                 cardDiv.innerHTML = `
-                    <div class="card-tag">${tag}</div>
                     <div class="card-header"><h3>${card.title}</h3></div>
                     <div class="card-excerpt">${shortDesc}</div>
                 `;
