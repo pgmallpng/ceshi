@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>PG Earn – Daily Commission</title>
-    <meta property="og:title" content="PG Earn – Daily Commission">
-    <meta property="og:description" content="PG Guide Center – Platform introduction, security, deposit/withdrawal rules & step-by-step guides. 8 years stable operation, transparent, compliant.">
+    <title>PG Earn – Commission Quotidienne</title>
+    <meta property="og:title" content="PG Earn – Commission Quotidienne">
+    <meta property="og:description" content="Centre de guidage PG – Présentation de la plateforme, sécurité, règles de dépôt/retrait et guides étape par étape. 8 ans de fonctionnement stable, transparent et conforme.">
     <meta property="og:image" content="https://raw.githubusercontent.com/pgmallpng/MiaClaire/main/images/share-preview.png">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="PG Earn – Daily Commission">
-    <meta name="twitter:description" content="Earn daily commission, 8 years stable. Complete tasks, withdraw easily.">
+    <meta name="twitter:title" content="PG Earn – Commission Quotidienne">
+    <meta name="twitter:description" content="Gagnez une commission quotidienne, 8 ans de stabilité. Effectuez des tâches, retirez facilement.">
     <meta name="twitter:image" content="https://raw.githubusercontent.com/pgmallpng/MiaClaire/main/images/share-preview.png">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💰%3C/text%3E%3C/svg%3E">
     <style>
@@ -34,6 +34,32 @@
             --warning-bg: #fef3c7;
             --warning-border: #f59e0b;
             --level-card-bg: #f8fafc;
+            --to-top-bg: rgba(255,255,255,0.9);
+            --to-top-icon: #3b82f6;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body: #0f172a;
+                --bg-card: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --text-muted: #94a3b8;
+                --border-light: #334155;
+                --badge-bg: #1e293b;
+                --badge-color: #60a5fa;
+                --contact-bg: #334155;
+                --footer-color: #64748b;
+                --divider: #334155;
+                --warning-bg: #451a03;
+                --warning-border: #f59e0b;
+                --level-card-bg: #0f172a;
+                --to-top-bg: #1e293b;
+                --to-top-icon: #60a5fa;
+            }
+            .detail-text table { background: #0f172a; }
+            .detail-text th { background: #334155; }
+            .detail-text tr:nth-child(even) { background: #1e293b; }
+            .scrollable-img img { filter: brightness(0.9); }
         }
         * {
             margin: 0;
@@ -143,9 +169,8 @@
         .glass-btn:active {
             transform: scale(0.96);
         }
-
         .intro-section {
-            background: #ffffff;
+            background: var(--bg-card);
             border-radius: 20px;
             padding: 28px 24px;
             margin-bottom: 32px;
@@ -155,7 +180,7 @@
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 12px;
-            color: #1e293b;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -188,7 +213,6 @@
         .intro-link:active {
             opacity: 0.7;
         }
-
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -232,7 +256,6 @@
             color: var(--text-secondary);
             line-height: 1.4;
         }
-
         .detail-view {
             background: transparent;
             border: none;
@@ -268,7 +291,7 @@
         .detail-title {
             font-size: 2rem;
             font-weight: 700;
-            color: #1e293b;
+            color: var(--text-primary);
             border-left: 5px solid var(--badge-color);
             padding-left: 18px;
             margin-bottom: 12px;
@@ -310,7 +333,7 @@
         .detail-text table {
             width: 100%;
             border-collapse: collapse;
-            background: #f8fafc;
+            background: var(--level-card-bg);
             border-radius: 16px;
             overflow: hidden;
             margin: 16px 0;
@@ -387,7 +410,7 @@
             right: 24px;
             width: 56px;
             height: 56px;
-            background: rgba(255, 255, 255, 0.9);
+            background: var(--to-top-bg);
             backdrop-filter: blur(8px);
             border-radius: 50%;
             display: flex;
@@ -402,16 +425,51 @@
         .floating-contact svg {
             width: 28px;
             height: 28px;
-            stroke: #3b82f6;
+            stroke: var(--badge-color);
             stroke-width: 1.5;
             fill: none;
         }
         .floating-contact:hover {
-            background: white;
+            background: var(--bg-card);
             transform: scale(1.05);
         }
         .floating-contact:active {
             transform: scale(0.94);
+        }
+        .to-top-btn {
+            position: fixed;
+            bottom: 96px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            background: var(--to-top-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 1000;
+            transition: opacity 0.2s, transform 0.2s;
+            border: 1px solid var(--border-light);
+            opacity: 0;
+            visibility: hidden;
+        }
+        .to-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .to-top-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--badge-color);
+            stroke-width: 1.8;
+            fill: none;
+        }
+        .to-top-btn:hover {
+            background: var(--bg-card);
+            transform: scale(1.05);
         }
         .toc-modal {
             position: fixed;
@@ -433,7 +491,7 @@
             opacity: 1;
         }
         .toc-content {
-            background: white;
+            background: var(--bg-card);
             width: 80%;
             max-width: 400px;
             border-radius: 28px;
@@ -457,14 +515,14 @@
         .toc-list a {
             display: block;
             padding: 10px 14px;
-            background: #f1f5f9;
+            background: var(--contact-bg);
             border-radius: 40px;
             color: var(--text-primary);
             text-decoration: none;
             transition: 0.2s;
         }
         .toc-list a:hover {
-            background: #e2e8f0;
+            background: var(--border-light);
         }
         .contact-link {
             display: inline-block;
@@ -479,7 +537,7 @@
             transition: background 0.2s;
         }
         .contact-link:hover {
-            background: #e2e8f0;
+            background: var(--border-light);
         }
         .hidden {
             display: none;
@@ -568,7 +626,7 @@
             margin: 20px 0;
         }
         .salary-card-item {
-            background: #f8fafc;
+            background: var(--level-card-bg);
             border: 1px solid var(--border-light);
             border-radius: 20px;
             padding: 18px;
@@ -604,7 +662,7 @@
         .detail-field {
             flex: 1;
             min-width: 100px;
-            background: white;
+            background: var(--bg-card);
             padding: 8px 12px;
             border-radius: 16px;
             text-align: center;
@@ -647,6 +705,29 @@
             .intro-section {
                 padding: 20px 16px;
             }
+            .to-top-btn {
+                bottom: 88px;
+                right: 20px;
+                width: 44px;
+                height: 44px;
+            }
+            .floating-contact {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .home-fadein {
+            animation: fadeInUp 0.25s ease-out forwards;
         }
         .view-exit {
             animation: fadeOutLeft 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -668,31 +749,26 @@
 <body>
 <div class="wrapper">
     <div class="header">
-        <h1>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            PG Earn – Daily Commission
-        </h1>
-        <p>Complete orders for brands — Earn every day</p>
+        <h1>💰 PG Earn – Commission Quotidienne</h1>
+        <p>Effectuez des commandes pour les marques — Gagnez chaque jour</p>
     </div>
     <div class="filter-bar">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="intern">Intern</button>
-        <button class="filter-btn" data-filter="staff">Staff</button>
+        <button class="filter-btn active" data-filter="all">Tout</button>
+        <button class="filter-btn" data-filter="intern">Débutant</button>
+        <button class="filter-btn" data-filter="staff">Employé</button>
     </div>
     <div class="header-actions">
         <button id="headerTocBtn" class="glass-btn">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h7" />
             </svg>
-            View Contents
+            Sommaire
         </button>
         <button id="headerShareBtn" class="glass-btn">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
             </svg>
-            Share Guide
+            Partager
         </button>
     </div>
     <div id="homeContainer">
@@ -701,18 +777,17 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                What Is PG?
+                Qu'est-ce que PG ?
             </div>
             <div class="intro-excerpt">
-                PG (PG Playground) is a legally registered technology service company in Colorado, USA, operating stably since 2018. 
-                It provides online marketing data support for global brands by generating real order records. 
-                Users earn commissions by completing order tasks — a real job, not an investment.
+                PG (PG Playground) est une société de services technologiques légalement enregistrée au Colorado, États-Unis, fonctionnant de manière stable depuis 2018.
+                Elle fournit un support de données marketing en ligne pour les marques mondiales en générant des enregistrements de commandes réels.
+                Les utilisateurs gagnent des commissions en effectuant des tâches de commande — un vrai travail, pas un investissement.
             </div>
-            <button class="intro-link" onclick="showDetail('what-is-pg')">Read more →</button>
+            <button class="intro-link" onclick="showDetail('what-is-pg')">Lire la suite →</button>
         </div>
-
         <div id="cardsArea" class="card-grid"></div>
-        <footer>✅ Select any card for detailed guide</footer>
+        <footer>✅ Sélectionnez n'importe quelle carte pour un guide détaillé</footer>
     </div>
     <div id="detailContainer" class="hidden">
         <div class="detail-view">
@@ -721,36 +796,41 @@
         <footer></footer>
     </div>
     <div class="disclaimer" style="text-align: center; font-size: 0.7rem; color: var(--footer-color); margin-top: 20px; padding: 12px 0 8px; border-top: 1px solid var(--divider);">
-        This is a personal help site. All rules are subject to the manager’s reply.
+        Ceci est un site d'aide personnel. Toutes les règles sont sujettes à la réponse du responsable.
     </div>
 </div>
-<div id="floatingContactBtn" class="floating-contact" title="Contact Manager">
+<div id="floatingContactBtn" class="floating-contact" title="Contacter le responsable">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+    </svg>
+</div>
+<div id="toTopBtn" class="to-top-btn" title="Retour en haut">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 10l7-7m0 0l7 7m-7-7v18" />
     </svg>
 </div>
 <div id="tocModal" class="toc-modal">
     <div class="toc-content">
-        <h4>📖 Table of Contents</h4>
+        <h4>📖 Sommaire</h4>
         <ul id="tocList" class="toc-list"></ul>
-        <button id="closeTocBtn" style="margin-top:16px; width:100%; padding:8px; border-radius:40px; border:1px solid var(--border-light); background:rgba(15,23,42,0.9); cursor:pointer;">Close</button>
+        <button id="closeTocBtn" style="margin-top:16px; width:100%; padding:8px; border-radius:40px; border:1px solid var(--border-light); background:var(--badge-color); color:white; cursor:pointer;">Fermer</button>
     </div>
 </div>
 <div id="lightbox" class="lightbox">
     <div class="lightbox-content" id="lightboxContent">
-        <img id="lightbox-img" src="" alt="Full size">
+        <img id="lightbox-img" src="" alt="Plein écran">
     </div>
-    <button class="lightbox-close" id="lightboxCloseBtn" aria-label="Close">✕</button>
+    <button class="lightbox-close" id="lightboxCloseBtn" aria-label="Fermer">✕</button>
     <div class="zoom-controls">
-        <button id="zoomOutBtn" title="Zoom out">−</button>
-        <button id="zoomResetBtn" title="Reset zoom">⟲</button>
-        <button id="zoomInBtn" title="Zoom in">+</button>
+        <button id="zoomOutBtn" title="Dézoomer">−</button>
+        <button id="zoomResetBtn" title="Réinitialiser">⟲</button>
+        <button id="zoomInBtn" title="Zoomer">+</button>
     </div>
 </div>
 <script src="contact-config.js"></script>
 <script>
     (function() {
-        // lightbox
+        // Lightbox logic (unchanged but kept)
         let lightboxActive = false, currentZoom = 1, imgTranslateX = 0, imgTranslateY = 0, startX = 0, startY = 0, isDragging = false, initialDistance = 0, initialScale = 1, isPinching = false;
         const lightbox = document.getElementById('lightbox'), lightboxImg = document.getElementById('lightbox-img'), lightboxContent = document.getElementById('lightboxContent'), zoomInBtn = document.getElementById('zoomInBtn'), zoomOutBtn = document.getElementById('zoomOutBtn'), zoomResetBtn = document.getElementById('zoomResetBtn'), closeBtn = document.getElementById('lightboxCloseBtn');
         [zoomInBtn, zoomOutBtn, zoomResetBtn, closeBtn].forEach(btn => btn.style.zIndex = '1003');
@@ -772,69 +852,75 @@
         function onTouchEnd(e) { if (isPinching) { isPinching = false; clampTranslate(); } if (isDragging) endDrag(); }
         function onWheel(e) { if (!lightboxActive) return; e.preventDefault(); const delta = e.deltaY > 0 ? -0.1 : 0.1; let newZoom = currentZoom + delta; newZoom = Math.min(Math.max(newZoom, 0.5), 3); if (newZoom !== currentZoom) { currentZoom = newZoom; applyTransform(); clampTranslate(); } }
         lightbox.addEventListener('mousedown', startDrag); window.addEventListener('mousemove', onDrag); window.addEventListener('mouseup', endDrag); lightbox.addEventListener('touchstart', onTouchStart, { passive: false }); lightbox.addEventListener('touchmove', onTouchMove, { passive: false }); lightbox.addEventListener('touchend', onTouchEnd); lightbox.addEventListener('wheel', onWheel, { passive: false }); lightbox.addEventListener('click', (e) => { if (e.target === lightbox || e.target === lightboxContent) closeLightbox(); }); closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); }); zoomInBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomIn(); }); zoomOutBtn.addEventListener('click', (e) => { e.stopPropagation(); zoomOut(); }); zoomResetBtn.addEventListener('click', (e) => { e.stopPropagation(); resetZoomAndPan(); clampTranslate(); });
-
-        // share
+        
+        // Share
         function doShare() {
             const url = window.location.href;
             if (navigator.share) {
-                navigator.share({ title: document.title, text: 'PG Earn – Daily Commission. Complete orders and earn daily.', url: url }).catch(()=>{});
+                navigator.share({ title: document.title, text: 'PG Earn – Commission Quotidienne. Effectuez des commandes et gagnez chaque jour.', url: url }).catch(()=>{});
             } else if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(() => alert('Link copied to clipboard!')).catch(() => alert('Unable to copy. Manual copy: ' + url));
+                navigator.clipboard.writeText(url).then(() => alert('Lien copié dans le presse-papiers !')).catch(() => alert('Impossible de copier. Copie manuelle : ' + url));
             } else {
-                alert('Share not supported. Please copy this link:\n' + url);
+                alert('Partage non supporté. Veuillez copier ce lien :\n' + url);
             }
         }
-
+        
+        // CARDS_DATA (French content)
         const CARDS_DATA = [
-            { id: "what-is-pg", title: "What Is PG?", meta: "Legal tech service since 2018 · 8 years stable", desc: "Online work platform since 2018",
-              content: `<p>PG (PG Playground) is a legally registered technology service company in Colorado, USA. PG has been stably operating for <strong>8 years</strong> since its founding in 2018.</p>
-<p>We specialize in providing online marketing data support for global brands by generating real order records to enhance their market visibility.</p>
-<p><strong>PG is a job, not an investment. You earn by completing orders — your income comes from your labor, not from financial returns.</strong></p>
-<p>Users earn commissions by completing assigned order tasks. Tasks are divided by levels — higher levels come with more daily tasks and higher daily pay. All tasks are generated based on real brand demands, ensuring data authenticity and business compliance.</p>
-<p>Income is settled based on actual task completion. Withdrawals are supported every workday (minimum amount varies by level, no upper limit).</p>
-<p>All deposits serve as order working capital and are fully refundable upon exit.</p>
-<p>The platform uses an automated order review and settlement system to ensure transaction transparency and fund security.</p>
-<p>PG is committed to transparent rules, refundable funds, and real earnings. We do not promise "get rich quick" — but we strive to provide every diligent user with a long‑term, stable, and sustainable online work opportunity.</p>
-<p>For any questions, please contact your manager or the official support team.</p>` },
-            { id: "why-pg-safe", title: "Why Is PG Safe?", meta: "Legal registration, fund security, transparent rules", desc: "Legal, stable, fund security & verifiable",
-              content: `<ul><li><strong>Legally Registered</strong> — Colorado, USA (2018), address publicly accessible</li><li><strong>Stable Operation</strong> — Stably operated for 8 years</li><li><strong>Fund Security</strong> — Deposit is working capital, earnings are labor‑based</li><li><strong>Transparent Rules</strong> — Every record traceable, income matched to orders</li><li><strong>Verifiable</strong> — Company info can be verified via official channels</li></ul><p>⭐ Thousands trust PG for daily online income – fully compliant.</p><div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;"><img src="images/pg-registration.jpg" alt="PG Registration Certificate" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="margin-top: 8px; font-size: 0.8rem; color: var(--text-muted);">PG Registration Certificate</div><div style="margin-top: 12px;"><a href="https://www.coloradosos.gov/biz/BusinessEntityDetail.do?quitButtonDestination=BusinessEntityCriteriaExt&fileId=20181650293&masterFileId=" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: var(--contact-bg); padding: 6px 14px; border-radius: 40px; text-decoration: none; color: var(--badge-color); font-weight: 500; font-size: 0.85rem;">🔍 Verify on Colorado SOS ↗</a></div><div style="margin-top: 16px;"><img src="images/pg-registration-summary.jpg" alt="Company registration summary" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="margin-top: 8px; font-size: 0.7rem; color: var(--text-muted); text-align: center;">Company registration summary (Colorado SOS)</div></div></div>` },
-            { id: "deposit-earnings", title: "Earn per Level", meta: "Level 1–3 · daily tasks · weekly income & withdrawal limits", desc: "Weekly earnings: K21 (L1) · K138.6 (L2) · K364 (L3)",
-              content: `<div class="salary-grid"><div class="salary-card-item"><div class="level-header"><span class="level-name">🌟 Level 1</span><span class="level-badge">💰 Recharge: K240</span></div><div class="salary-details"><div class="detail-field"><div class="field-label">📋 Max concurrent orders</div><div class="field-value">3</div></div><div class="detail-field"><div class="field-label">🏆 Weekly income</div><div class="field-value">K21</div></div><div class="detail-field"><div class="field-label">💸 Min withdrawal</div><div class="field-value">K14</div></div><div class="detail-field"><div class="field-label">💸 Max withdrawal</div><div class="field-value">No limit</div></div></div></div><div class="salary-card-item"><div class="level-header"><span class="level-name">⭐ Level 2</span><span class="level-badge">💰 Recharge: K670</span></div><div class="salary-details"><div class="detail-field"><div class="field-label">📋 Max concurrent orders</div><div class="field-value">6</div></div><div class="detail-field"><div class="field-label">🏆 Weekly income</div><div class="field-value">K138.6</div></div><div class="detail-field"><div class="field-label">💸 Min withdrawal</div><div class="field-value">K80</div></div><div class="detail-field"><div class="field-label">💸 Max withdrawal</div><div class="field-value">No limit</div></div></div></div><div class="salary-card-item"><div class="level-header"><span class="level-name">🚀 Level 3</span><span class="level-badge">💰 Recharge: K1,700</span></div><div class="salary-details"><div class="detail-field"><div class="field-label">📋 Max concurrent orders</div><div class="field-value">8</div></div><div class="detail-field"><div class="field-label">🏆 Weekly income</div><div class="field-value">K364</div></div><div class="detail-field"><div class="field-label">💸 Min withdrawal</div><div class="field-value">K250</div></div><div class="detail-field"><div class="field-label">💸 Max withdrawal</div><div class="field-value">No limit</div></div></div></div></div><p><em>Interns are eligible for a discount. Contact your manager for the exact amount.</em></p>
-<p>✅ When you upgrade to a higher level, your previous level deposit will be fully refunded. For example, upgrading from Level 1 (K240) to Level 2 (K670) will refund the K240 deposit.</p>
-<p>💡 Your deposit is working capital (fully refundable). Higher level = more daily orders + higher earnings.</p>` },
-            { id: "topup-steps", title: "Top‑Up Steps", meta: "4 easy steps to fund your account", desc: "Contact manager → transfer → confirm → credit",
-              content: `<ol><li>Contact your manager to get the current account details.</li><li>Transfer the required deposit (keep a screenshot of the Ref No).</li><li>Send the screenshot to your manager. Once confirmed, the funds will be credited to your PG account.</li><li>The platform supports transfers via <strong>BSP, Kina, USDT, and other local banks</strong>.</li></ol><div class="warning-box">⚠️ Always confirm details with your manager before any transfer.</div>` },
-            { id: "withdrawal-rules", title: "Withdrawal", meta: "Request schedule & arrival time", desc: "Mon–Fri only, arrive 1–4 days",
-              content: `<ul><li><strong>Withdrawal request:</strong> Monday–Friday (no requests on weekends).</li><li><strong>Funds arrive:</strong> 1–4 days (including weekends).</li><li><strong>Minimum withdrawal:</strong> depends on your level.</li></ul><div class="warning-box">📌 All withdrawals are processed in order. Make sure your bank account details are correct to avoid delays.</div>` },
-            { id: "why-topup", title: "Why Top Up?", meta: "Deposit = working capital (refundable)", desc: "Deposit is working capital, fully refundable",
-              content: `<p>The deposit is <strong>not a "fee"</strong> – it's working capital to support your order flow.</p>
-<p>Each order requires matching funds to complete the process. Your deposit stays in your account as a tool for your daily tasks. Every order you complete earns you commission. When you upgrade or leave, the deposit is fully refunded.</p>
-<div class="warning-box">✅ <strong>PG is a job, not an investment. Completing your daily orders is the foundation of your income — you earn by working, not by waiting.</strong></div>` },
-            { id: "task-steps", title: "Task Steps", meta: "Step-by-step guide for all employees", desc: "Step-by-step: add address → submit order",
-              content: `<p><strong>📍 1. Add your shipping address (one time only)</strong><br>Go to <strong>User Center</strong> (bottom right) → scroll down to find "Shipping Address" → enter your address once.</p>
-<p><strong>🏠 2. Enter the task page</strong><br>On the Home page, click on your level button (for example, <strong>"Level 1 employee"</strong> if you are Level 1). For Level 2 or Level 3, click the corresponding level button.</p>
-<p><strong>🛒 3. Select the first item and start order</strong><br>Choose the first item from the list and click <strong>"Buy Now"</strong>.</p>
-<p><strong>4. Review and submit your order</strong><br>After selecting <strong>"Select All"</strong>, click <strong>"Checkout"</strong>. Then click <strong>"Submit Order and Confirm"</strong>.</p>
+            { id: "what-is-pg", title: "Qu'est-ce que PG ?", meta: "Service tech légal depuis 2018 · 8 ans de stabilité", desc: "Plateforme de travail en ligne depuis 2018",
+              content: `<p>PG (PG Playground) est une société de services technologiques légalement enregistrée au Colorado, États-Unis. PG fonctionne de manière stable depuis <strong>8 ans</strong> depuis sa création en 2018.</p>
+<p>Nous nous spécialisons dans le support de données marketing en ligne pour les marques mondiales en générant des enregistrements de commandes réels afin d'améliorer leur visibilité sur le marché.</p>
+<p><strong>PG est un emploi, pas un investissement. Vous gagnez en effectuant des commandes — vos revenus proviennent de votre travail, pas de rendements financiers.</strong></p>
+<p>Les utilisateurs gagnent des commissions en effectuant des tâches de commande assignées. Les tâches sont divisées par niveaux — des niveaux plus élevés offrent plus de tâches quotidiennes et un salaire quotidien plus élevé. Toutes les tâches sont générées en fonction des demandes réelles des marques, garantissant l'authenticité des données et la conformité commerciale.</p>
+<p>Les revenus sont réglés en fonction de l'achèvement réel des tâches. Les retraits sont possibles chaque jour ouvrable (le montant minimum varie selon le niveau, pas de limite maximale).</p>
+<p>Tous les dépôts servent de capital de travail pour les commandes et sont entièrement remboursables à la sortie.</p>
+<p>La plateforme utilise un système de révision et de règlement automatisé des commandes pour garantir la transparence des transactions et la sécurité des fonds.</p>
+<p>PG s'engage à des règles transparentes, des fonds remboursables et des revenus réels. Nous ne promettons pas de "devenir riche rapidement" — mais nous nous efforçons d'offrir à chaque utilisateur diligent une opportunité de travail en ligne stable et durable à long terme.</p>
+<p>Pour toute question, veuillez contacter votre responsable ou l'équipe de support officielle.</p>` },
+            { id: "why-pg-safe", title: "Pourquoi PG est-il sûr ?", meta: "Enregistrement légal, sécurité des fonds, règles transparentes", desc: "Légal, stable, sécurité des fonds et vérifiable",
+              content: `<ul><li><strong>Enregistrement légal</strong> — Colorado, États-Unis (2018), adresse accessible au public</li><li><strong>Fonctionnement stable</strong> — 8 ans d'activité stable</li><li><strong>Sécurité des fonds</strong> — Le dépôt est un capital de travail, les revenus sont basés sur le travail</li><li><strong>Règles transparentes</strong> — Chaque enregistrement traçable, revenus liés aux commandes</li><li><strong>Vérifiable</strong> — Les informations de l'entreprise peuvent être vérifiées via les canaux officiels</li></ul><p>⭐ Des milliers de personnes font confiance à PG pour un revenu quotidien en ligne – pleinement conforme.</p><div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;"><img src="images/pg-registration.jpg" alt="Certificat d'enregistrement PG" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="margin-top: 8px; font-size: 0.8rem; color: var(--text-muted);">Certificat d'enregistrement PG</div><div style="margin-top: 12px;"><a href="https://www.coloradosos.gov/biz/BusinessEntityDetail.do?quitButtonDestination=BusinessEntityCriteriaExt&fileId=20181650293&masterFileId=" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: var(--contact-bg); padding: 6px 14px; border-radius: 40px; text-decoration: none; color: var(--badge-color); font-weight: 500; font-size: 0.85rem;">
+    🔍 Vérifier sur Colorado SOS
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 14px; height: 14px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+    </svg>
+</a></div><div style="margin-top: 16px;"><img src="images/pg-registration-summary.jpg" alt="Récapitulatif d'enregistrement" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="margin-top: 8px; font-size: 0.7rem; color: var(--text-muted); text-align: center;">Récapitulatif d'enregistrement (Colorado SOS)</div></div></div>` },
+            { id: "deposit-earnings", title: "Gains par niveau", meta: "Niveaux 1–3 · tâches quotidiennes · revenus et limites de retrait hebdomadaires", desc: "Gains hebdomadaires : K21 (L1) · K138.6 (L2) · K364 (L3)",
+              content: `<div class="salary-grid"><div class="salary-card-item"><div class="level-header"><span class="level-name">🌟 Niveau 1</span><span class="level-badge">💰 Recharge : K240</span></div><div class="salary-details"><div class="detail-field"><div class="field-label">📋 Commandes max simultanées</div><div class="field-value">3</div></div><div class="detail-field"><div class="field-label">🏆 Revenu hebdomadaire</div><div class="field-value">K21</div></div><div class="detail-field"><div class="field-label">💸 Retrait min</div><div class="field-value">K14</div></div><div class="detail-field"><div class="field-label">💸 Retrait max</div><div class="field-value">Sans limite</div></div></div></div><div class="salary-card-item"><div class="level-header"><span class="level-name">⭐ Niveau 2</span><span class="level-badge">💰 Recharge : K670</span></div><div class="salary-details"><div class="detail-field"><div class="field-label">📋 Commandes max simultanées</div><div class="field-value">6</div></div><div class="detail-field"><div class="field-label">🏆 Revenu hebdomadaire</div><div class="field-value">K138.6</div></div><div class="detail-field"><div class="field-label">💸 Retrait min</div><div class="field-value">K80</div></div><div class="detail-field"><div class="field-label">💸 Retrait max</div><div class="field-value">Sans limite</div></div></div></div><div class="salary-card-item"><div class="level-header"><span class="level-name">🚀 Niveau 3</span><span class="level-badge">💰 Recharge : K1,700</span></div><div class="salary-details"><div class="detail-field"><div class="field-label">📋 Commandes max simultanées</div><div class="field-value">8</div></div><div class="detail-field"><div class="field-label">🏆 Revenu hebdomadaire</div><div class="field-value">K364</div></div><div class="detail-field"><div class="field-label">💸 Retrait min</div><div class="field-value">K250</div></div><div class="detail-field"><div class="field-label">💸 Retrait max</div><div class="field-value">Sans limite</div></div></div></div></div><p><em>Les débutants bénéficient d'une réduction. Contactez votre responsable pour le montant exact.</em></p>
+<p>✅ Lorsque vous passez à un niveau supérieur, votre dépôt de niveau précédent est entièrement remboursé. Par exemple, passer du Niveau 1 (K240) au Niveau 2 (K670) remboursera le dépôt de K240.</p>
+<p>💡 Votre dépôt est un capital de travail (entièrement remboursable). Niveau supérieur = plus de commandes quotidiennes + gains plus élevés.</p>` },
+            { id: "topup-steps", title: "Étapes de recharge", meta: "4 étapes faciles pour approvisionner votre compte", desc: "Contactez le responsable → virement → confirmez → crédit",
+              content: `<ol><li>Contactez votre responsable pour obtenir les coordonnées bancaires actuelles.</li><li>Effectuez le virement du dépôt requis (conservez une capture d'écran du numéro de référence).</li><li>Envoyez la capture d'écran à votre responsable. Une fois confirmé, les fonds seront crédités sur votre compte PG.</li><li>La plateforme prend en charge les virements via <strong>BSP, Kina, USDT et autres banques locales</strong>.</li></ol><div class="warning-box">⚠️ Confirmez toujours les détails avec votre responsable avant tout virement.</div>` },
+            { id: "withdrawal-rules", title: "Retrait", meta: "Calendrier des demandes & délai d'arrivée", desc: "Lun–Ven uniquement, arrivée en 1–4 jours",
+              content: `<ul><li><strong>Demande de retrait :</strong> Lundi–Vendredi (pas de demandes le week-end).</li><li><strong>Arrivée des fonds :</strong> 1–4 jours (week-ends inclus).</li><li><strong>Retrait minimum :</strong> dépend de votre niveau.</li></ul><div class="warning-box">📌 Tous les retraits sont traités dans l'ordre. Assurez-vous que vos coordonnées bancaires sont correctes pour éviter les retards.</div>` },
+            { id: "why-topup", title: "Pourquoi recharger ?", meta: "Dépôt = capital de travail (remboursable)", desc: "Le dépôt est un capital de travail, entièrement remboursable",
+              content: `<p>Le dépôt n'est <strong>pas un "frais"</strong> – c'est un capital de travail pour soutenir votre flux de commandes.</p>
+<p>Chaque commande nécessite des fonds correspondants pour terminer le processus. Votre dépôt reste sur votre compte comme outil pour vos tâches quotidiennes. Chaque commande que vous terminez vous rapporte une commission. Lorsque vous passez à un niveau supérieur ou que vous partez, le dépôt est entièrement remboursé.</p>
+<div class="warning-box">✅ <strong>PG est un emploi, pas un investissement. Effectuer vos commandes quotidiennes est la base de vos revenus — vous gagnez en travaillant, pas en attendant.</strong></div>` },
+            { id: "task-steps", title: "Étapes des tâches", meta: "Guide étape par étape pour tous les employés", desc: "Étape par étape : ajoutez l'adresse → soumettez la commande",
+              content: `<p><strong>📍 1. Ajoutez votre adresse de livraison (une seule fois)</strong><br>Allez dans <strong>Centre utilisateur</strong> (en bas à droite) → faites défiler jusqu'à "Adresse de livraison" → entrez votre adresse une fois.</p>
+<p><strong>🏠 2. Entrez dans la page des tâches</strong><br>Sur la page d'accueil, cliquez sur le bouton de votre niveau (par exemple, <strong>"Employé Niveau 1"</strong> si vous êtes Niveau 1). Pour les Niveaux 2 ou 3, cliquez sur le bouton correspondant.</p>
+<p><strong>🛒 3. Sélectionnez le premier article et commencez la commande</strong><br>Choisissez le premier article de la liste et cliquez sur <strong>"Acheter maintenant"</strong>.</p>
+<p><strong>4. Vérifiez et soumettez votre commande</strong><br>Après avoir sélectionné <strong>"Tout sélectionner"</strong>, cliquez sur <strong>"Passer la commande"</strong>. Ensuite, cliquez sur <strong>"Soumettre la commande et confirmer"</strong>.</p>
 <div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin:20px 0;">
-  <div style="text-align:center; width:160px;"><img src="images/address.jpg" alt="Shipping address" style="width:100%; border-radius:12px; cursor:pointer;" onclick="openLightbox(this)" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27100%27%20height%3D%27100%27%3E%3Crect%20fill%3D%27%23ccc%27%20width%3D%27100%27%20height%3D%27100%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23666%27%3ENo%20image%3C%2Ftext%3E%3C%2Fsvg%3E'"><div style="font-size:0.7rem; color:#5c7e97;">📍 Shipping address</div></div>
-  <div style="width:100%;"><div class="scrollable-img"><img src="images/checkout.jpg" alt="Full order process" style="max-height:300px; border-radius:12px; cursor:pointer;" onclick="openLightbox(this)" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%27100%27%3E%3Crect%20fill%3D%27%23ccc%27%20width%3D%27200%27%20height%3D%27100%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23666%27%3ENo%20image%3C%2Ftext%3E%3C%2Fsvg%3E'"></div><div style="font-size:0.7rem; color:#5c7e97; text-align:center;">📋 Swipe right to see full task flow →</div></div>
+  <div style="text-align:center; width:160px;"><img src="images/address.jpg" alt="Adresse de livraison" style="width:100%; border-radius:12px; cursor:pointer;" onclick="openLightbox(this)" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27100%27%20height%3D%27100%27%3E%3Crect%20fill%3D%27%23ccc%27%20width%3D%27100%27%20height%3D%27100%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23666%27%3EPas%20d%27image%3C%2Ftext%3E%3C%2Fsvg%3E'"><div style="font-size:0.7rem; color:#5c7e97;">📍 Adresse de livraison</div></div>
+  <div style="width:100%;"><div class="scrollable-img"><img src="images/checkout.jpg" alt="Processus complet de commande" style="max-height:300px; border-radius:12px; cursor:pointer;" onclick="openLightbox(this)" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%27100%27%3E%3Crect%20fill%3D%27%23ccc%27%20width%3D%27200%27%20height%3D%27100%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20dominant-baseline%3D%27middle%27%20text-anchor%3D%27middle%27%20fill%3D%27%23666%27%3EPas%20d%27image%3C%2Ftext%3E%3C%2Fsvg%3E'"></div><div style="font-size:0.7rem; color:#5c7e97; text-align:center;">📋 Balayez vers la droite pour voir le flux complet →</div></div>
 </div>
-<p>✅ Once submitted, the system starts a countdown. When the countdown ends, the commission will be automatically credited to your balance.</p>
-<p><em>This order is intended to help brands improve their product sales data. No physical product will be shipped to you.</em></p>` },
-            { id: "order-guide", title: "Order Guide", meta: "Order fields, status colors & batch completion", desc: "Entry, fields, red/green colors, batch logic",
-              content: `<p><strong>Two ways to access your orders:</strong><br>\n- After submitting a task, you are redirected to "My Orders".<br>\n- From the home screen, tap <strong>"User Center"</strong> → <strong>"My Orders"</strong>.</p>\n<p><strong>Order card fields:</strong><br>\nEach order card shows: Order number, date, product(s), total amount, <strong>commission earned</strong>, payment status, shipping status, and countdown timer (<strong>Time Left</strong> / <strong>Shipped</strong>).</p>\n<p><strong>⏰ Expire At (exact date & time):</strong> Every order card displays the exact expiration date and time (e.g., "Expire At: 2026-05-09 10:23:15"). By checking the "Expire At" time of all your orders, you can see exactly when each commission will be credited and when you will be able to submit a new order.</p>\n<div style="margin: 20px 0; text-align: center;"><img src="images/order-expire-example.jpg" alt="Example of order countdown and Expire At time" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 6px;">Example: countdown timers and Expire At times</div></div>\n<p><strong>🎨 Order Status Colors</strong><br>\n<span style="color:#f87171;">🔴 Red order title</span> – Appears only in the <strong>"Pending processing"</strong> list. This individual order has finished its countdown, but other orders in the same batch are still running.<br>\n<span style="color:#4ade80;">🟢 Green order title</span> – Order countdown is still in progress.<br>\nAfter <strong>all</strong> orders in a batch are completed, the entire batch moves to the <strong>"Completed"</strong> list (no red labels there).</p>\n<p><strong>📦 Batch orders</strong><br>\nWhen you submit 2 or more orders together, they appear as one batch. Different countdowns may cause some to finish earlier (turn red) while others remain green.</p>\n<p><strong>📌 Maximum concurrent orders</strong><br>\n- Level 1: <strong>3</strong> orders &nbsp;|&nbsp; Level 2: <strong>6</strong> orders &nbsp;|&nbsp; Level 3: <strong>8</strong> orders<br>\n(You can run this many orders at the same time. When one finishes, you can add a new one.)</p>\n<div class="warning-box">💡 Wait patiently during countdown. Once credited, check your balance in "User Center", then start a new order.</div>\n<div style="margin-top: 24px; text-align: center;"><button class="detail-btn" style="display: inline-flex; width: auto; padding: 8px 20px;" onclick="showDetail('commission-rules')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg> Learn about Commission Rules →</button></div>` },
-            { id: "commission-rules", title: "Commission Rules", meta: "Daily base × countdown days + quick reference", desc: "Calculate commission: daily base * days",
-              content: `<p><strong>Single order commission formula:</strong><br>\nCommission = <strong>Daily base × Countdown days</strong><br>\n(Countdown is always whole days, minimum 1 day)</p>\n<p><strong>Base per order per day:</strong><br>\nLevel 1: <strong>K1</strong> &nbsp;|&nbsp; Level 2: <strong>K3.3</strong> &nbsp;|&nbsp; Level 3: <strong>K6.5</strong></p>\n<p><strong>Example:</strong> Level 1 order with 15-day countdown → K1 × 15 = <strong>K15 commission</strong>.</p>\n<div style="overflow-x: auto; margin: 16px 0;"><table style="min-width: 280px;"><thead><tr><th>Level</th><th>Daily base</th><th>Max orders</th><th>Daily total</th><th>Weekly total</th></tr></thead><tbody><tr><td style="text-align: center;"><strong>Level 1</strong></td><td style="text-align: center;">K1</td><td style="text-align: center;">3</td><td style="text-align: center;"><strong>K3</strong></td><td style="text-align: center;">K21</td></tr><tr><td style="text-align: center;"><strong>Level 2</strong></td><td style="text-align: center;">K3.3</td><td style="text-align: center;">6</td><td style="text-align: center;"><strong>K19.8</strong></td><td style="text-align: center;">K138.6</td></tr><tr><td style="text-align: center;"><strong>Level 3</strong></td><td style="text-align: center;">K6.5</td><td style="text-align: center;">8</td><td style="text-align: center;"><strong>K52</strong></td><td style="text-align: center;">K364</td></tr></tbody></table></div>\n<p><em>Longer countdowns increase your commission proportionally.</em></p>` },
-            { id: "extra-earnings", title: "Extra Earnings", meta: "Beyond daily order commissions", desc: "Invitation bonuses, subordinate rebates, fixed salary & welfare orders",
-              content: `<p>In addition to daily order commissions, PG offers several extra earning methods:</p><h4>🔹 Invitation Bonus (Limited-time activity)</h4><p>Amount and rules are announced in the official PG discussion group. Contact your manager for current offers.</p><h4>🔹 Subordinate Rebate (0.2% of product value)</h4><p>When your downline Employees complete daily orders, you earn 0.2% of the <strong>product value</strong> of each order.<br>Example: A Level 2 Employee buys an item worth K110. Your rebate = K110 × 0.2% = <strong>K0.22</strong> per order. Automatically added to your balance.</p><h4>🔹 Welfare Product Orders</h4><p>Limited‑quantity orders offered by the platform. Purchasing with your user center balance earns a higher rebate. These orders do <strong>not</strong> affect your daily order volume.<br>Example: 15‑day countdown, product value K200, commission <strong>K80</strong> (much higher than standard orders).</p><h4>🔹 Fixed Salary & Tax Subsidies</h4><p>Based on the number of your downline Employees who are Level 2 or above (registered using your invitation link), you receive the following fixed salary and tax subsidies. The fixed salary is paid in two installments: on the <strong>1st</strong> and <strong>15th</strong> of each month.</p><div style="overflow-x: auto; margin: 12px 0;"><table style="min-width: 280px;"><thead><tr><th>Team Employees (Level 2+)</th><th>Fixed salary (K)</th><th>Tax subsidies</th></tr></thead><tbody><tr><td style="text-align: center;">1</td><td style="text-align: center;">—</td><td style="text-align: center;">10%</td></tr><tr><td style="text-align: center;">5</td><td style="text-align: center;">100</td><td style="text-align: center;">10%</td></tr><tr><td style="text-align: center;">10</td><td style="text-align: center;">500</td><td style="text-align: center;">15%</td></tr><tr><td style="text-align: center;">20</td><td style="text-align: center;">1200</td><td style="text-align: center;">20%</td></tr><tr><td style="text-align: center;">30</td><td style="text-align: center;">3500</td><td style="text-align: center;">20%</td></tr><tr><td style="text-align: center;">50</td><td style="text-align: center;">6500</td><td style="text-align: center;">20%</td></tr></tbody></table></div><p>📌 Tax subsidies apply even with 1 qualifying downline. Fixed salary starts from 5 downline Employees. To receive tax subsidies, once you meet the requirements, please contact your manager to apply.</p><div class="warning-box">✅ All extra earnings are calculated automatically. For details and eligibility, contact your manager.</div>` },
-            { id: "platform-synergy", title: "Synergy & Growth", meta: "Invite → Bonus → Welfare orders → Upgrade → Team salary → Downline rebates", desc: "How invitations, bonuses, upgrades, team salary and rebates work together",
-              content: `<p>PG's activity system is highly interconnected — every action fuels the next opportunity:</p><ol style="margin-left: 1.2rem; line-height: 1.6;"><li><strong>Invite new members</strong> → Earn <strong>invitation bonus</strong> once they become regular Employees (Level 1+).</li><li><strong>Use your bonus</strong> → Participate in <strong>Welfare Product Orders</strong> which yield higher commissions.</li><li><strong>Accumulate earnings</strong> → Upgrade to Level 2 or Level 3, unlocking more daily tasks and higher income.</li><li><strong>Build your team</strong> → When your downline members upgrade (e.g., to Level 2+), you receive <strong>fixed team salary</strong> and <strong>downline rebates (0.2% of the product value of their orders)</strong>.</li><li><strong>Scale up</strong> → More active team members = more passive income, creating a sustainable growth loop.</li></ol><div class="warning-box">💡 Every level deposit is fully refundable when you upgrade.</div><div style="margin-top: 24px; text-align: center;"><button class="detail-btn" style="display: inline-flex; width: auto; padding: 8px 20px;" onclick="showDetail('extra-earnings')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Learn about Extra Earnings →</button></div>` },
-            { id: "order-block-reasons", title: "Order Block Reasons", meta: "3 common errors & how to fix them", desc: "Why you can't place an order and what to do",
-              content: `<p>As an Employee, you may occasionally see one of these three error messages when trying to place an order. Here's what they mean and how to resolve them:</p><ol style="margin-left: 1.2rem; line-height: 1.8;"><li><strong>"This product can only be purchased 1 item per day..."</strong><br>You have already added this product to your cart but haven't submitted the order. Go to your <strong>shopping cart</strong> and complete the checkout. You cannot add the same product again until the existing order is submitted or removed.</li><li><strong>"Insufficient Deposit"</strong><br>You are trying to submit more orders than your level's concurrent processing limit (Level 1: 3, Level 2: 6, Level 3: 8). Check <strong>"My Orders"</strong> for pending orders. Delete some items from your cart so that total pending + new orders ≤ your limit.</li><li><strong>"Your account status does not allow placing orders"</strong><br>Your account has been flagged as inactive because you haven't contacted your manager for a long time. Reach out to your manager to request reinstatement of order privileges.</li></ol><div class="warning-box">💡 Always monitor "My Orders" and clear pending items before adding new tasks. Contact your manager if you're unsure about any error.</div>` },
-            { id: "letter-to-team", title: "A Letter to Our Team", meta: "An honest, sustainable opportunity", desc: "We are here to place an honest, sustainable opportunity into your hands.",
-              content: `<p>Dear friend,</p><p>We are here to place a real, honest, and sustainable opportunity into the hands of those who seek a better life — for themselves and for their families.</p><p>Since its founding in the U.S. in 2018, PG has been helping people earn a stable income. Over the years, we have grown and now provide our services and support to Employees around the world.</p><p>PG is built on <strong>honest work</strong>. Every Employee earns through their own effort. When you invite someone, you are not just inviting — you are <strong>extending a hand</strong>. The platform simply thanks you for showing another person the way.</p><p>This is a cycle of good: you help someone stand firm, and later, they help someone else. Together, we create stability, restore trust, and offer a reliable path forward.</p><p>The person you invite today is not a number. They are a father, a mother, a child’s hope.</p><p>Let us lift each other up. Let us build a community where hard work is rewarded, honesty is respected, and everyone has a place.</p><p style="margin-top: 20px;">Wishing you and everyone you bring in all the best. ❤️</p>` },
-            { id: "pg-rules", title: "Platform Regulations", meta: "Official rules for all Employees", desc: "Platform guidelines and policies",
-              content: `<ol style="list-style-type: decimal; margin-left: 1.2rem; line-height: 1.6;"><li><strong>Employee Conduct</strong><br>All Employees must treat each other with respect and professionalism. Offensive language, harassment, or conflicts are not allowed.</li><li><strong>Honest Registration</strong><br>Employees must provide truthful information when registering. Fake profiles or multiple accounts (one person, one account) are prohibited.</li><li><strong>Teamwork & Support</strong><br>Uplines are encouraged to guide and support their downlines. Positive teamwork helps everyone grow together.</li><li><strong>Task Completion</strong><br>Complete your daily assigned orders.<br>After finishing your daily tasks, <strong>please send a screenshot of any one of them to your manager</strong>. If you fail to report back, your account could be limited from getting new tasks. (Contact your manager for further assistance.)</li><li><strong>Earnings & Rewards</strong><br>Income includes daily salary (Level 1: <strong>K3/day</strong>, Level 2: <strong>K19.8/day</strong>, Level 3: <strong>K52/day</strong>), invitation bonuses, subordinate rebate (0.2%), fixed salary, and welfare order rebates. All earnings are settled based on actual task completion.</li><li><strong>Referrals & Invitations</strong><br>You may invite friends or family, but spamming, forcing, or misleading others is not allowed. Invitation bonuses are paid only after the invited person becomes a regular Employee (Level 1+).</li><li><strong>Account Security</strong><br>Do not share your password or account access with anyone. Report any suspicious activity to support immediately.</li><li><strong>Violations</strong><br>Violating these rules may result in warnings, suspension of task access, or permanent account removal.</li><li><strong>Rule Updates</strong><br>PG Mall reserves the right to update these regulations for platform improvement. Employees will be notified in advance.</li><li><strong>Contact Support</strong><br>For questions or assistance, please contact your manager or the official support team through official channels.</li></ol>` }
+<p>✅ Une fois soumise, le système démarre un compte à rebours. Lorsque le compte à rebours se termine, la commission sera automatiquement créditée sur votre solde.</p>
+<p><em>Cette commande vise à aider les marques à améliorer leurs données de vente de produits. Aucun produit physique ne vous sera expédié.</em></p>` },
+            { id: "order-guide", title: "Guide des commandes", meta: "Champs, couleurs d'état et achèvement par lot", desc: "Entrée, champs, couleurs rouge/vert, logique de lot",
+              content: `<p><strong>Deux façons d'accéder à vos commandes :</strong><br>\n- Après avoir soumis une tâche, vous êtes redirigé vers "Mes commandes".<br>\n- Depuis l'écran d'accueil, appuyez sur <strong>"Centre utilisateur"</strong> → <strong>"Mes commandes"</strong>.</p>\n<p><strong>Champs de la carte de commande :</strong><br>\nChaque carte affiche : Numéro de commande, date, produit(s), montant total, <strong>commission gagnée</strong>, statut du paiement, statut de livraison, et compte à rebours (<strong>Temps restant</strong> / <strong>Expédié</strong>).</p>\n<p><strong>⏰ Expire à (date et heure exactes) :</strong> Chaque carte de commande affiche la date et l'heure d'expiration exactes (par exemple, "Expire à : 2026-05-09 10:23:15"). En vérifiant l'heure "Expire à" de toutes vos commandes, vous pouvez voir exactement quand chaque commission sera créditée et quand vous pourrez soumettre une nouvelle commande.</p>\n<div style="margin: 20px 0; text-align: center;"><img src="images/order-expire-example.jpg" alt="Exemple de compte à rebours et d'heure d'expiration" style="max-width: 100%; border-radius: 12px; cursor: pointer;" onclick="openLightbox(this)"><div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 6px;">Exemple : compteurs de temps et heures d'expiration</div></div>\n<p><strong>🎨 Couleurs d'état des commandes</strong><br>\n<span style="color:#f87171;">🔴 Titre de commande rouge</span> – Apparaît uniquement dans la liste <strong>"En attente de traitement"</strong>. Cette commande individuelle a terminé son compte à rebours, mais d'autres commandes du même lot sont toujours en cours.<br>\n<span style="color:#4ade80;">🟢 Titre de commande vert</span> – Le compte à rebours de la commande est toujours en cours.<br>\nAprès que <strong>toutes</strong> les commandes d'un lot sont terminées, le lot entier passe dans la liste <strong>"Terminées"</strong> (pas d'étiquettes rouges là-bas).</p>\n<p><strong>📦 Commandes par lot</strong><br>\nLorsque vous soumettez 2 commandes ou plus ensemble, elles apparaissent comme un seul lot. Des comptes à rebours différents peuvent faire que certaines se terminent plus tôt (deviennent rouges) tandis que d'autres restent vertes.</p>\n<p><strong>📌 Nombre maximum de commandes simultanées</strong><br>\n- Niveau 1 : <strong>3</strong> commandes &nbsp;|&nbsp; Niveau 2 : <strong>6</strong> commandes &nbsp;|&nbsp; Niveau 3 : <strong>8</strong> commandes<br>\n(Vous pouvez exécuter ce nombre de commandes en même temps. Quand l'une se termine, vous pouvez en ajouter une nouvelle.)</p>\n<div class="warning-box">💡 Attendez patiemment pendant le compte à rebours. Une fois crédité, vérifiez votre solde dans "Centre utilisateur", puis commencez une nouvelle commande.</div>\n<div style="margin-top: 24px; text-align: center;"><button class="detail-btn" style="display: inline-flex; width: auto; padding: 8px 20px;" onclick="showDetail('commission-rules')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg> En savoir plus sur les règles de commission →</button></div>` },
+            { id: "commission-rules", title: "Règles de commission", meta: "Base quotidienne × jours de compte à rebours + référence rapide", desc: "Calculer la commission : base quotidienne * jours",
+              content: `<p><strong>Formule de commission par commande :</strong><br>\nCommission = <strong>Base quotidienne × Jours de compte à rebours</strong><br>\n(Le compte à rebours est toujours en jours entiers, minimum 1 jour)</p>\n<p><strong>Base par commande par jour :</strong><br>\nNiveau 1 : <strong>K1</strong> &nbsp;|&nbsp; Niveau 2 : <strong>K3.3</strong> &nbsp;|&nbsp; Niveau 3 : <strong>K6.5</strong></p>\n<p><strong>Exemple :</strong> Commande Niveau 1 avec un compte à rebours de 15 jours → K1 × 15 = <strong>K15 de commission</strong>.</p>\n<div style="overflow-x: auto; margin: 16px 0;"><table style="min-width: 280px;"><thead><tr><th>Niveau</th><th>Base quotidienne</th><th>Commandes max</th><th>Total quotidien</th><th>Total hebdomadaire</th></tr></thead><tbody><tr><td style="text-align: center;"><strong>Niveau 1</strong></td><td style="text-align: center;">K1</td><td style="text-align: center;">3</td><td style="text-align: center;"><strong>K3</strong></td><td style="text-align: center;">K21</td></tr><tr><td style="text-align: center;"><strong>Niveau 2</strong></td><td style="text-align: center;">K3.3</td><td style="text-align: center;">6</td><td style="text-align: center;"><strong>K19.8</strong></td><td style="text-align: center;">K138.6</td></tr><tr><td style="text-align: center;"><strong>Niveau 3</strong></td><td style="text-align: center;">K6.5</td><td style="text-align: center;">8</td><td style="text-align: center;"><strong>K52</strong></td><td style="text-align: center;">K364</td></tr></tbody></table></div>\n<p><em>Les comptes à rebours plus longs augmentent proportionnellement votre commission.</em></p>` },
+            { id: "extra-earnings", title: "Gains supplémentaires", meta: "Au-delà des commissions quotidiennes", desc: "Bonus de parrainage, ristournes subordonnées, salaire fixe et commandes de bien-être",
+              content: `<p>En plus des commissions quotidiennes, PG offre plusieurs méthodes de gains supplémentaires :</p><h4>🔹 Bonus de parrainage (activité limitée)</h4><p>Le montant et les règles sont annoncés dans le groupe de discussion officiel PG. Contactez votre responsable pour les offres actuelles.</p><h4>🔹 Ristourne subordonnée (0,2 % de la valeur du produit)</h4><p>Lorsque vos employés en aval effectuent des commandes quotidiennes, vous gagnez 0,2 % de la <strong>valeur du produit</strong> de chaque commande.<br>Exemple : Un employé de Niveau 2 achète un article d'une valeur de K110. Votre ristourne = K110 × 0,2 % = <strong>K0,22</strong> par commande. Ajouté automatiquement à votre solde.</p><h4>🔹 Commandes de produits de bien-être</h4><p>Commandes en quantité limitée proposées par la plateforme. L'achat avec votre solde de centre utilisateur rapporte une ristourne plus élevée. Ces commandes n'<strong>affectent pas</strong> votre volume de commandes quotidiennes.<br>Exemple : Compte à rebours de 15 jours, valeur du produit K200, commission <strong>K80</strong> (beaucoup plus élevée que les commandes standard).</p><h4>🔹 Salaire fixe et subventions fiscales</h4><p>En fonction du nombre de vos employés en aval de Niveau 2 ou plus (enregistrés avec votre lien de parrainage), vous recevez le salaire fixe et les subventions fiscales suivants. Le salaire fixe est versé en deux fois : les <strong>1er</strong> et <strong>15</strong> de chaque mois.</p><div style="overflow-x: auto; margin: 12px 0;"><table style="min-width: 280px;"><thead><tr><th>Employés en équipe (Niv.2+)</th><th>Salaire fixe (K)</th><th>Subventions fiscales</th></tr></thead><tbody><tr><td style="text-align: center;">1</td><td style="text-align: center;">—</td><td style="text-align: center;">10%</td></tr><tr><td style="text-align: center;">5</td><td style="text-align: center;">100</td><td style="text-align: center;">10%</td></tr><tr><td style="text-align: center;">10</td><td style="text-align: center;">500</td><td style="text-align: center;">15%</td></tr><tr><td style="text-align: center;">20</td><td style="text-align: center;">1200</td><td style="text-align: center;">20%</td></tr><tr><td style="text-align: center;">30</td><td style="text-align: center;">3500</td><td style="text-align: center;">20%</td></tr><tr><td style="text-align: center;">50</td><td style="text-align: center;">6500</td><td style="text-align: center;">20%</td></tr></tbody></table></div><p>📌 Les subventions fiscales s'appliquent même avec 1 employé en aval qualifié. Le salaire fixe commence à partir de 5 employés en aval. Pour recevoir les subventions fiscales, une fois que vous remplissez les conditions, veuillez contacter votre responsable pour en faire la demande.</p><div class="warning-box">✅ Tous les gains supplémentaires sont calculés automatiquement. Pour plus de détails et d'éligibilité, contactez votre responsable.</div>` },
+            { id: "platform-synergy", title: "Synergie et croissance", meta: "Invitez → Bonus → Commandes de bien-être → Améliorez → Salaire d'équipe → Ristournes aval", desc: "Comment les invitations, bonus, améliorations, salaire d'équipe et ristournes fonctionnent ensemble",
+              content: `<p>Le système d'activité de PG est hautement interconnecté — chaque action alimente l'opportunité suivante :</p><ol style="margin-left: 1.2rem; line-height: 1.6;"><li><strong>Invitez de nouveaux membres</strong> → Gagnez un <strong>bonus de parrainage</strong> une fois qu'ils deviennent des employés réguliers (Niveau 1+).</li><li><strong>Utilisez votre bonus</strong> → Participez aux <strong>commandes de produits de bien-être</strong> qui offrent des commissions plus élevées.</li><li><strong>Accumulez des gains</strong> → Passez au Niveau 2 ou Niveau 3, débloquant plus de tâches quotidiennes et des revenus plus élevés.</li><li><strong>Construisez votre équipe</strong> → Lorsque vos membres en aval améliorent (par exemple au Niveau 2+), vous recevez un <strong>salaire d'équipe fixe</strong> et des <strong>ristournes aval (0,2 % de la valeur du produit de leurs commandes)</strong>.</li><li><strong>Montez en puissance</strong> → Plus de membres d'équipe actifs = plus de revenus passifs, créant une boucle de croissance durable.</li></ol><div class="warning-box">💡 Chaque dépôt de niveau est entièrement remboursable lorsque vous passez à un niveau supérieur.</div><div style="margin-top: 24px; text-align: center;"><button class="detail-btn" style="display: inline-flex; width: auto; padding: 8px 20px;" onclick="showDetail('extra-earnings')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> En savoir plus sur les gains supplémentaires →</button></div>` },
+            { id: "order-block-reasons", title: "Raisons de blocage des commandes", meta: "3 erreurs courantes et comment les résoudre", desc: "Pourquoi vous ne pouvez pas passer de commande et que faire",
+              content: `<p>En tant qu'employé, vous pouvez parfois voir l'un de ces trois messages d'erreur lorsque vous essayez de passer une commande. Voici ce qu'ils signifient et comment les résoudre :</p><ol style="margin-left: 1.2rem; line-height: 1.8;"><li><strong>"Ce produit ne peut être acheté qu'une seule fois par jour..."</strong><br>Vous avez déjà ajouté ce produit à votre panier mais n'avez pas soumis la commande. Allez dans votre <strong>panier</strong> et terminez le processus de commande. Vous ne pouvez pas ajouter le même produit tant que la commande existante n'est pas soumise ou supprimée.</li><li><strong>"Dépôt insuffisant"</strong><br>Vous essayez de soumettre plus de commandes que la limite de traitement simultané de votre niveau (Niveau 1 : 3, Niveau 2 : 6, Niveau 3 : 8). Vérifiez <strong>"Mes commandes"</strong> pour les commandes en attente. Supprimez certains articles de votre panier afin que le total des commandes en attente + nouvelles commandes soit ≤ votre limite.</li><li><strong>"Votre statut de compte ne permet pas de passer des commandes"</strong><br>Votre compte a été signalé comme inactif car vous n'avez pas contacté votre responsable depuis longtemps. Contactez votre responsable pour demander la réactivation des privilèges de commande.</li></ol><div class="warning-box">💡 Surveillez toujours "Mes commandes" et effacez les articles en attente avant d'ajouter de nouvelles tâches. Contactez votre responsable si vous n'êtes pas sûr d'une erreur.</div>` },
+            { id: "letter-to-team", title: "Une lettre à notre équipe", meta: "Une opportunité honnête et durable", desc: "Nous sommes là pour mettre une opportunité réelle, honnête et durable entre vos mains.",
+              content: `<p>Cher ami,</p><p>Nous sommes là pour mettre une opportunité réelle, honnête et durable entre les mains de ceux qui cherchent une vie meilleure — pour eux-mêmes et pour leurs familles.</p><p>Depuis sa création aux États-Unis en 2018, PG aide les gens à gagner un revenu stable. Au fil des ans, nous avons grandi et fournissons maintenant nos services et notre soutien aux employés du monde entier.</p><p>PG est construit sur <strong>le travail honnête</strong>. Chaque employé gagne par ses propres efforts. Lorsque vous invitez quelqu'un, vous ne faites pas qu'inviter — vous <strong>tendez la main</strong>. La plateforme vous remercie simplement d'avoir montré le chemin à une autre personne.</p><p>C'est un cycle vertueux : vous aidez quelqu'un à tenir bon, et plus tard, ils aident quelqu'un d'autre. Ensemble, nous créons la stabilité, restaurons la confiance et offrons une voie fiable pour l'avenir.</p><p>La personne que vous invitez aujourd'hui n'est pas un chiffre. C'est un père, une mère, l'espoir d'un enfant.</p><p>Soutenons-nous mutuellement. Construisons une communauté où le travail acharné est récompensé, l'honnêteté respectée, et où chacun a sa place.</p><p style="margin-top: 20px;">Je vous souhaite, ainsi qu'à tous ceux que vous amenez, le meilleur. ❤️</p>` },
+            { id: "pg-rules", title: "Règlement de la plateforme", meta: "Règles officielles pour tous les employés", desc: "Directives et politiques de la plateforme",
+              content: `<ol style="list-style-type: decimal; margin-left: 1.2rem; line-height: 1.6;"><li><strong>Conduite des employés</strong><br>Tous les employés doivent se traiter mutuellement avec respect et professionnalisme. Les insultes, le harcèlement ou les conflits ne sont pas autorisés.</li><li><strong>Enregistrement honnête</strong><br>Les employés doivent fournir des informations véridiques lors de l'inscription. Les faux profils ou comptes multiples (une personne, un compte) sont interdits.</li><li><strong>Travail d'équipe et soutien</strong><br>Les supérieurs sont encouragés à guider et soutenir leurs subordonnés. Un travail d'équipe positif aide tout le monde à grandir ensemble.</li><li><strong>Achèvement des tâches</strong><br>Effectuez vos commandes quotidiennes assignées.<br>Après avoir terminé vos tâches quotidiennes, <strong>veuillez envoyer une capture d'écran de l'une d'elles à votre responsable</strong>. Si vous ne faites pas de rapport, votre compte pourrait être limité pour l'obtention de nouvelles tâches. (Contactez votre responsable pour plus d'assistance.)</li><li><strong>Gains et récompenses</strong><br>Les revenus comprennent le salaire quotidien (Niveau 1 : <strong>K3/jour</strong>, Niveau 2 : <strong>K19.8/jour</strong>, Niveau 3 : <strong>K52/jour</strong>), les bonus de parrainage, la ristourne subordonnée (0,2 %), le salaire fixe et les ristournes des commandes de bien-être. Tous les gains sont réglés en fonction de l'achèvement réel des tâches.</li><li><strong>Parrainages et invitations</strong><br>Vous pouvez inviter des amis ou de la famille, mais le spam, la coercition ou l'induction en erreur ne sont pas autorisés. Les bonus de parrainage sont payés uniquement après que la personne invitée devient un employé régulier (Niveau 1+).</li><li><strong>Sécurité du compte</strong><br>Ne partagez pas votre mot de passe ou votre accès avec quiconque. Signalez toute activité suspecte au support immédiatement.</li><li><strong>Violations</strong><br>La violation de ces règles peut entraîner des avertissements, la suspension de l'accès aux tâches ou la suppression permanente du compte.</li><li><strong>Mises à jour des règles</strong><br>PG Mall se réserve le droit de mettre à jour ce règlement pour améliorer la plateforme. Les employés seront informés à l'avance.</li><li><strong>Contacter le support</strong><br>Pour toute question ou assistance, veuillez contacter votre responsable ou l'équipe de support officielle via les canaux officiels.</li></ol>` }
         ];
 
         const ARTICLES = {};
@@ -847,30 +933,30 @@
                     for (let c of window.CONTACT_CONFIG.contacts) {
                         links += `<a href="${c.url}" target="_blank" rel="noopener noreferrer" class="contact-link">${c.icon ? c.icon+' ' : ''}${c.name}</a> `;
                     }
-                    return `<p><strong>Manager Contacts:</strong></p><p>${links}</p><p>🕒 <strong>Working hours:</strong> ${window.CONTACT_CONFIG.hours || "10am – 10pm (PNG time)"}</p><p>Your manager helps with top-up confirmation, withdrawal requests, level upgrades and daily support.</p>`;
+                    return `<p><strong>Contacts du responsable :</strong></p><p>${links}</p><p>🕒 <strong>Heures de travail :</strong> ${window.CONTACT_CONFIG.hours || "10h – 22h (heure PNG)"}</p><p>Votre responsable vous aide pour la confirmation des recharges, les demandes de retrait, les améliorations de niveau et le soutien quotidien.</p>`;
                 } else if (window.CONTACT_CONFIG.telegram && window.CONTACT_CONFIG.signal) {
-                    return `<p><strong>Official Manager Contacts:</strong></p><p><a href="${window.CONTACT_CONFIG.telegram}" target="_blank" rel="noopener noreferrer" class="contact-link">📱 Telegram Manager</a> <a href="${window.CONTACT_CONFIG.signal}" target="_blank" rel="noopener noreferrer" class="contact-link">🔒 Signal Manager</a></p><p>🕒 <strong>Working hours:</strong> ${window.CONTACT_CONFIG.hours || "10am – 10pm (PNG time)"}</p><p>Your manager helps with top-up confirmation, withdrawal requests, level upgrades and daily support.</p>`;
+                    return `<p><strong>Contacts officiels du responsable :</strong></p><p><a href="${window.CONTACT_CONFIG.telegram}" target="_blank" rel="noopener noreferrer" class="contact-link">📱 Telegram Responsable</a> <a href="${window.CONTACT_CONFIG.signal}" target="_blank" rel="noopener noreferrer" class="contact-link">🔒 Signal Responsable</a></p><p>🕒 <strong>Heures de travail :</strong> ${window.CONTACT_CONFIG.hours || "10h – 22h (heure PNG)"}</p><p>Votre responsable vous aide pour la confirmation des recharges, les demandes de retrait, les améliorations de niveau et le soutien quotidien.</p>`;
                 }
             }
-            return `<p><em>⚠️ Contact information not configured. Please contact your manager directly.</em></p><p>If you are an administrator, create a <code>contact-config.js</code> file in the site root with <code>contacts</code> array or legacy <code>telegram/signal</code> fields.</p>`;
+            return `<p><em>⚠️ Informations de contact non configurées. Veuillez contacter votre responsable directement.</em></p><p>Si vous êtes administrateur, créez un fichier <code>contact-config.js</code> à la racine du site avec un tableau <code>contacts</code> ou les champs hérités <code>telegram/signal</code>.</p>`;
         }
-        ARTICLES['contact-manager'] = { title: "📞 Contact Manager", meta: "Direct support for deposit/withdrawal/upgrades", content: buildContactManagerContent() };
+        ARTICLES['contact-manager'] = { title: "Contacter le responsable", meta: "Support direct pour dépôt/retrait/amélioration", content: buildContactManagerContent() };
 
         const ALL_CARDS = [
-            { id: "why-pg-safe", title: "Why Is PG Safe?", desc: "Legal, stable, fund security & verifiable" },
-            { id: "deposit-earnings", title: "Earn per Level", desc: "Weekly earnings: K21 (L1) · K138.6 (L2) · K364 (L3)" },
-            { id: "topup-steps", title: "Top‑Up Steps", desc: "Contact manager → transfer → confirm → credit" },
-            { id: "withdrawal-rules", title: "Withdrawal", desc: "Mon–Fri only, arrive 1–4 days" },
-            { id: "why-topup", title: "Why Top Up?", desc: "Deposit is working capital, fully refundable" },
-            { id: "task-steps", title: "Task Steps", desc: "Step-by-step: add address → submit order" },
-            { id: "order-guide", title: "Order Guide", desc: "Order fields, status colors & batch completion" },
-            { id: "commission-rules", title: "Commission Rules", desc: "Calculate commission: daily base × days" },
-            { id: "extra-earnings", title: "Extra Earnings", desc: "Invitation bonuses, rebates, fixed salary" },
-            { id: "platform-synergy", title: "Synergy & Growth", desc: "Invite → Bonus → Welfare orders → Upgrade → Team salary → Rebates" },
-            { id: "order-block-reasons", title: "Order Block Reasons", desc: "3 common errors & how to fix them" },
-            { id: "letter-to-team", title: "A Letter to Our Team", desc: "We are here to place an honest, sustainable opportunity into your hands." },
-            { id: "pg-rules", title: "Platform Regulations", desc: "Platform guidelines and policies" },
-            { id: "contact-manager", title: "Contact Manager", desc: "Direct support for deposit/withdrawal/upgrades" }
+            { id: "why-pg-safe", title: "Pourquoi PG est-il sûr ?", desc: "Légal, stable, sécurité des fonds et vérifiable" },
+            { id: "deposit-earnings", title: "Gains par niveau", desc: "Gains hebdomadaires : K21 (L1) · K138.6 (L2) · K364 (L3)" },
+            { id: "topup-steps", title: "Étapes de recharge", desc: "Contactez le responsable → virement → confirmez → crédit" },
+            { id: "withdrawal-rules", title: "Retrait", desc: "Lun–Ven uniquement, arrivée en 1–4 jours" },
+            { id: "why-topup", title: "Pourquoi recharger ?", desc: "Le dépôt est un capital de travail, entièrement remboursable" },
+            { id: "task-steps", title: "Étapes des tâches", desc: "Étape par étape : ajoutez l'adresse → soumettez la commande" },
+            { id: "order-guide", title: "Guide des commandes", desc: "Champs, couleurs d'état et achèvement par lot" },
+            { id: "commission-rules", title: "Règles de commission", desc: "Calculer la commission : base quotidienne × jours" },
+            { id: "extra-earnings", title: "Gains supplémentaires", desc: "Bonus de parrainage, ristournes, salaire fixe" },
+            { id: "platform-synergy", title: "Synergie et croissance", desc: "Invitez → Bonus → Commandes bien-être → Améliorez → Salaire d'équipe → Ristournes" },
+            { id: "order-block-reasons", title: "Raisons de blocage", desc: "3 erreurs courantes et comment les résoudre" },
+            { id: "letter-to-team", title: "Une lettre à notre équipe", desc: "Nous sommes là pour mettre une opportunité réelle, honnête et durable entre vos mains." },
+            { id: "pg-rules", title: "Règlement de la plateforme", desc: "Directives et politiques de la plateforme" },
+            { id: "contact-manager", title: "Contacter le responsable", desc: "Support direct pour dépôt/retrait/amélioration" }
         ];
         
         const INTERN_IDS = ["deposit-earnings", "topup-steps", "withdrawal-rules", "why-topup", "task-steps"];
@@ -887,9 +973,30 @@
         const tocList = document.getElementById('tocList');
         const headerShareBtn = document.getElementById('headerShareBtn');
         const floatingBtn = document.getElementById('floatingContactBtn');
+        const toTopBtn = document.getElementById('toTopBtn');
         let savedScrollY = 0;
         let isTransitioning = false;
-
+        
+        // Return to top button visibility
+        function checkScrollForToTop() {
+            if (window.scrollY > 300) toTopBtn.classList.add('visible');
+            else toTopBtn.classList.remove('visible');
+        }
+        window.addEventListener('scroll', checkScrollForToTop);
+        toTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // ESC key handling
+        function handleEscKey(e) {
+            if (e.key === 'Escape') {
+                if (lightbox.style.display === 'flex') closeLightbox();
+                else if (tocModal.classList.contains('active')) tocModal.classList.remove('active');
+                else if (!detailContainer.classList.contains('hidden')) backToHome(true);
+            }
+        }
+        document.addEventListener('keydown', handleEscKey);
+        
         function getCardIcon(cardId) {
             const icons = {
                 'why-pg-safe': `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>`,
@@ -905,7 +1012,7 @@
                 'order-block-reasons': `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`,
                 'letter-to-team': `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>`,
                 'pg-rules': `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>`,
-                'contact-manager': `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>`
+                'contact-manager': `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" /></svg>`
             };
             return icons[cardId] || `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>`;
         }
@@ -957,16 +1064,28 @@
         function goHomeAndFilter(newFilter) {
             if (isTransitioning) return;
             if (!detailContainer.classList.contains('hidden')) {
-                backToHome(true);
+                backToHome(true, () => {
+                    currentFilter = newFilter;
+                    updateFilterUI();
+                    renderCards();
+                    renderTOC();
+                    window.scrollTo({ top: 0, behavior: 'auto' });
+                });
+            } else {
+                currentFilter = newFilter;
+                updateFilterUI();
+                renderCards();
+                renderTOC();
+                window.scrollTo({ top: 0, behavior: 'auto' });
             }
-            currentFilter = newFilter;
+        }
+        
+        function updateFilterUI() {
             const btns = document.querySelectorAll('.filter-btn');
             btns.forEach(btn => {
-                if (btn.getAttribute('data-filter') === newFilter) btn.classList.add('active');
+                if (btn.getAttribute('data-filter') === currentFilter) btn.classList.add('active');
                 else btn.classList.remove('active');
             });
-            renderCards();
-            renderTOC();
         }
         
         function showDetail(articleId, fromBack = false) {
@@ -975,11 +1094,7 @@
                 const visibleIds = getVisibleIds();
                 if (!visibleIds.includes(articleId)) {
                     currentFilter = 'all';
-                    const btns = document.querySelectorAll('.filter-btn');
-                    btns.forEach(btn => {
-                        if (btn.getAttribute('data-filter') === 'all') btn.classList.add('active');
-                        else btn.classList.remove('active');
-                    });
+                    updateFilterUI();
                     renderCards();
                     renderTOC();
                 }
@@ -990,16 +1105,18 @@
             savedScrollY = window.scrollY;
             let actionsHtml = '';
             if (articleId === 'contact-manager') {
-                actionsHtml = `<div class="detail-actions"><button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg> Back to Guides</button></div>`;
+                actionsHtml = `<div class="detail-actions"><button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg> Retour aux guides</button></div>`;
             } else {
                 actionsHtml = `<div class="detail-actions">
                     <button class="detail-btn" id="contactManagerBtnDetail">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                        Contact Manager
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:18px;height:18px;">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+</svg>
+                        Contacter le responsable
                     </button>
                     <button class="detail-btn detail-btn-primary" id="backToGuidesBtnDetail">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px;height:18px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                        Back to Guides
+                        Retour aux guides
                     </button>
                 </div>`;
             }
@@ -1009,7 +1126,7 @@
             if (articleId !== 'contact-manager') {
                 document.getElementById('contactManagerBtnDetail')?.addEventListener('click', () => showDetail('contact-manager'));
             }
-            document.getElementById('backToGuidesBtnDetail')?.addEventListener('click', backToHome);
+            document.getElementById('backToGuidesBtnDetail')?.addEventListener('click', () => backToHome());
             const detailDiv = document.querySelector('.detail-view');
             detailDiv.classList.remove('active');
             void detailDiv.offsetWidth;
@@ -1025,7 +1142,7 @@
             }, 200);
         }
         
-        function backToHome(skipPushState = false) {
+        function backToHome(skipPushState = false, callback) {
             if (isTransitioning) return;
             isTransitioning = true;
             const detailDiv = document.querySelector('.detail-view');
@@ -1035,19 +1152,21 @@
                 detailContainer.classList.add('hidden');
                 homeContainer.classList.remove('hidden');
                 detailContainer.classList.remove('view-exit');
-                window.scrollTo({ top: savedScrollY, behavior: 'auto' });
+                if (savedScrollY && !callback) window.scrollTo({ top: savedScrollY, behavior: 'auto' });
                 if (location.hash) {
                     const cleanUrl = window.location.pathname + window.location.search;
                     history.replaceState(null, '', cleanUrl);
                 }
-                isTransitioning = false;
+                if (callback) callback();
+                else isTransitioning = false;
             }, 200);
         }
         
         floatingBtn.addEventListener('click', () => {
             if (!detailContainer.classList.contains('hidden')) {
-                backToHome();
-                setTimeout(() => showDetail('contact-manager'), 250);
+                backToHome(false, () => {
+                    setTimeout(() => showDetail('contact-manager'), 50);
+                });
             } else {
                 showDetail('contact-manager');
             }
@@ -1072,8 +1191,9 @@
             if (!id) return;
             tocModal.classList.remove('active');
             if (!detailContainer.classList.contains('hidden')) {
-                backToHome();
-                setTimeout(() => showDetail(id), 250);
+                backToHome(false, () => {
+                    setTimeout(() => showDetail(id), 50);
+                });
             } else {
                 const targetCard = document.querySelector(`.card[data-id="${id}"]`);
                 if (targetCard) {
@@ -1110,7 +1230,7 @@
             else { homeContainer.classList.remove('hidden'); detailContainer.classList.add('hidden'); }
         }
         
-        renderCards(); renderTOC(); initRouting();
+        renderCards(); renderTOC(); initRouting(); checkScrollForToTop();
     })();
 </script>
 </body>
